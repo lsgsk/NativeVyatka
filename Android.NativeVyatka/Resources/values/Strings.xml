@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, Click Me!</string>
+    <string name="app_name">NativeVyatkaAndroid</string>
+
+    <!--  Общие данные -->
+    <string name="null_content">Нет данных или ошибка загрузки. Повторить?</string>
+
+
+    <!--  меню -->
+    <string name="action_filter">Фильтр</string>
+    <string name="action_search">Поиск</string>
+    <string name="action_search_hint">Поиск</string>
+    <string name="navigation_my_records">Мои записи</string>
+    <string name="navigation_map_records">Карта записей</string>
+    <string name="navigation_additional">Дополнительно</string>
+    <string name="navigation_settings">Настройки</string>
+    <string name="navigation_about">О программе</string>
+</resources>

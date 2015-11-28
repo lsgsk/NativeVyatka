@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <group 
+    android:checkableBehavior="single">
+    <item
+      android:id="@+id/nav_my_records"
+      android:icon="@drawable/Icon"
+      android:title="navigation_my_records"/>  
+    <item
+      android:id="@+id/nav_map_records"
+      android:icon="@drawable/Icon"
+      android:title="navigation_map_records"/>
+  </group>
+  <item android:title="@string/navigation_additional">
+    <menu>
+      <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/Icon"
+        android:title="navigation_settings" />
+      <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/Icon"
+        android:title="navigation_about" />
+     </menu>
+  </item>
+</menu>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refresher"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/progress_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <com.github.rahatarmanahmed.cpv.CircularProgressView
+                android:id="@android:id/progress"
+                android:layout_width="@dimen/base_progress_size"
+                android:layout_height="@dimen/base_progress_size"
+                app:cpv_indeterminate="true"
+                app:cpv_animAutostart="true"
+                app:cpv_color="@color/color_primary"
+                app:cpv_thickness="5dp" />
+            <TextView
+                android:id="@+id/progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dip"
+                android:singleLine="true"
+                android:visibility="gone"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+        <FrameLayout
+            android:visibility="gone"
+            android:id="@+id/content_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@android:id/empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </FrameLayout>
+    </FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
