@@ -9,24 +9,32 @@ using Android.Util;
 
 namespace NativeVyatkaAndroid
 {
+    public enum QuestionType
+    {
+        ContinueWithoutGps
+    }
+
+
     public class QuestionAlertDialog : DialogFragment
     {
-        public static QuestionAlertDialog NewInstance(int message, int title)
+        public static QuestionAlertDialog NewInstance(int message, int title, QuestionType type)
         {
             var dialog = new QuestionAlertDialog();
             var args = new Bundle();
             args.PutInt(MESSAGE, message);
             args.PutInt(TITLE, title);
+            args.PutInt(TYPE, (int)type);
             dialog.Arguments = args;
             return dialog;
         }
 
-        public static QuestionAlertDialog NewInstance(string message, string title)
+        public static QuestionAlertDialog NewInstance(string message, string title, QuestionType type)
         {
             var dialog = new QuestionAlertDialog();  
             var args = new Bundle();
             args.PutString(MESSAGE, message);
             args.PutString(TITLE, title);
+            args.PutInt(TYPE, (int)type);
             dialog.Arguments = args;
             return dialog;
         }
@@ -37,28 +45,28 @@ namespace NativeVyatkaAndroid
             {
                 adb.SetTitle(Title)
                     .SetMessage(Message)
-                    .SetPositiveButton(Resource.String.dialog_ok, (s, e) => listener.OnDialogPositiveClick())
-                    .SetNegativeButton(Resource.String.dialog_cancel, (s, e) => listener.OnDialogNegitiveClick());
+                    .SetPositiveButton(Resource.String.dialog_ok, Positive)
+                    .SetNegativeButton(Resource.String.dialog_cancel, Negative);
                 return adb.Create();
             }
         }
 
         private void Positive(object sender, System.EventArgs e)
         {
-            listener.OnDialogPositiveClick();
+            listener.OnDialogPositiveClick(Type);
             Dismiss();
         }
 
         private void Negative(object sender, System.EventArgs e)
         {
-            listener.OnDialogNegitiveClick();
+            listener.OnDialogNegitiveClick(Type);
             Dismiss();
         }
 
         public override void OnCancel(IDialogInterface dialog)
         {
             base.OnCancel(dialog);
-            listener.OnDialogNegitiveClick();
+            listener.OnDialogNegitiveClick(Type);
         }
 
         public override void OnAttach(Context context)
@@ -71,6 +79,8 @@ namespace NativeVyatkaAndroid
         public const string QuestionAlertDialogTag = "QuestionAlertDialogTag";
         private const string MESSAGE = "message";
         private const string TITLE = "title";
+        private const string TYPE = "type";
+
         private string Message
         {
             get
@@ -78,6 +88,7 @@ namespace NativeVyatkaAndroid
                 return  Arguments.GetString(MESSAGE) ?? Resources.GetString(Arguments.GetInt(MESSAGE));
             }
         }
+
         private string Title
         {
             get
@@ -85,11 +96,20 @@ namespace NativeVyatkaAndroid
                 return Arguments.GetString(TITLE) ?? Resources.GetString(Arguments.GetInt(TITLE));
             }
         }
+
+        private QuestionType Type
+        {
+            get
+            {
+                return (QuestionType)Arguments.GetInt(TYPE);
+            }
+        }
+
         public interface IQuestionAlertDialogListener
         {
-            void OnDialogPositiveClick();
-            void OnDialogNegitiveClick();
+            void OnDialogPositiveClick(QuestionType type);
+            void OnDialogNegitiveClick(QuestionType type);
         }
-    }   
+    }
 }
 

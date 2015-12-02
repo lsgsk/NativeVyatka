@@ -52,5 +52,10 @@ namespace NativeVyatkaCore
         /// Синхранизирована ли запись
         /// </summary>
         public bool IsSended { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("[BurialEntity: Id={0}, HashId={1}, Name={2}, BirthTime={3}, DeathTime={4}, Desctiption={5}, Time={6}, Latitude={7}, Longitude={8}, PicturePath={9}, IsSended={10}]", Id, HashId, Name, BirthTime, DeathTime, Desctiption, Time, Latitude, Longitude, PicturePath, IsSended);
+        }
     } 
 }

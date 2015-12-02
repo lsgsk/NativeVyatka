@@ -10,6 +10,9 @@ using System;
 using Android.OS;
 using Android.Graphics;
 using System.Threading.Tasks;
+using Android.Support.V7.App;
+using NativeVyatkaCore;
+using System.Threading;
 
 namespace NativeVyatkaAndroid
 {
@@ -20,38 +23,45 @@ namespace NativeVyatkaAndroid
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Layout_MainActivity);
-            FindAndBindViews(savedInstanceState);
+            FindAndBindViews();
+            if (savedInstanceState == null)
+                SelectItem(Resource.Id.navigation_my_records);
         }
 
-        private void FindAndBindViews(Bundle savedInstanceState)
+        private void FindAndBindViews()
         {
             mToolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             mNavigationView = FindViewById<NavigationView>(Resource.Id.navigation_drawer);
-
+            var toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
+            mDrawerLayout.SetDrawerListener(toggle);
+            toggle.SyncState();
             SetSupportActionBar(mToolbar);
-            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.Icon);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-
             mNavigationView.NavigationItemSelected += (sender, e) =>
             {
                 e.MenuItem.SetChecked(true);
                 SelectItem(e.MenuItem.ItemId);
                 mDrawerLayout.CloseDrawers();
-            };     
-            if (savedInstanceState == null)
-                SelectItem(Resource.Id.navigation_my_records); 
+            };    
         }
 
         public override void OnBackPressed()
         {
-            if (FragmentManager.BackStackEntryCount > 1)
+            if (mDrawerLayout.IsDrawerOpen(Android.Support.V4.View.GravityCompat.Start))
             {
-                FragmentManager.PopBackStack();
+                mDrawerLayout.CloseDrawer(Android.Support.V4.View.GravityCompat.Start);
             }
             else
             {
-                base.OnBackPressed();
+                if (FragmentManager.BackStackEntryCount > 1)
+                {
+                    FragmentManager.PopBackStack();
+                }
+                else
+                {
+                    base.OnBackPressed();
+                }
             }
         }
 
@@ -61,42 +71,50 @@ namespace NativeVyatkaAndroid
             switch (view.Id)
             {
                 case Resource.Id.fbNewPhoto:
-                    TakeBurialPhoto();
+                    AskCamera();
                     break;
             }
         }
 
-        private void TakeBurialPhoto()
+        private void AskCamera()
         {
             if (!mLocalization.GpsStatus)
             {
-                var dialog = QuestionAlertDialog.NewInstance("gps не доступен", "внимание");
+                var dialog = QuestionAlertDialog.NewInstance("В настоящее время gps не доступен. Вы действительно хотите добавить запись?", "Внимание", QuestionType.ContinueWithoutGps);
                 dialog.Show(SupportFragmentManager, QuestionAlertDialog.QuestionAlertDialogTag);
             }
             else
             {
-                OnDialogPositiveClick();
+                OpenCamera();
             }
         }
 
-        public void OnDialogPositiveClick()
+        public void OnDialogPositiveClick(QuestionType type)
+        {
+            switch (type)
+            {
+                case QuestionType.ContinueWithoutGps:
+                    OpenCamera();
+                    break;
+            }
+        }
+
+        private void OpenCamera()
         {
             var intent = new Intent(MediaStore.ActionImageCapture);
             StartActivityForResult(intent, TAKE_PHOTO);
         }
 
-        public void OnDialogNegitiveClick()
+        public void OnDialogNegitiveClick(QuestionType type)
         {
+            
         }
 
         protected async override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             if (requestCode == TAKE_PHOTO && resultCode == Result.Ok)
-            {                
-                using (var bitmap = data.Extras.Get("data").JavaCast<Bitmap>())
-                {
-                    await CreateAndSaveNewBurial(bitmap);
-                }           
+            {               
+                await CreateAndSaveNewBurial(data.Extras.Get("data") as Bitmap);          
             }
             base.OnActivityResult(requestCode, resultCode, data);
         }
@@ -105,20 +123,28 @@ namespace NativeVyatkaAndroid
         {
             try
             {
-                var imageName = System.IO.Path.GetRandomFileName();
+                var imagepath = System.IO.Path.GetRandomFileName();
                 var array = await BitmapHelper.ResizeImage(bitmap);
-                await new PhotoStorageManager(this).SaveBurialImageToFileSystemAsync(imageName, array);
-                await mBurialsManager.InsertBurial(imageName, mLocalization.Location);
+                new PhotoStorageManager(this).SaveBurialImageToFileSystemAsync(imagepath, array);
+                var unknown = GetString(Resource.String.unknown); 
+                var item = new BurialEntity()
+                {
+                    HashId = Guid.NewGuid().ToString(),  
+                    Name = unknown,           
+                    Desctiption = unknown,
+                    Time = DateTime.UtcNow,             
+                    Latitude = mLocalization.Location.Latitude,             
+                    Longitude = mLocalization.Location.Longitude,                 
+                    PicturePath = imagepath,                  
+                    IsSended = false
+                };
+                await mBurialsManager.InsertBurial(item, new CancellationToken());
+                SelectItem(Resource.Id.navigation_my_records);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
-        }
-
-        private void ListInvalidate()
-        {
-            
         }
 
         protected void SelectItem(int itemId)

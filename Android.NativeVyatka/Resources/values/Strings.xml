@@ -3,13 +3,18 @@
     <string name="hello">Hello World, Click Me!</string>
     <string name="app_name">NativeVyatkaAndroid</string>
 
-    <!--  Общие данные -->
-    <string name="null_content">Нет данных или ошибка загрузки. Повторить?</string>
-
     <!--  авторизация -->
     <string name="action_sign_in">Авторизовать</string>
 
 
+    <!-- списки -->
+    <string name="null_content">Нет данных или ошибка загрузки. Повторить?</string>
+
+
+    <!-- главный экран -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="unknown">Неизвестный</string>
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Отмена</string>

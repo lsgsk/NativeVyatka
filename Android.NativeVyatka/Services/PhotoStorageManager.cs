@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Android.Content;
 using System.IO;
+using System;
 
 namespace NativeVyatkaAndroid
 {
@@ -34,13 +35,28 @@ namespace NativeVyatkaAndroid
             throw new FileNotFoundException("burial image not found: " + name);
         }
 
-        public async Task SaveBurialImageToFileSystemAsync(string name, byte[] imageBytes)
+        public void SaveBurialImageToFileSystemAsync(string name, byte[] imageBytes)
         {
             if (imageBytes != null)
             {
-                using (var fs = mContext.OpenFileOutput(name, FileCreationMode.Private))
+                Stream fs = null;
+                try
+                {                    
+                    fs = mContext.OpenFileOutput(name, FileCreationMode.Private);
+                    {
+                        fs.Write(imageBytes, 0, imageBytes.Length);
+                    }
+                }
+                catch (Exception ex)
                 {
-                    await fs.WriteAsync(imageBytes, 0, imageBytes.Length);
+                    Console.WriteLine(ex);
+                }
+                finally
+                {
+                    /*if (fs != null)
+                    {
+                        fs.Close();
+                    }*/
                 }
             }
         }

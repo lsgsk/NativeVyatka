@@ -60,6 +60,14 @@ namespace NativeVyatkaCore
             }
         }
 
+        public Task<int> UpdateAllBurialAsync(IEnumerable<BurialEntity> items)
+        {
+            lock (locker)
+            {
+                return UpdateAllAsync(items);
+            }
+        }
+
         public Task<int> DeleteBurialAsync(BurialEntity item)
         {
             lock (locker)

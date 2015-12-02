@@ -46,7 +46,7 @@ namespace NativeVyatkaAndroid
             SetSupportActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             collapsingToolbarLayout = FindViewById<CollapsingToolbarLayout>(Resource.Id.collapsing_toolbar);
-            collapsingToolbarLayout.Title = ("Collapsing");
+            collapsingToolbarLayout.Title = "Collapsing";
             collapsingToolbarLayout.SetExpandedTitleColor(Resources.GetColor(Android.Resource.Color.Transparent));
         }
 

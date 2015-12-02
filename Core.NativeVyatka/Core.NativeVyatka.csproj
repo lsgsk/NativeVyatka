@@ -31,7 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Managers\Interfaces\IBurialsManager.cs" />
     <Compile Include="Managers\Interfaces\IRestServiceManager.cs" />
     <Compile Include="Managers\Interfaces\ISettings.cs" />
     <Compile Include="Database\BurialDatabase.cs" />
@@ -40,9 +39,11 @@
     <Compile Include="Entities\ServiceEntities\BurialEntityRequest.cs" />
     <Compile Include="Entities\CrossLocation.cs" />
     <Compile Include="EvetArgs\CrossLocationEventArgs.cs" />
-    <Compile Include="Managers\Interfaces\ILocationManager.cs" />
     <Compile Include="Managers\AppLocationManager.cs" />
     <Compile Include="Managers\AppBurialsManager.cs" />
+    <Compile Include="Managers\Interfaces\IBurialsManager.cs" />
+    <Compile Include="Managers\Interfaces\ILocationManager.cs" />
+    <Compile Include="Managers\Interfaces\IUploaderManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

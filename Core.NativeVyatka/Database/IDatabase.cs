@@ -11,6 +11,7 @@ namespace NativeVyatkaCore
         Task<BurialEntity> GetBurialAsync(int id);      
         Task<int> InsertBurialAsync(BurialEntity item);
         Task<int> InsertOrReplaceBurialAsync(BurialEntity item);
+        Task<int> UpdateAllBurialAsync(IEnumerable<BurialEntity> items);
         Task<int> DeleteBurialAsync(BurialEntity item);
         Task DeleteAllBurialAsync();
     }

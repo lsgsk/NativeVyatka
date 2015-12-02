@@ -8,6 +8,7 @@
     <dimen name="app_bar_image_min_height">250dp</dimen>
 
     <!-- списки -->
-     <dimen name="burial_list_image_size">80dp</dimen>
+    <dimen name="burial_list_image_size">80dp</dimen>
+    <dimen name="round_point">10dp</dimen>
 
 </resources>

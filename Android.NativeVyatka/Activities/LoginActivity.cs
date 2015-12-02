@@ -12,7 +12,7 @@ namespace NativeVyatkaAndroid
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Layout_LoginActivity);
-            Button button = FindViewById<Button>(Resource.Id.button1);            
+            Button button = FindViewById<Button>(Resource.Id.email_sign_in_button);            
             button.Click += delegate
             {
                 StartActivity(typeof(MainActivity));

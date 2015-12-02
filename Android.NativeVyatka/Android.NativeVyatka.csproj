@@ -90,6 +90,8 @@
     <Compile Include="Utilities\BitmapHelper.cs" />
     <Compile Include="Dialogs\MessageDialog.cs" />
     <Compile Include="Dialogs\QuestionAlertDialog.cs" />
+    <Compile Include="Services\BackgroundUploadService.cs" />
+    <Compile Include="Fragment\BaseRecyclerFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -121,6 +123,8 @@
     <AndroidResource Include="Resources\drawable\katya.jpg" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_add_a_photo_white.png" />
     <AndroidResource Include="Resources\layout\View_BurialDetailDescription.axml" />
+    <AndroidResource Include="Resources\drawable\drawer_header.jpg" />
+    <AndroidResource Include="Resources\drawable\round_point.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
@@ -149,6 +153,10 @@
     <ProjectReference Include="..\Android.Libraries\MaterialProgressBar\MaterialProgressBar.csproj">
       <Project>{9D7C697C-F432-467E-8DCF-2A214AFE99DC}</Project>
       <Name>MaterialProgressBar</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Android.Libraries\Picasso\Picasso.csproj">
+      <Project>{4630EC95-BA2F-4B3B-8CDE-CCC2D5B9B002}</Project>
+      <Name>Picasso</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -9,7 +8,8 @@
         android:background="@drawable/item_selector_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/base_margin">
+        android:padding="@dimen/base_margin"
+        android:layout_alignParentLeft="true">
         <de.hdodenhof.circleimageview.CircleImageView
             android:src="@drawable/Icon"
             android:layout_width="@dimen/burial_list_image_size"
@@ -41,4 +41,13 @@
                 android:maxLines="2" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+    <View
+        android:orientation="horizontal"
+        android:id="@+id/vIsSended"
+        android:background="@drawable/round_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/base_margin" />
+</RelativeLayout>
