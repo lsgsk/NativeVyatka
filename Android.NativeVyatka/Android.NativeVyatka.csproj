@@ -63,6 +63,10 @@
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\packages\Unity.4.0.1\lib\portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="SQLite-net">
+      <HintPath>..\packages\sqlite-net-pcl.1.0.11\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android.Export" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -79,6 +83,13 @@
     <Compile Include="Utilities\Adapters\ViewHolders\IBindViewHolder.cs" />
     <Compile Include="Utilities\Adapters\ViewHolders\BurialRecordViewHolder.cs" />
     <Compile Include="Utilities\Adapters\ViewHolders\BaseEventArgs.cs" />
+    <Compile Include="Activities\BurialDetailActivity.cs" />
+    <Compile Include="Services\LocationService.cs" />
+    <Compile Include="Activities\BaseAppCompatActivity.cs" />
+    <Compile Include="Services\PhotoStorageManager.cs" />
+    <Compile Include="Utilities\BitmapHelper.cs" />
+    <Compile Include="Dialogs\MessageDialog.cs" />
+    <Compile Include="Dialogs\QuestionAlertDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -98,14 +109,18 @@
     <AndroidResource Include="Resources\values\Themes.xml" />
     <AndroidResource Include="Resources\menu\menu_action_bar.xml" />
     <AndroidResource Include="Resources\menu\menu_navigation.xml" />
-    <AndroidResource Include="Resources\layout\Activity_Main.axml" />
     <AndroidResource Include="Resources\drawable\Icon.png" />
     <AndroidResource Include="Resources\layout\View_DrawerHeader.axml" />
     <AndroidResource Include="Resources\values\Dimens.xml" />
-    <AndroidResource Include="Resources\layout\Activity_Login.axml" />
     <AndroidResource Include="Resources\layout\Fragment_Records.axml" />
     <AndroidResource Include="Resources\layout\Item_BurialRecord.axml" />
     <AndroidResource Include="Resources\drawable\item_selector_row.xml" />
+    <AndroidResource Include="Resources\layout\Layout_LoginActivity.axml" />
+    <AndroidResource Include="Resources\layout\Layout_MainActivity.axml" />
+    <AndroidResource Include="Resources\layout\Layout_BurialDetailActivity.axml" />
+    <AndroidResource Include="Resources\drawable\katya.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_add_a_photo_white.png" />
+    <AndroidResource Include="Resources\layout\View_BurialDetailDescription.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
@@ -116,8 +131,12 @@
     <Folder Include="Utilities\" />
     <Folder Include="Utilities\Adapters\" />
     <Folder Include="Utilities\Adapters\ViewHolders\" />
+    <Folder Include="Services\" />
+    <Folder Include="Resources\drawable-xhdpi\" />
+    <Folder Include="Dialogs\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Import Project="..\packages\SQLitePCL.raw_basic.0.8.4\build\MonoAndroid\SQLitePCL.raw_basic.targets" Condition="Exists('..\packages\SQLitePCL.raw_basic.0.8.4\build\MonoAndroid\SQLitePCL.raw_basic.targets')" />
   <ItemGroup>
     <ProjectReference Include="..\Android.Libraries\CircularImageView\CircularImageView.csproj">
       <Project>{94251AC3-7C95-41F4-8672-537E8F383AFD}</Project>

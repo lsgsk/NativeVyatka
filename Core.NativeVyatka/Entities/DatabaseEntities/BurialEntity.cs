@@ -23,11 +23,11 @@ namespace NativeVyatkaCore
         /// <summary>
         /// Дата рождения
         /// </summary>
-        public DateTime BirthTime { get; set; }
+        public DateTime? BirthTime { get; set; }
         /// <summary>
         /// Дата смерти
         /// </summary>
-        public DateTime DeathTime { get; set; }
+        public DateTime? DeathTime { get; set; }
         /// <summary>
         /// Дополнительное описание
         /// </summary>

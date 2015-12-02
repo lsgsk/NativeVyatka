@@ -6,6 +6,13 @@
     <!--  Общие данные -->
     <string name="null_content">Нет данных или ошибка загрузки. Повторить?</string>
 
+    <!--  авторизация -->
+    <string name="action_sign_in">Авторизовать</string>
+
+
+
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Отмена</string>
 
     <!--  меню -->
     <string name="action_filter">Фильтр</string>

@@ -5,13 +5,14 @@ namespace NativeVyatkaCore
 {
     public interface IDatabase
     {
-        Task<int> BurialCount();
-        Task<List<BurialEntity>> GetAllBurial();
-        Task<List<BurialEntity>> GetAllUnsendedBurial();
-        Task<BurialEntity> GetBurial(int id);      
-        Task<int> InsertOrReplaceBurial(BurialEntity item);
-        Task<int> DeleteBurial(BurialEntity item);
-        Task DeleteAllBurial();
+        Task<int> BurialCountAsync();
+        Task<List<BurialEntity>> GetAllBurialAsync();
+        Task<List<BurialEntity>> GetAllUnsendedBurialAsync();
+        Task<BurialEntity> GetBurialAsync(int id);      
+        Task<int> InsertBurialAsync(BurialEntity item);
+        Task<int> InsertOrReplaceBurialAsync(BurialEntity item);
+        Task<int> DeleteBurialAsync(BurialEntity item);
+        Task DeleteAllBurialAsync();
     }
 }
 

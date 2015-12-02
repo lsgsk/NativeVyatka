@@ -15,6 +15,7 @@ using System.Threading;
 using Android.Support.V7.Widget;
 using NativeVyatkaCore;
 using Microsoft.Practices.Unity;
+using System.Threading.Tasks;
 
 namespace NativeVyatkaAndroid
 {
@@ -43,8 +44,8 @@ namespace NativeVyatkaAndroid
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
-            Refresher.Refresh += (sender, e) => ObtainData(true); 
-            RepeatClick += (sender, e) => ObtainData(true);
+            Refresher.Refresh += async (sender, e) => await ObtainData(true); 
+            RepeatClick += async (sender, e) => await ObtainData(true);
             mRecyclerView = mContentView.FindViewById<RecyclerView>(Resource.Id.rvRecordsList);
             mRecyclerView.HasFixedSize = true;
             //mRecyclerView.AddItemDecoration(new DividerItemDecoration(this));
@@ -57,15 +58,15 @@ namespace NativeVyatkaAndroid
             base.OnDestroyView();
         }
 
-        public override void OnActivityCreated(Bundle savedInstanceState)
+        public override async void OnActivityCreated(Bundle savedInstanceState)
         {
             base.OnActivityCreated(savedInstanceState);
             SetContentView(mContentView);
             SetEmptyText(Resource.String.null_content);
-            ObtainData(savedInstanceState == null);
+            await ObtainData(savedInstanceState == null);
         }
 
-        protected async void ObtainData(bool force = false)
+        protected async Task ObtainData(bool force = false)
         {
             try
             {
@@ -85,7 +86,7 @@ namespace NativeVyatkaAndroid
 
         private void BurialRecordItemClick (object sender, BaseEventArgs<BurialEntity> e)
         {
-            
+            StartActivity(new Intent(this.Activity, typeof(BurialDetailActivity)));
         }
 
         private void ShowErrorAction()
@@ -96,8 +97,8 @@ namespace NativeVyatkaAndroid
 
         public override void OnPrepareOptionsMenu(IMenu menu)
         {           
-            menu.FindItem(Resource.Id.action_filter).SetVisible(true);
-            menu.FindItem(Resource.Id.action_search).SetVisible(false);               
+            menu.FindItem(Resource.Id.action_filter).SetVisible(false);
+            menu.FindItem(Resource.Id.action_search).SetVisible(true);               
             base.OnPrepareOptionsMenu(menu);
         }
         private IBurialsManager mBurialManager;

@@ -2,7 +2,7 @@
 
 namespace Core
 {
-    public class BurialRequest
+    public class BurialEntityRequest
     {
         /// <summary>
         /// Уникальный глобальный идентификатор записи, генерируется на устройстве в момент съемки

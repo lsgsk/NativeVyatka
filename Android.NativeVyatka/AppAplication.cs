@@ -15,8 +15,9 @@ namespace NativeVyatkaAndroid
         public override void OnCreate()
         {
             base.OnCreate();
-            Container.RegisterInstance<IDatabase>(new BurialDatabase(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Burials.db")));
-            Container.RegisterType<IBurialsManager, BurialsManager>();
+            Container.RegisterInstance<IDatabase>(new BurialDatabase(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Burials.db")),new ContainerControlledLifetimeManager());
+            Container.RegisterType<IBurialsManager, AppBurialsManager>();
+            Container.RegisterType<ILocationManager, AppLocationManager>(new ContainerControlledLifetimeManager());
         }
         public static readonly UnityContainer Container = new UnityContainer();
     }

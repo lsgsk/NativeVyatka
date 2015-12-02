@@ -12,7 +12,7 @@ namespace NativeVyatkaCore
             CreateTableAsync<BurialEntity>().ContinueWith(t => { Debug.WriteLine("Burial table created!"); });
         }
 
-        public Task<int> BurialCount()
+        public Task<int> BurialCountAsync()
         {
             lock (locker)
             {
@@ -20,7 +20,7 @@ namespace NativeVyatkaCore
             }
         }
 
-        public Task<List<BurialEntity>> GetAllBurial()
+        public Task<List<BurialEntity>> GetAllBurialAsync()
         {
             lock (locker)
             {
@@ -28,7 +28,7 @@ namespace NativeVyatkaCore
             }
         }
 
-        public Task<List<BurialEntity>> GetAllUnsendedBurial()
+        public Task<List<BurialEntity>> GetAllUnsendedBurialAsync()
         {
             lock (locker)
             {
@@ -36,7 +36,7 @@ namespace NativeVyatkaCore
             }
         }
 
-        public Task<BurialEntity> GetBurial(int id)
+        public Task<BurialEntity> GetBurialAsync(int id)
         {
             lock (locker)
             {
@@ -44,7 +44,15 @@ namespace NativeVyatkaCore
             }
         }
 
-        public Task<int> InsertOrReplaceBurial(BurialEntity item)
+        public Task<int> InsertBurialAsync(BurialEntity item)
+        {
+            lock (locker)
+            {
+                return InsertAsync(item);
+            }
+        }
+
+        public Task<int> InsertOrReplaceBurialAsync(BurialEntity item)
         {
             lock (locker)
             {
@@ -52,7 +60,7 @@ namespace NativeVyatkaCore
             }
         }
 
-        public Task<int> DeleteBurial(BurialEntity item)
+        public Task<int> DeleteBurialAsync(BurialEntity item)
         {
             lock (locker)
             {
@@ -60,7 +68,7 @@ namespace NativeVyatkaCore
             }
         }
 
-        public Task DeleteAllBurial()
+        public Task DeleteAllBurialAsync()
         {
             lock (locker)
             {
