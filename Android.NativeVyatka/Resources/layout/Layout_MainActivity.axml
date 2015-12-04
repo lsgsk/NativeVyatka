@@ -35,8 +35,7 @@
             android:layout_margin="@dimen/base_fab_margin"
             android:src="@drawable/ic_add_a_photo_white"
             app:layout_anchor="@id/content_frame"
-            app:layout_anchorGravity="bottom|right|end"
-            android:onClick="OnButtonClick" />
+            app:layout_anchorGravity="bottom|right|end" />
     </android.support.design.widget.CoordinatorLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_drawer"

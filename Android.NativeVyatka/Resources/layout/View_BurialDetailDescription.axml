@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/sestedscroll"
+    android:id="@+id/nestedscroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
@@ -20,10 +20,10 @@
                 android:id="@+id/tvDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/base_margin"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="27 age, female sbdhf ghrgfj gdfjhgdsjfggf dgsgdfhgjfgsdfds ff adgf gadfgdahf gd hdas flgdsjfdsj fgafsd fd dsa hsdjshf dsjhfjaffgafg" />
             <TextView
-                android:id="@+id/tvDescDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -109,4 +109,4 @@
                 android:text="Дата съемки" />
         </LinearLayout>
     </GridLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

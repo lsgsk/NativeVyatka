@@ -48,7 +48,6 @@ namespace NativeVyatkaAndroid
             RepeatClick += async (sender, e) => await ObtainData(true);
             mRecyclerView = mContentView.FindViewById<RecyclerView>(Resource.Id.rvRecordsList);
             mRecyclerView.HasFixedSize = true;
-            //mRecyclerView.AddItemDecoration(new DividerItemDecoration(this));
             mRecyclerView.SetLayoutManager(new LinearLayoutManager(Activity.BaseContext));
         }
 
@@ -86,7 +85,9 @@ namespace NativeVyatkaAndroid
 
         private void BurialRecordItemClick (object sender, BaseEventArgs<BurialEntity> e)
         {
-            StartActivity(new Intent(this.Activity, typeof(BurialDetailActivity)));
+            var intent = new Intent(this.Activity, typeof(BurialDetailActivity));
+            intent.PutExtra(BurialDetailActivity.BURIAL_ID, e.Item.Id);
+            StartActivity(intent);
         }
 
         private void ShowErrorAction()

@@ -221,7 +221,6 @@ namespace NativeVyatkaAndroid
                 SetContentShown(false, false);
             }
             Refresher = root.FindViewById<SwipeRefreshLayout>(Resource.Id.refresher);
-            Refresher.Enabled = false;
             //Refresher.Setcol.SetColorScheme(Android.Resource.Color.Blu, Resource.Color.xam_purple, Resource.Color.xam_gray, Resource.Color.xam_green);
         }
     }

@@ -115,12 +115,12 @@ namespace NativeVyatkaAndroid
             return BitmapFactory.DecodeByteArrayAsync (imagedata, 0, imagedata.Length);
         }
 
-        public async static Task<byte[]> ToByteArray(Bitmap b)
+        public static async Task<byte[]> ToByteArray(Bitmap b)
         {
             byte[] res;
             using (var stream = new MemoryStream ()) 
             {
-                b.CompressAsync(Bitmap.CompressFormat.Png, 100, stream);
+                await b.CompressAsync(Bitmap.CompressFormat.Png, 100, stream);
                 byte[] byteArray = stream.ToArray();
                 res = byteArray;
             }

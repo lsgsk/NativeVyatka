@@ -47,6 +47,9 @@ namespace NativeVyatkaAndroid
             mLoginFormView = view.FindViewById(Resource.Id.login_form);
             mProgressView = view.FindViewById(Resource.Id.login_progress);
             ShowProgress(mProgress);
+            #if DEBUG
+            mEmailView.Text = "qwe@qwe.ru";
+            #endif
             return view;
         }
 
@@ -220,7 +223,7 @@ namespace NativeVyatkaAndroid
 
             protected override Java.Lang.Object DoInBackground(params Java.Lang.Object[] native_parms)
             {    
-                Thread.Sleep(10000);
+                Thread.Sleep(500);
                 return true;
             }
 

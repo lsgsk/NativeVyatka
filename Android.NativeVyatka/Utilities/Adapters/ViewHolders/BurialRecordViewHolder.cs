@@ -3,6 +3,7 @@ using Android.Views;
 using NativeVyatkaCore;
 using Android.App;
 using IT.Sephiroth.Android.Library.Picasso;
+using Java.IO;
 
 namespace NativeVyatkaAndroid
 {
@@ -29,7 +30,7 @@ namespace NativeVyatkaAndroid
             vIsSended.Visibility = item.IsSended ? ViewStates.Invisible : ViewStates.Visible;
             if (item.PicturePath != null)
             {
-                Picasso.With(imgImage.Context).Load(new Java.IO.File(item.PicturePath)).Resize(100, 100).CenterCrop().Into(imgImage);
+                Picasso.With(imgImage.Context).Load(new File(Application.Context.FilesDir.AbsolutePath + "/" +item.PicturePath)).Resize(100, 100).CenterCrop().Into(imgImage);
             }
         }
     }

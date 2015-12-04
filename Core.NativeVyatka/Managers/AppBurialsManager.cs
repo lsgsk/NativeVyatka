@@ -79,7 +79,7 @@ namespace NativeVyatkaCore
         {
             try
             {
-                await mDataBase.InsertOrReplaceBurialAsync(item);
+                await mDataBase.InsertBurialAsync(item);
                 token.ThrowIfCancellationRequested();
             }
             catch (OperationCanceledException ex)

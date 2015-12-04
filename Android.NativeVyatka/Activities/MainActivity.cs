@@ -13,10 +13,12 @@ using System.Threading.Tasks;
 using Android.Support.V7.App;
 using NativeVyatkaCore;
 using System.Threading;
+using Android.Support.V4.View;
+using Android.Content.PM;
 
 namespace NativeVyatkaAndroid
 {
-    [Activity(Label = "MainActivity")]            
+    [Activity(Label = "MainActivity", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]            
     public class MainActivity : BaseAppCompatActivity, NavigationView.IOnNavigationItemSelectedListener, QuestionAlertDialog.IQuestionAlertDialogListener
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -24,8 +26,23 @@ namespace NativeVyatkaAndroid
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Layout_MainActivity);
             FindAndBindViews();
-            //if (savedInstanceState == null)
-            //    SelectItem(Resource.Id.navigation_my_records);
+            if (savedInstanceState == null)
+            {
+                SelectItem(Resource.Id.navigation_my_records);
+                mNavigationView.Menu.GetItem(0).SetChecked(true);
+            }
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            fabNewPhoto.Click += OnTakeNewPhoto;
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            fabNewPhoto.Click -= OnTakeNewPhoto;
         }
 
         private void FindAndBindViews()
@@ -33,126 +50,21 @@ namespace NativeVyatkaAndroid
             mToolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             mNavigationView = FindViewById<NavigationView>(Resource.Id.navigation_drawer);
-            var fab = (FloatingActionButton)FindViewById(Resource.Id.fabNewPhoto);
+            fabNewPhoto = (FloatingActionButton)FindViewById(Resource.Id.fabNewPhoto);
             var toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
 
             mDrawerLayout.SetDrawerListener(toggle);
             toggle.SyncState();
             SetSupportActionBar(mToolbar);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-            mNavigationView.NavigationItemSelected += (sender, e) =>
-            {
-                e.MenuItem.SetChecked(true);
-                SelectItem(e.MenuItem.ItemId);
-                mDrawerLayout.CloseDrawers();
-            };    
-        }
-
-        public override void OnBackPressed()
-        {
-            if (mDrawerLayout.IsDrawerOpen(Android.Support.V4.View.GravityCompat.Start))
-            {
-                mDrawerLayout.CloseDrawer(Android.Support.V4.View.GravityCompat.Start);
-            }
-            else
-            {
-                if (FragmentManager.BackStackEntryCount > 1)
-                {
-                    FragmentManager.PopBackStack();
-                }
-                else
-                {
-                    base.OnBackPressed();
-                }
-            }
-        }
-
-        [Export("OnButtonClick")]
-        public void OnButtonClick(View view)
-        {
-            switch (view.Id)
-            {
-                case Resource.Id.fabNewPhoto:
-                    AskCamera();
-                    break;
-            }
-        }
-
-        private void AskCamera()
-        {
-            if (!mLocalization.GpsStatus)
-            {
-                var dialog = QuestionAlertDialog.NewInstance("В настоящее время gps не доступен. Вы действительно хотите добавить запись?", "Внимание", QuestionType.ContinueWithoutGps);
-                dialog.Show(SupportFragmentManager, QuestionAlertDialog.QuestionAlertDialogTag);
-            }
-            else
-            {
-                OpenCamera();
-            }
-        }
-
-        public void OnDialogPositiveClick(QuestionType type)
-        {
-            switch (type)
-            {
-                case QuestionType.ContinueWithoutGps:
-                    OpenCamera();
-                    break;
-            }
-        }
-
-        private void OpenCamera()
-        {
-            var intent = new Intent(MediaStore.ActionImageCapture);
-            StartActivityForResult(intent, TAKE_PHOTO);
-        }
-
-        public void OnDialogNegitiveClick(QuestionType type)
-        {
-            
-        }
-
-        protected async override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        {
-            if (requestCode == TAKE_PHOTO && resultCode == Result.Ok)
-            {               
-                await CreateAndSaveNewBurial(data.Extras.Get("data") as Bitmap);          
-            }
-            base.OnActivityResult(requestCode, resultCode, data);
-        }
-
-        private async Task CreateAndSaveNewBurial(Bitmap bitmap)
-        {
-            try
-            {
-                var imagepath = System.IO.Path.GetRandomFileName();
-                var array = await BitmapHelper.ResizeImage(bitmap);
-                await new PhotoStorageManager(this).SaveBurialImageToFileSystemAsync(imagepath, array);
-                var unknown = GetString(Resource.String.unknown); 
-                var item = new BurialEntity()
-                {
-                    HashId = Guid.NewGuid().ToString(),  
-                    Name = unknown,           
-                    Desctiption = unknown,
-                    Time = DateTime.UtcNow,             
-                    Latitude = mLocalization.Location.Latitude,             
-                    Longitude = mLocalization.Location.Longitude,                 
-                    PicturePath = imagepath,                  
-                    IsSended = false
-                };
-                await mBurialsManager.InsertBurial(item, new CancellationToken());
-                SelectItem(Resource.Id.navigation_my_records);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+            mNavigationView.SetNavigationItemSelectedListener(this);
         }
 
         public bool OnNavigationItemSelected(IMenuItem menuItem)
         {
+            menuItem.SetChecked(true);
             SelectItem(menuItem.ItemId);
-            mDrawerLayout.CloseDrawer(Android.Support.V4.View.GravityCompat.Start);
+            mDrawerLayout.CloseDrawers();
             return true;
         }
 
@@ -167,6 +79,8 @@ namespace NativeVyatkaAndroid
                     tag = RecordsFragment.RecordsFragmentTag;
                     break;
                 case Resource.Id.navigation_map_records:
+                    fragment = MapFragment.NewInstance();
+                    tag = MapFragment.MapFragmentTag;
                     break;
                 case Resource.Id.navigation_settings:
                     break;
@@ -179,15 +93,123 @@ namespace NativeVyatkaAndroid
             }
         }
 
+        public override void OnBackPressed()
+        {
+            if (mDrawerLayout.IsDrawerOpen(GravityCompat.Start))
+            {
+                mDrawerLayout.CloseDrawers();
+            }
+            else
+            {
+                if (FragmentManager.BackStackEntryCount > 1)
+                {
+                    FragmentManager.PopBackStack();
+                }
+                else
+                {
+                    base.OnBackPressed();
+                }
+            }
+        }
+
+        private void OnTakeNewPhoto(object sender, EventArgs e)
+        {
+            if (!mLocalization.GpsStatus)
+            {
+                var dialog = QuestionAlertDialog.NewInstance("В настоящее время gps не доступен. Вы действительно хотите добавить запись?", "Внимание", QuestionType.ContinueWithoutGps);
+                dialog.Show(SupportFragmentManager, QuestionAlertDialog.QuestionAlertDialogTag);
+            }
+            else
+            {
+                OpenCamera();
+            }
+        }
+
+        private void OpenCamera()
+        {
+            var intent = new Intent(MediaStore.ActionImageCapture);
+            StartActivityForResult(intent, TAKE_PHOTO);
+        }
+
+        public void OnDialogPositiveClick(QuestionType type)
+        {
+            switch (type)
+            {
+                case QuestionType.ContinueWithoutGps:
+                    OpenCamera();
+                    break;
+            }
+        }
+
+        public void OnDialogNegitiveClick(QuestionType type)
+        {
+            
+        }
+
+        protected async override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            if (requestCode == TAKE_PHOTO && resultCode == Result.Ok)
+            {               
+                using (var bitmap = data.Extras.Get("data") as Bitmap)
+                {
+                    await CreateAndSaveNewBurial(bitmap);   
+                }
+            }
+            base.OnActivityResult(requestCode, resultCode, data);
+        }
+
+        private async Task CreateAndSaveNewBurial(Bitmap bitmap)
+        {
+            try
+            {
+                var imagepath = System.IO.Path.GetRandomFileName() + ".png";
+                var array = await BitmapHelper.ResizeImage(bitmap);
+                await new PhotoStorageManager(this).SaveBurialImageToFileSystemAsync(imagepath, array);
+                var unknown = GetString(Resource.String.unknown); 
+                var item = new BurialEntity()
+                {
+                    HashId = Guid.NewGuid().ToString(),  
+                    Name = "Иванов Сергей Юрьевич",           
+                    Desctiption = "Быстрицкое кладбище. Рядом со входом",
+                    Time = DateTime.UtcNow,             
+                    Latitude = mLocalization.Location.Latitude,             
+                    Longitude = mLocalization.Location.Longitude,                 
+                    PicturePath = imagepath,   
+                    BirthTime = new DateTime(1956, 10, 5),
+                    DeathTime = new DateTime(2004, 5, 9),
+                    IsSended = false
+                };
+                await mBurialsManager.InsertBurial(item, new CancellationToken());
+                SelectItem(Resource.Id.navigation_my_records);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.menu_action_bar, menu);
             return base.OnCreateOptionsMenu(menu);
         }
 
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    mDrawerLayout.OpenDrawer(GravityCompat.Start); 
+                    return true;
+
+            }
+            return base.OnOptionsItemSelected(item);
+        }
+
         protected DrawerLayout mDrawerLayout;
         protected NavigationView mNavigationView;
         protected Toolbar mToolbar;
+        protected FloatingActionButton fabNewPhoto;
         public const int TAKE_PHOTO = 16188;
     }
 }

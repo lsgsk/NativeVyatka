@@ -26,6 +26,9 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Отмена</string>
 
+    <!-- подробный экран -->
+    <string name="desciption_unknown">Неизвестно</string>
+
     <!--  меню -->
     <string name="action_filter">Фильтр</string>
     <string name="action_search">Поиск</string>
