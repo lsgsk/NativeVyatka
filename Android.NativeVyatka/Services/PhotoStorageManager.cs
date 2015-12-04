@@ -35,30 +35,16 @@ namespace NativeVyatkaAndroid
             throw new FileNotFoundException("burial image not found: " + name);
         }
 
-        public void SaveBurialImageToFileSystemAsync(string name, byte[] imageBytes)
+        public Task SaveBurialImageToFileSystemAsync(string name, byte[] imageBytes)
         {
             if (imageBytes != null)
-            {
-                Stream fs = null;
-                try
-                {                    
-                    fs = mContext.OpenFileOutput(name, FileCreationMode.Private);
-                    {
-                        fs.Write(imageBytes, 0, imageBytes.Length);
-                    }
-                }
-                catch (Exception ex)
+            {                            
+                using (var fs = mContext.OpenFileOutput(name, FileCreationMode.Private))
                 {
-                    Console.WriteLine(ex);
-                }
-                finally
-                {
-                    /*if (fs != null)
-                    {
-                        fs.Close();
-                    }*/
-                }
+                    return fs.WriteAsync(imageBytes, 0, imageBytes.Length);
+                }            
             }
+            return null;
         }
 
         public bool IsFileExists(string filename)

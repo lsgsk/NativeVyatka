@@ -4,7 +4,14 @@
     <string name="app_name">NativeVyatkaAndroid</string>
 
     <!--  авторизация -->
-    <string name="action_sign_in">Авторизовать</string>
+    <string name="prompt_email">Логин</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Авторизоваться</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">Некорректный email</string>
+    <string name="error_incorrect_password">Неверный логин или пароль</string>
+    <string name="error_field_required">Логин обязателен</string>
+    <string name="permission_rationale">Необходимо разрешение на доступ к контактам</string>
 
 
     <!-- списки -->

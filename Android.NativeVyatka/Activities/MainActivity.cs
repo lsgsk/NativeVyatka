@@ -17,15 +17,15 @@ using System.Threading;
 namespace NativeVyatkaAndroid
 {
     [Activity(Label = "MainActivity")]            
-    public class MainActivity : BaseAppCompatActivity, QuestionAlertDialog.IQuestionAlertDialogListener
+    public class MainActivity : BaseAppCompatActivity, NavigationView.IOnNavigationItemSelectedListener, QuestionAlertDialog.IQuestionAlertDialogListener
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Layout_MainActivity);
             FindAndBindViews();
-            if (savedInstanceState == null)
-                SelectItem(Resource.Id.navigation_my_records);
+            //if (savedInstanceState == null)
+            //    SelectItem(Resource.Id.navigation_my_records);
         }
 
         private void FindAndBindViews()
@@ -33,7 +33,9 @@ namespace NativeVyatkaAndroid
             mToolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             mNavigationView = FindViewById<NavigationView>(Resource.Id.navigation_drawer);
+            var fab = (FloatingActionButton)FindViewById(Resource.Id.fabNewPhoto);
             var toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
+
             mDrawerLayout.SetDrawerListener(toggle);
             toggle.SyncState();
             SetSupportActionBar(mToolbar);
@@ -70,7 +72,7 @@ namespace NativeVyatkaAndroid
         {
             switch (view.Id)
             {
-                case Resource.Id.fbNewPhoto:
+                case Resource.Id.fabNewPhoto:
                     AskCamera();
                     break;
             }
@@ -125,7 +127,7 @@ namespace NativeVyatkaAndroid
             {
                 var imagepath = System.IO.Path.GetRandomFileName();
                 var array = await BitmapHelper.ResizeImage(bitmap);
-                new PhotoStorageManager(this).SaveBurialImageToFileSystemAsync(imagepath, array);
+                await new PhotoStorageManager(this).SaveBurialImageToFileSystemAsync(imagepath, array);
                 var unknown = GetString(Resource.String.unknown); 
                 var item = new BurialEntity()
                 {
@@ -145,6 +147,13 @@ namespace NativeVyatkaAndroid
             {
                 Console.WriteLine(ex.ToString());
             }
+        }
+
+        public bool OnNavigationItemSelected(IMenuItem menuItem)
+        {
+            SelectItem(menuItem.ItemId);
+            mDrawerLayout.CloseDrawer(Android.Support.V4.View.GravityCompat.Start);
+            return true;
         }
 
         protected void SelectItem(int itemId)

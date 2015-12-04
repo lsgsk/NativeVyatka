@@ -2,28 +2,22 @@
 using Android.Widget;
 using Android.OS;
 using Android.Views;
+using Android.Support.V7.App;
 
 namespace NativeVyatkaAndroid
 {
-    [Activity(Label = "NativeVyatkaAndroid", MainLauncher = true, Icon = "@mipmap/icon")]
-    public class LoginActivity : BaseAppCompatActivity
+    [Activity(Label = "NativeVyatkaAndroid", MainLauncher = true, Icon = "@mipmap/icon", WindowSoftInputMode = SoftInput.StateAlwaysHidden)]
+    public class LoginActivity : AppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.Layout_LoginActivity);
-            Button button = FindViewById<Button>(Resource.Id.email_sign_in_button);            
-            button.Click += delegate
+            SetContentView(Resource.Layout.Layout_FrameActivity);
+            if (SupportFragmentManager.FindFragmentByTag(LoginFragment.LoginFragmentTag) == null)
             {
-                StartActivity(typeof(MainActivity));
-            };
+                SupportFragmentManager.BeginTransaction().Replace(Resource.Id.content_frame, LoginFragment.NewInstance(), LoginFragment.LoginFragmentTag).Commit();
+            }
         }
-
-
-        private AutoCompleteTextView mEmailView;
-        private EditText mPasswordView;
-        private View mProgressView;
-        private View mLoginFormView;
     }
 }
 
