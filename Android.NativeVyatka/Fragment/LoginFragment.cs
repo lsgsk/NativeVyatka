@@ -12,6 +12,7 @@ using Fragment = Android.Support.V4.App.Fragment;
 using LoaderManager = Android.Support.V4.App.LoaderManager;
 using Loader = Android.Support.V4.Content.Loader;
 using CursorLoader = Android.Support.V4.Content.CursorLoader;
+using Android.Locations;
 
 namespace NativeVyatkaAndroid
 {
@@ -96,6 +97,13 @@ namespace NativeVyatkaAndroid
 
         private void AttemptLogin()
         {
+            var location = new Location();
+
+            FetchAddressIntentService.StartFetchAddressIntentService(
+
+            return;
+
+
             if (mAuthTask != null)
             {
                 return;
