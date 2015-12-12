@@ -232,6 +232,7 @@ namespace NativeVyatkaAndroid
             protected override Java.Lang.Object DoInBackground(params Java.Lang.Object[] native_parms)
             {    
                 Thread.Sleep(500);
+                        //ContentResolver.SetSyncAutomatically(sAccount, AUTHORITY, true);
                 return true;
             }
 
