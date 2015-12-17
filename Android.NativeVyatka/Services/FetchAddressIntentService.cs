@@ -24,7 +24,7 @@ namespace NativeVyatkaAndroid
             // Get the location passed to this service through an extra.
             Location location = intent.GetParcelableExtra(Constants.LOCATION_DATA_EXTRA).JavaCast<Location>();
             var geocoder = new Geocoder(this, Java.Util.Locale.Default);
-            IList<Address> addresses;
+            IList<Address> addresses = null;
             try
             {
                 // In this sample, get just a single address.

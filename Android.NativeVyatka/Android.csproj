@@ -105,10 +105,15 @@
     <Compile Include="Services\BackgroundUploadService.cs" />
     <Compile Include="Fragment\BaseRecyclerFragment.cs" />
     <Compile Include="Utilities\ViewAnimator.cs" />
-    <Compile Include="Fragment\LoginFragment.cs" />
     <Compile Include="Services\FetchAddressIntentService.cs" />
     <Compile Include="Activities\StartupActivity.cs" />
-    <Compile Include="Sync\VyatkaAccount.cs" />
+    <Compile Include="Sync\Authenticator.cs" />
+    <Compile Include="Sync\SyncAccount.cs" />
+    <Compile Include="Sync\RecordsContentProvider.cs" />
+    <Compile Include="Sync\AppAccount.cs" />
+    <Compile Include="Sync\SyncAdapter.cs" />
+    <Compile Include="Sync\SyncService.cs" />
+    <Compile Include="Sync\SyncConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -142,8 +147,10 @@
     <AndroidResource Include="Resources\drawable\drawer_header.jpg" />
     <AndroidResource Include="Resources\drawable\round_point.xml" />
     <AndroidResource Include="Resources\layout\Layout_FrameActivity.axml" />
-    <AndroidResource Include="Resources\layout\Fragment_Login.axml" />
     <AndroidResource Include="Resources\layout\Fragment_Map.axml" />
+    <AndroidResource Include="Resources\xml\authenticator.xml" />
+    <AndroidResource Include="Resources\xml\syncadapter.xml" />
+    <AndroidResource Include="Resources\layout\Layout_LoginActivity.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
