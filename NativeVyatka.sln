@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.NativeVyatka", "Core.NativeVyatka\Core.NativeVyatka.csproj", "{BA664D97-02FF-438C-A0E4-E6DA2BEAD050}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core.NativeVyatka\Core.csproj", "{BA664D97-02FF-438C-A0E4-E6DA2BEAD050}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Android.NativeVyatka", "Android.NativeVyatka\Android.NativeVyatka.csproj", "{B4FE2CCC-87F2-4046-9022-26CFC4FB9F10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Android", "Android.NativeVyatka\Android.csproj", "{B4FE2CCC-87F2-4046-9022-26CFC4FB9F10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Android.Libraries", "Android.Libraries", "{52802D1A-1FCA-44C3-B547-42F481943AB2}"
 EndProject
