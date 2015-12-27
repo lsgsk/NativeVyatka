@@ -79,12 +79,26 @@
     <Reference Include="Xamarin.Android.Support.Design">
       <HintPath>..\packages\Xamarin.Android.Support.Design.23.1.1.0\lib\MonoAndroid403\Xamarin.Android.Support.Design.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.CurrentActivity">
+      <HintPath>..\packages\Plugin.CurrentActivity.1.0.1\lib\MonoAndroid10\Plugin.CurrentActivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Permissions.Abstractions">
+      <HintPath>..\packages\Plugin.Permissions.1.1.3\lib\MonoAndroid10\Plugin.Permissions.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Permissions">
+      <HintPath>..\packages\Plugin.Permissions.1.1.3\lib\MonoAndroid10\Plugin.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Geolocator.Abstractions">
+      <HintPath>..\packages\Xam.Plugin.Geolocator.3.0.3\lib\MonoAndroid10\Plugin.Geolocator.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Geolocator">
+      <HintPath>..\packages\Xam.Plugin.Geolocator.3.0.3\lib\MonoAndroid10\Plugin.Geolocator.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Fragment\ProgressFragment.cs" />
-    <Compile Include="AppAplication.cs" />
     <Compile Include="Activities\LoginActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Fragment\MapFragment.cs" />
@@ -114,6 +128,7 @@
     <Compile Include="Sync\SyncAdapter.cs" />
     <Compile Include="Sync\SyncService.cs" />
     <Compile Include="Sync\SyncConstants.cs" />
+    <Compile Include="MainApplication.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -181,9 +196,9 @@
       <Project>{4630EC95-BA2F-4B3B-8CDE-CCC2D5B9B002}</Project>
       <Name>Picasso</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core.NativeVyatka\Core.csproj">
+    <ProjectReference Include="..\Core.NativeVyatka\NativeVyatka.Core.csproj">
       <Project>{BA664D97-02FF-438C-A0E4-E6DA2BEAD050}</Project>
-      <Name>Core</Name>
+      <Name>NativeVyatka.Core</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
