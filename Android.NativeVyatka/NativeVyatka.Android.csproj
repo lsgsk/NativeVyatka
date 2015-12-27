@@ -16,6 +16,7 @@
     <AssemblyName>NativeVyatkaAndroid</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,6 +28,8 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -36,6 +39,8 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <JavaMaximumHeapSize>2G</JavaMaximumHeapSize>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -94,6 +99,12 @@
     <Reference Include="Plugin.Geolocator">
       <HintPath>..\packages\Xam.Plugin.Geolocator.3.0.3\lib\MonoAndroid10\Plugin.Geolocator.dll</HintPath>
     </Reference>
+    <Reference Include="PCLStorage.Abstractions">
+      <HintPath>..\packages\PCLStorage.1.0.2\lib\monoandroid\PCLStorage.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLStorage">
+      <HintPath>..\packages\PCLStorage.1.0.2\lib\monoandroid\PCLStorage.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -110,9 +121,7 @@
     <Compile Include="Utilities\Adapters\ViewHolders\BurialRecordViewHolder.cs" />
     <Compile Include="Utilities\Adapters\ViewHolders\BaseEventArgs.cs" />
     <Compile Include="Activities\BurialDetailActivity.cs" />
-    <Compile Include="Services\LocationService.cs" />
     <Compile Include="Activities\BaseAppCompatActivity.cs" />
-    <Compile Include="Services\PhotoStorageManager.cs" />
     <Compile Include="Utilities\BitmapHelper.cs" />
     <Compile Include="Dialogs\MessageDialog.cs" />
     <Compile Include="Dialogs\QuestionAlertDialog.cs" />
@@ -129,6 +138,7 @@
     <Compile Include="Sync\SyncService.cs" />
     <Compile Include="Sync\SyncConstants.cs" />
     <Compile Include="MainApplication.cs" />
+    <Compile Include="Utilities\ImageFuctor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -155,7 +165,6 @@
     <AndroidResource Include="Resources\layout\Item_BurialRecord.axml" />
     <AndroidResource Include="Resources\drawable\item_selector_row.xml" />
     <AndroidResource Include="Resources\layout\Layout_MainActivity.axml" />
-    <AndroidResource Include="Resources\layout\Layout_BurialDetailActivity.axml" />
     <AndroidResource Include="Resources\drawable\katya.jpg" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_add_a_photo_white.png" />
     <AndroidResource Include="Resources\layout\View_BurialDetailDescription.axml" />
@@ -166,6 +175,11 @@
     <AndroidResource Include="Resources\xml\authenticator.xml" />
     <AndroidResource Include="Resources\xml\syncadapter.xml" />
     <AndroidResource Include="Resources\layout\Layout_LoginActivity.axml" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_delete_white.png" />
+    <AndroidResource Include="Resources\menu\menu_detailes_bar.xml" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_mode_edit_white.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_send_white.png" />
+    <AndroidResource Include="Resources\layout\Layout_BurialDetailActivity.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
@@ -180,6 +194,7 @@
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Dialogs\" />
     <Folder Include="Sync\" />
+    <Folder Include="Utilities\ Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\SQLitePCL.raw_basic.0.8.4\build\MonoAndroid\SQLitePCL.raw_basic.targets" Condition="Exists('..\packages\SQLitePCL.raw_basic.0.8.4\build\MonoAndroid\SQLitePCL.raw_basic.targets')" />
@@ -199,6 +214,14 @@
     <ProjectReference Include="..\Core.NativeVyatka\NativeVyatka.Core.csproj">
       <Project>{BA664D97-02FF-438C-A0E4-E6DA2BEAD050}</Project>
       <Name>NativeVyatka.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Abstractions\Abstractions.csproj">
+      <Project>{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}</Project>
+      <Name>Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Android.Libraries\FabProgressCircle\FabProgressCircle.csproj">
+      <Project>{653AEC9F-3174-47E3-9805-811725438A13}</Project>
+      <Name>FabProgressCircle</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

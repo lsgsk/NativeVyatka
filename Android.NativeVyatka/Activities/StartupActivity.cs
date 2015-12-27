@@ -50,7 +50,6 @@ namespace NativeVyatkaAndroid
                 CheckAccount();
             }
         }
-
         public const int CREATE_ACCOUNT = 5;
     }
 }

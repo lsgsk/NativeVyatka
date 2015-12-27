@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace NativeVyatkaCore
+namespace Abstractions
 {
     public interface IBurialsManager
     {

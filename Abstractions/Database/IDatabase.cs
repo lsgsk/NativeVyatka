@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace NativeVyatkaCore
+namespace Abstractions
 {
     public interface IDatabase
     {

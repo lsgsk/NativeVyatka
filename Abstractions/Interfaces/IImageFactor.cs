@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace NativeVyatkaCore
+namespace Abstractions
 {
     public interface IImageFactor
     {

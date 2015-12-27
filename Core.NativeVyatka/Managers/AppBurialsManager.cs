@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
-using Microsoft.Practices.Unity;
 using System;
 using System.Threading;
 using System.Diagnostics;
+using Abstractions;
 
 namespace NativeVyatkaCore
 {
@@ -12,15 +12,14 @@ namespace NativeVyatkaCore
         public AppBurialsManager(IDatabase dataBase)
         {   
             this.mDataBase = dataBase;
-            /*#if DEBUG        mDataBase.DeleteAllBurialAsync();            for (int i = 0; i < 10; i++)            {                var item = new BurialEntity() { BirthTime = DateTime.Now, DeathTime = DateTime.Now, Desctiption = "Description" + i, HashId = Guid.NewGuid().ToString(), IsSended = i % 3 == 0, Latitude = 10, Longitude = 10, Name = "Name" + 1 };                mDataBase.InsertBurialAsync(item).Wait();            }            #endif*/
         }
 
-        public async Task<List<BurialEntity>> GetAllBurials(CancellationToken token)
+        public async Task<List<BurialEntity>> GetAllBurials(CancellationToken? token = null)
         {
             try
             {
                 var result = await mDataBase.GetAllBurialAsync();
-                token.ThrowIfCancellationRequested();
+                //token.ThrowIfCancellationRequested();
                 return result;
             }
             catch (OperationCanceledException ex)
@@ -35,12 +34,12 @@ namespace NativeVyatkaCore
             }
         }
 
-        public async Task<List<BurialEntity>> GetUnsendedBurials(CancellationToken token)
+        public async Task<List<BurialEntity>> GetUnsendedBurials(CancellationToken? token = null)
         {
             try
             {
                 var result = await mDataBase.GetAllUnsendedBurialAsync();
-                token.ThrowIfCancellationRequested();
+                //token.ThrowIfCancellationRequested();
                 return result;
             }
             catch (OperationCanceledException ex)
@@ -55,12 +54,12 @@ namespace NativeVyatkaCore
             }
         }
 
-        public async Task<BurialEntity> GetBurial(int id, CancellationToken token)
+        public async Task<BurialEntity> GetBurial(int id, CancellationToken? token = null)
         {
             try
             {
                 var result = await mDataBase.GetBurialAsync(id);
-                token.ThrowIfCancellationRequested();
+                //token.ThrowIfCancellationRequested();
                 return result;
             }
             catch (OperationCanceledException ex)
@@ -75,12 +74,12 @@ namespace NativeVyatkaCore
             }
         }
 
-        public async Task InsertBurial(BurialEntity item, CancellationToken token)
+        public async Task InsertBurial(BurialEntity item, CancellationToken? token = null)
         {
             try
             {
                 await mDataBase.InsertBurialAsync(item);
-                token.ThrowIfCancellationRequested();
+                //token.ThrowIfCancellationRequested();
             }
             catch (OperationCanceledException ex)
             {
@@ -93,7 +92,7 @@ namespace NativeVyatkaCore
             }
         }
 
-        public async Task UpdateSendedBurial(List<BurialEntity> items, CancellationToken token)
+        public async Task UpdateSendedBurial(List<BurialEntity> items, CancellationToken? token = null)
         {
             try
             {
@@ -110,12 +109,12 @@ namespace NativeVyatkaCore
             }
         }
 
-        public Task DeleteBurial(BurialEntity item, CancellationToken token)
+        public Task DeleteBurial(BurialEntity item, CancellationToken? token = null)
         {
             return null;
         }
 
-        public Task UpdateBurial(BurialEntity item, CancellationToken token)
+        public Task UpdateBurial(BurialEntity item, CancellationToken? token = null)
         {
             return null;
         }

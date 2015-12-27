@@ -1,9 +1,9 @@
 ﻿using Android.Widget;
 using Android.Views;
-using NativeVyatkaCore;
 using Android.App;
 using IT.Sephiroth.Android.Library.Picasso;
 using Java.IO;
+using Abstractions;
 
 namespace NativeVyatkaAndroid
 {
@@ -13,8 +13,7 @@ namespace NativeVyatkaAndroid
         public TextView tvDescription { get; private set; }
         public ImageView imgImage { get; private set; }
         public View vIsSended { get; private set; }
-        private PhotoStorageManager mPsm = new PhotoStorageManager(Application.Context);
-
+       
         public void FindViews(View view)
         {
             tvName = view.FindViewById<TextView>(Resource.Id.tvName);
@@ -30,7 +29,7 @@ namespace NativeVyatkaAndroid
             vIsSended.Visibility = item.IsSended ? ViewStates.Invisible : ViewStates.Visible;
             if (item.PicturePath != null)
             {
-                Picasso.With(imgImage.Context).Load(new File(Application.Context.FilesDir.AbsolutePath + "/" +item.PicturePath)).Resize(100, 100).CenterCrop().Into(imgImage);
+                Picasso.With(imgImage.Context).Load(item.PicturePath).Resize(100, 100).CenterCrop().Into(imgImage);
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core
+namespace Abstractions
 {
     public class BurialEntityRequest
     {

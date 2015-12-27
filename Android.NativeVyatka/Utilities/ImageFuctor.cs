@@ -5,8 +5,10 @@ using Java.Interop;
 using Android.Views;
 using System.Threading.Tasks;
 using Abstractions;
+using PCLStorage;
+using NativeVyatkaAndroid;
 
-namespace iLobby.Droid
+namespace NativeVyatkaAndroid
 { 
     public class ImageFactor : IImageFactor
     {

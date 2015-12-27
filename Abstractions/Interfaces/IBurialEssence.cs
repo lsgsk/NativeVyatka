@@ -1,9 +1,8 @@
-﻿using System;
-
-namespace Abstractions
+﻿namespace Abstractions
 {
     public interface IBurialEssence
     {
+        BurialEntity Item { get; }
     }
 }
 

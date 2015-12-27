@@ -12,13 +12,17 @@ using Android.Graphics;
 using System.Threading.Tasks;
 using Android.Support.V7.App;
 using NativeVyatkaCore;
-using System.Threading;
 using Android.Support.V4.View;
 using Android.Content.PM;
+using Plugin.Geolocator;
+using Microsoft.Practices.Unity;
+using Abstractions;
+using Com.Github.Jorgecastilloprz;
+
 
 namespace NativeVyatkaAndroid
 {
-    [Activity(Label = "MainActivity", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]            
+    [Activity(Label = "MainActivity", Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]            
     public class MainActivity : BaseAppCompatActivity, NavigationView.IOnNavigationItemSelectedListener, QuestionAlertDialog.IQuestionAlertDialogListener
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -50,8 +54,10 @@ namespace NativeVyatkaAndroid
             mToolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             mNavigationView = FindViewById<NavigationView>(Resource.Id.navigation_drawer);
-            fabNewPhoto = (FloatingActionButton)FindViewById(Resource.Id.fabNewPhoto);
+            fabNewPhoto = FindViewById<FloatingActionButton>(Resource.Id.fabNewPhoto);
+            fabProgressCircle = FindViewById<FABProgressCircle>(Resource.Id.fabProgressCircle);
             var toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
+
 
             mDrawerLayout.SetDrawerListener(toggle);
             toggle.SyncState();
@@ -113,8 +119,11 @@ namespace NativeVyatkaAndroid
         }
 
         private void OnTakeNewPhoto(object sender, EventArgs e)
-        {
-            if (!mLocalization.GpsStatus)
+        {           
+            if (mSavingPhoto)
+                return;
+
+            if (!CrossGeolocator.Current.IsGeolocationAvailable) //FIXME, то ли проверяю
             {
                 var dialog = QuestionAlertDialog.NewInstance("В настоящее время gps не доступен. Вы действительно хотите добавить запись?", "Внимание", QuestionType.ContinueWithoutGps);
                 dialog.Show(SupportFragmentManager, QuestionAlertDialog.QuestionAlertDialogTag);
@@ -161,30 +170,24 @@ namespace NativeVyatkaAndroid
         private async Task CreateAndSaveNewBurial(Bitmap bitmap)
         {
             try
-            {
-                var imagepath = System.IO.Path.GetRandomFileName() + ".png";
-                var array = await BitmapHelper.ResizeImage(bitmap);
-                await new PhotoStorageManager(this).SaveBurialImageToFileSystemAsync(imagepath, array);
-                var unknown = GetString(Resource.String.unknown); 
-                var item = new BurialEntity()
-                {
-                    HashId = Guid.NewGuid().ToString(),  
-                    Name = "Иванов Сергей Юрьевич",           
-                    Desctiption = "Быстрицкое кладбище. Рядом со входом",
-                    Time = DateTime.UtcNow,             
-                    Latitude = mLocalization.Location.Latitude,             
-                    Longitude = mLocalization.Location.Longitude,                 
-                    PicturePath = imagepath,   
-                    BirthTime = new DateTime(1956, 10, 5),
-                    DeathTime = new DateTime(2004, 5, 9),
-                    IsSended = false
-                };
-                await mBurialsManager.InsertBurial(item, new CancellationToken());
+            {       
+                mSavingPhoto = true;
+                var ct = MainApplication.Container;
+                fabProgressCircle.Show(); 
+                var array = await BitmapHelper.ToByteArray(bitmap);
+                var burial = await BurialEssence.CreateAsync(array, ct.Resolve<IBurialsManager>(),  ct.Resolve<IImageFactor>());
+                ShowSnack("Запись создана");
                 SelectItem(Resource.Id.navigation_my_records);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                ShowSnack("Ошибка создания записи");
+            }
+            finally
+            {
+                fabProgressCircle.Hide();
+                mSavingPhoto = false;
             }
         }
 
@@ -210,7 +213,15 @@ namespace NativeVyatkaAndroid
         protected NavigationView mNavigationView;
         protected Toolbar mToolbar;
         protected FloatingActionButton fabNewPhoto;
-        public const int TAKE_PHOTO = 16188;
+        protected FABProgressCircle fabProgressCircle;
+
+        private bool mSavingPhoto = false;
+
+
+        public const int TAKE_PHOTO = 0;
+        public const int OPEN_BURIAL = 1;
+
+        public const string BURIAL_ACTIVITY_MESSAGE = "burial_activity_message";
     }
 }
 

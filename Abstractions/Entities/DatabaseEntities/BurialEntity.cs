@@ -1,7 +1,7 @@
 ﻿using System;
 using SQLite;
 
-namespace NativeVyatkaCore
+namespace Abstractions
 {
     [Table(BurialEntity.TableName)]
     public class BurialEntity
@@ -44,6 +44,11 @@ namespace NativeVyatkaCore
         /// Долгот а места захоронения
         /// </summary>
         public double Longitude { get; set; }
+        /// <summary>
+        /// Человеческое место съемки
+        /// </summary>
+        /// <value>The adress.</value>
+        public string Address { get; set; }
         /// <summary>
         /// путь к файлу фотографии на устройстве
         /// </summary>

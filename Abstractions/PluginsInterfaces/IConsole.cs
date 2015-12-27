@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iLobby.Portable
+namespace Abstractions
 {
     public interface IConsole
     {

@@ -28,6 +28,7 @@ namespace NativeVyatkaAndroid
             carmaMap = mContentView.FindViewById<MapView>(Resource.Id.mapView);
             carmaMap.OnCreate(savedInstanceState); 
             carmaMap.GetMapAsync(this);
+            Refresher.Enabled = false;
         }
 
         public override async void OnActivityCreated(Bundle savedInstanceState)
@@ -77,9 +78,12 @@ namespace NativeVyatkaAndroid
                 var locMan = Activity.GetSystemService(Context.LocationService) as LocationManager;
                 var crit = new Criteria();
                 Location loc = locMan.GetLastKnownLocation(locMan.GetBestProvider(crit, false));
-                CameraPosition camPos = new CameraPosition.Builder().Target(new LatLng(loc.Latitude, loc.Longitude)).Zoom(15f).Build();
-                CameraUpdate camUpdate = CameraUpdateFactory.NewCameraPosition(camPos);
-                carmaGoogleMap.MoveCamera(camUpdate);
+                if (loc != null)
+                {
+                    CameraPosition camPos = new CameraPosition.Builder().Target(new LatLng(loc.Latitude, loc.Longitude)).Zoom(15f).Build();
+                    CameraUpdate camUpdate = CameraUpdateFactory.NewCameraPosition(camPos);
+                    carmaGoogleMap.MoveCamera(camUpdate);
+                }
                 SetMarkers();              
             }
         }

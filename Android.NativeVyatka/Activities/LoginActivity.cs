@@ -18,7 +18,7 @@ using System.Threading;
 
 namespace NativeVyatkaAndroid
 {
-    [Activity(Label = "NativeVyatkaAndroid", MainLauncher = true, Icon = "@mipmap/icon", WindowSoftInputMode = SoftInput.StateAlwaysHidden, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
+    [Activity(Label = "NativeVyatkaAndroid", Icon = "@mipmap/icon", Theme = "@style/AppTheme", WindowSoftInputMode = SoftInput.StateAlwaysHidden, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
     public class LoginActivity : AccountAuthenticatorActivity, LoaderManager.ILoaderCallbacks
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -251,8 +251,8 @@ namespace NativeVyatkaAndroid
             {
                 if (mActivity!= null && !mActivity.IsFinishing)
                 {
-                    mActivity.mAuthTask = null;
-                    mActivity.ShowProgress(false);
+                    //mActivity.mAuthTask = null;
+                    //mActivity.ShowProgress(false);
                     mActivity.SetResult(Result.Ok);
                     mActivity.Finish();
                 }

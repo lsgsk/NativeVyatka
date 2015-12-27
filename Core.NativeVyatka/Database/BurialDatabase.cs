@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Abstractions;
 
 namespace NativeVyatkaCore
 {

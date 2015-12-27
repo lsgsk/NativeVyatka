@@ -25,7 +25,7 @@ namespace Plugins
             #if PORTABLE
             return null;
             #else
-            return new ConsoleRealization();
+            return new FetchAddressRealization();
             #endif
         }
 

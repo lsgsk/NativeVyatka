@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core.NativeVyatka\Core.csproj", "{BA664D97-02FF-438C-A0E4-E6DA2BEAD050}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeVyatka.Core", "Core.NativeVyatka\NativeVyatka.Core.csproj", "{BA664D97-02FF-438C-A0E4-E6DA2BEAD050}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Android", "Android.NativeVyatka\Android.csproj", "{B4FE2CCC-87F2-4046-9022-26CFC4FB9F10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeVyatka.Android", "Android.NativeVyatka\NativeVyatka.Android.csproj", "{B4FE2CCC-87F2-4046-9022-26CFC4FB9F10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Android.Libraries", "Android.Libraries", "{52802D1A-1FCA-44C3-B547-42F481943AB2}"
 EndProject
@@ -13,16 +13,38 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircularImageView", "Androi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Picasso", "Android.Libraries\Picasso\Picasso.csproj", "{4630EC95-BA2F-4B3B-8CDE-CCC2D5B9B002}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FabProgressCircle", "Android.Libraries\FabProgressCircle\FabProgressCircle.csproj", "{653AEC9F-3174-47E3-9805-811725438A13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{136F5CF1-3A8D-436A-B95F-33ACCC9F0AB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins", "Plugins\Plugins\Plugins.csproj", "{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.Android", "Plugins\Plugin.Android\Plugins.Android.csproj", "{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abstractions", "Abstractions\Abstractions.csproj", "{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4630EC95-BA2F-4B3B-8CDE-CCC2D5B9B002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4630EC95-BA2F-4B3B-8CDE-CCC2D5B9B002}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4630EC95-BA2F-4B3B-8CDE-CCC2D5B9B002}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4630EC95-BA2F-4B3B-8CDE-CCC2D5B9B002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{653AEC9F-3174-47E3-9805-811725438A13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{653AEC9F-3174-47E3-9805-811725438A13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{653AEC9F-3174-47E3-9805-811725438A13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{653AEC9F-3174-47E3-9805-811725438A13}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94251AC3-7C95-41F4-8672-537E8F383AFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{94251AC3-7C95-41F4-8672-537E8F383AFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94251AC3-7C95-41F4-8672-537E8F383AFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,10 +61,17 @@ Global
 		{BA664D97-02FF-438C-A0E4-E6DA2BEAD050}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA664D97-02FF-438C-A0E4-E6DA2BEAD050}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA664D97-02FF-438C-A0E4-E6DA2BEAD050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9D7C697C-F432-467E-8DCF-2A214AFE99DC} = {52802D1A-1FCA-44C3-B547-42F481943AB2}
 		{94251AC3-7C95-41F4-8672-537E8F383AFD} = {52802D1A-1FCA-44C3-B547-42F481943AB2}
 		{4630EC95-BA2F-4B3B-8CDE-CCC2D5B9B002} = {52802D1A-1FCA-44C3-B547-42F481943AB2}
+		{653AEC9F-3174-47E3-9805-811725438A13} = {52802D1A-1FCA-44C3-B547-42F481943AB2}
+		{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F} = {136F5CF1-3A8D-436A-B95F-33ACCC9F0AB8}
+		{E139C75A-0258-4C7D-9CC9-69AFA368A2DA} = {136F5CF1-3A8D-436A-B95F-33ACCC9F0AB8}
 	EndGlobalSection
 EndGlobal

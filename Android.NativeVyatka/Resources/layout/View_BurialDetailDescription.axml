@@ -6,107 +6,157 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:padding="@dimen/base_margin">
-        <LinearLayout
+        android:orientation="vertical">
+    <!-- ОПИСАНИЕ -->
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_columnSpan="2">
-            <TextView
-                android:id="@+id/tvDesc"
+            android:layout_margin="@dimen/base_margin"
+            app:cardElevation="@dimen/base_card_elevation"
+            app:cardCornerRadius="@dimen/base_card_radius">
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/base_margin"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="27 age, female sbdhf ghrgfj gdfjhgdsjfggf dgsgdfhgjfgsdfds ff adgf gadfgdahf gd hdas flgdsjfdsj fgafsd fd dsa hsdjshf dsjhfjaffgafg" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Описание захоронения"
-                android:layout_margin="@dimen/base_margin" />
-        </LinearLayout>
-        <ImageView
-            android:id="@+id/imgLivingTime"
-            android:src="@drawable/Icon"
-            android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:layout_marginRight="@dimen/base_margin">
+                <TextView
+                    android:id="@+id/tvDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/base_margin"
+                    android:layout_marginRight="@dimen/base_margin"
+                    android:layout_marginLeft="@dimen/base_margin"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="27 age, female sbdhf ghrgfj gdfjhgdsjfggf dgsgdfhgjfgsdfds ff adgf gadfgdahf gd hdas flgdsjfdsj fgafsd fd dsa hsdjshf dsjhfjaffgafg" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Описание захоронения"
+                    android:layout_margin="@dimen/base_margin" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    <!-- ПРОЧИЕ ДАННЫЕ О ЗАХОРОНЕНИЯ -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/base_margin"
-            android:layout_gravity="center_vertical" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
-            <TextView
-                android:id="@+id/tvLivingTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Kazan, Republic of Tatarstan" />
-            <TextView
-                android:id="@+id/tvLivingTimeDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Годы жизни"
-                android:layout_margin="@dimen/base_margin" />
-        </LinearLayout>
-        <ImageView
-            android:id="@+id/imgPlace"
-            android:src="@drawable/Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/base_margin"
-            android:layout_gravity="center_vertical" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
-            <TextView
-                android:id="@+id/tvPlace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Kazan, Republic of Tatarstan"
-                android:layout_gravity="center_vertical" />
-            <TextView
-                android:id="@+id/tvPlaceDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Место съемки"
-                android:layout_margin="@dimen/base_margin" />
-        </LinearLayout>
-        <ImageView
-            android:id="@+id/imgPhotoTime"
-            android:src="@drawable/Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/base_margin" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
-            <TextView
-                android:id="@+id/tvPhotoTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Kazan, Republic of Tatarstan" />
-            <TextView
-                android:id="@+id/tvPhotoTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_margin="@dimen/base_margin"
-                android:text="Дата съемки" />
-        </LinearLayout>
-    </GridLayout>
+            app:cardElevation="@dimen/base_card_elevation"
+            app:cardCornerRadius="@dimen/base_card_radius">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/base_margin"
+                    android:layout_alignParentLeft="true">
+                    <ImageView
+                        android:src="@drawable/Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:layout_gravity="center_vertical" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/base_margin"
+                        android:layout_marginRight="@dimen/base_margin">
+                        <TextView
+                            android:id="@+id/tvLivingTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Kazan, Republic of Tatarstan" />
+                        <TextView
+                            android:id="@+id/tvLivingTimeDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Годы жизни"
+                            android:layout_margin="@dimen/base_margin" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/base_margin"
+                    android:layout_alignParentLeft="true">
+                    <ImageView
+                        android:src="@drawable/Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:layout_gravity="center_vertical" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/base_margin"
+                        android:layout_marginRight="@dimen/base_margin">
+                        <TextView
+                            android:id="@+id/tvPlace"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Kazan, Republic of Tatarstan"
+                            android:layout_gravity="center_vertical" />
+                        <TextView
+                            android:id="@+id/tvPlaceDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Место съемки"
+                            android:layout_margin="@dimen/base_margin" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/base_margin"
+                    android:layout_alignParentLeft="true">
+                    <ImageView
+                        android:src="@drawable/Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/base_margin"
+                        android:layout_gravity="center_vertical" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/base_margin"
+                        android:layout_marginRight="@dimen/base_margin">
+                        <TextView
+                            android:id="@+id/tvPhotoTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Kazan, Republic of Tatarstan" />
+                        <TextView
+                            android:id="@+id/tvPhotoTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_margin="@dimen/base_margin"
+                            android:text="Дата съемки" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    <!-- ДАННЫЕ О СЪЕМКЕ -->
+    </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

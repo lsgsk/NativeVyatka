@@ -4,6 +4,11 @@ using Android.App;
 using Android.OS;
 using Android.Runtime;
 using Plugin.CurrentActivity;
+using Microsoft.Practices.Unity;
+using Abstractions;
+using NativeVyatkaCore;
+using System.IO;
+using Android.Content;
 
 namespace NativeVyatkaAndroid
 {
@@ -11,16 +16,24 @@ namespace NativeVyatkaAndroid
     [Application]
     public class MainApplication : Application, Application.IActivityLifecycleCallbacks
     {
-        public MainApplication(IntPtr handle, JniHandleOwnership transer)
-          :base(handle, transer)
-        {
+        public static UnityContainer Container;
+
+        public MainApplication(IntPtr handle, JniHandleOwnership transer):base(handle, transer)
+        {       
+            
         }
 
         public override void OnCreate()
         {
             base.OnCreate();
             RegisterActivityLifecycleCallbacks(this);
-            //A great place to initialize Xamarin.Insights and Dependency Services!
+            Container = new UnityContainer();           
+            string dbPath = Path.Combine(System.Environment.GetFolderPath (System.Environment.SpecialFolder.Personal),"burials.db3");
+            Container.RegisterInstance<IDatabase>(new BurialDatabase(dbPath));
+            Container.RegisterType<IBurialsManager, AppBurialsManager>();
+            Container.RegisterType<IImageFactor, ImageFactor>();  
+            Container.RegisterType<IBurialEssence, BurialEssence>();
+            Container.RegisterInstance<Context>(ApplicationContext);
         }
 
         public override void OnTerminate()

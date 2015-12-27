@@ -1,33 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Support.Design.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
-using Android.Support.V7.App;
-using Android.Support.V4.App;
 using IT.Sephiroth.Android.Library.Picasso;
-using Java.IO;
 using System.Threading.Tasks;
 using Android.Support.V4.Widget;
+using Android.Content.PM;
+using NativeVyatkaCore;
+using Microsoft.Practices.Unity;
+using Abstractions;
+using Android.Views.Animations;
+using Android.Graphics;
 
 namespace NativeVyatkaAndroid
 {
-    [Activity(Label = "BurialDetailActivity")]            
+    [Activity(Label = "BurialDetailActivity", Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]            
     public class BurialDetailActivity : BaseAppCompatActivity
     {
         protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Layout_BurialDetailActivity);
-            await FindAndBindViews(Intent.GetIntExtra(BURIAL_ID, -1));
+            var id = Intent.GetIntExtra(BURIAL_ID, -1);
+            if (id == -1)
+            {
+                SetResult(Result.Canceled);
+                Intent.PutExtra(MainActivity.BURIAL_ACTIVITY_MESSAGE, "Ошибка открытия, неверный идентификатор");
+                Finish();
+                return;
+            }
+            FindAndBindViews();
+            await InitBurial(id);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -37,19 +43,23 @@ namespace NativeVyatkaAndroid
                 case Android.Resource.Id.Home:
                     OnBackPressed();
                     return true;
+                case Resource.Id.action_delete:
+                    return true;
+                case Resource.Id.action_edit:
+                    return true;
                 default:
                     return base.OnOptionsItemSelected(item);
             }
         }
 
-        private async Task FindAndBindViews(int id)
+        public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            if (id == -1)
-            {
-                Finish();
-                return;
-            }
+            MenuInflater.Inflate(Resource.Menu.menu_detailes_bar,menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
 
+        private void FindAndBindViews()
+        {          
             var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             var collapsingToolbarLayout = FindViewById<CollapsingToolbarLayout>(Resource.Id.collapsing_toolbar);
             var fabChangePhoto = FindViewById<FloatingActionButton>(Resource.Id.fabChangePhoto);
@@ -58,23 +68,27 @@ namespace NativeVyatkaAndroid
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.Title = "";
             //collapsingToolbarLayout.SetTitle(toolbar.Title);
-            collapsingToolbarLayout.SetCollapsedTitleTextColor(Resources.GetColor(Android.Resource.Color.White)); 
+            collapsingToolbarLayout.SetCollapsedTitleTextColor(Color.White); 
             collapsingToolbarLayout.SetExpandedTitleColor(Resources.GetColor(Resource.Color.color_accent));
 
+            imgPhoto = FindViewById<ImageView>(Resource.Id.image);
+            tvDesc = FindViewById<TextView>(Resource.Id.tvDesc);
+            tvLivingTime = FindViewById<TextView>(Resource.Id.tvLivingTime);
+            tvPlace = FindViewById<TextView>(Resource.Id.tvPlace);
+            tvPhotoTime = FindViewById<TextView>(Resource.Id.tvPhotoTime);
+            nestedscroll = FindViewById<NestedScrollView>(Resource.Id.nestedscroll); 
+            rlProgressPanel = FindViewById<RelativeLayout>(Resource.Id.rlProgressPanel);
+        }
 
-            var imgPhoto = FindViewById<ImageView>(Resource.Id.image);
-            var tvDesc = FindViewById<TextView>(Resource.Id.tvDesc);
-            var tvLivingTime = FindViewById<TextView>(Resource.Id.tvLivingTime);
-            var tvPlace = FindViewById<TextView>(Resource.Id.tvPlace);
-            var tvPhotoTime = FindViewById<TextView>(Resource.Id.tvPhotoTime);
-            var nestedscroll = FindViewById<NestedScrollView>(Resource.Id.nestedscroll);
+        private async Task InitBurial(int id)
+        {
+            var ct = MainApplication.Container;
+            mBurial = await BurialEssence.GetAsync(id, ct.Resolve<IBurialsManager>(),  ct.Resolve<IImageFactor>());
+            var item = mBurial.Item;
+            SupportActionBar.Title = item.Name;
+            Picasso.With(Application.Context).Load(item.PicturePath).Into(imgPhoto);
 
-            var item = await mBurialsManager.GetBurial(id, new System.Threading.CancellationToken());
-            SupportActionBar.Title = item.Name;
-            Picasso.With(Application.Context).Load(new File(Application.Context.FilesDir.AbsolutePath + "/" + item.PicturePath)).Resize(100, 100).CenterCrop().Into(imgPhoto);
-            SupportActionBar.Title = item.Name;
-            //collapsingToolbarLayout.Title = item.Name;
-            tvDesc.Text = item.Desctiption;
+            tvDesc.Text = string.IsNullOrEmpty(item.Desctiption) ? "Нет описания" : item.Desctiption;
             if (!item.BirthTime.HasValue && !item.DeathTime.HasValue)
             {
                 tvLivingTime.Text = GetString(Resource.String.desciption_unknown);
@@ -83,11 +97,30 @@ namespace NativeVyatkaAndroid
             {
                 var start = (item.BirthTime.HasValue) ? item.BirthTime.Value.ToShortDateString() : GetString(Resource.String.desciption_unknown);
                 var finish = item.DeathTime.HasValue ? item.DeathTime.Value.ToShortDateString() : GetString(Resource.String.desciption_unknown);
-                tvDesc.Text = string.Format("{0} - {1}", start, finish);
-            }  
-            tvPlace.Text = "Vjcrdf";
-            tvPhotoTime.Text = item.Time.ToLongDateString();           
+                tvLivingTime.Text = string.Format("{0} - {1}", start, finish);
+            } 
+            if (string.IsNullOrEmpty(item.Address) && item.Longitude * item.Latitude == 0)
+            {
+                tvPlace.Text = "Место съемки неизвестно";
+            }
+            else
+            {
+                tvPlace.Text = string.Format("{0} {1}", item.Address, (item.Longitude * item.Latitude != 0) ? (item.Longitude + "/" + item.Latitude) : string.Empty);
+            }
+            tvPhotoTime.Text = item.Time.ToLongDateString(); 
+            rlProgressPanel.StartAnimation(AnimationUtils.LoadAnimation(this, Android.Resource.Animation.FadeOut));
+            rlProgressPanel.Visibility = ViewStates.Gone;
         }
+
+        private BurialEssence mBurial;
+
+        private ImageView imgPhoto;
+        private TextView tvDesc;
+        private TextView tvLivingTime;
+        private TextView tvPlace;
+        private TextView tvPhotoTime;
+        private NestedScrollView nestedscroll;
+        private RelativeLayout rlProgressPanel;
 
         public const string BURIAL_ID = "burial_id";
     }

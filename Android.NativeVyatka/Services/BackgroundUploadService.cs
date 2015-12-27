@@ -5,6 +5,7 @@ using NativeVyatkaCore;
 using Microsoft.Practices.Unity;
 using System.Threading;
 using System.Net;
+using Abstractions;
 
 namespace NativeVyatkaAndroid
 {
@@ -19,8 +20,8 @@ namespace NativeVyatkaAndroid
 
         public BackgroundUploadService() : base("BackgroundUploadService")
         {
-            mBurialManager = AppApplication.Container.Resolve<IBurialsManager>();
-            mUploaderManager = AppApplication.Container.Resolve<IUploaderManager>();
+            mBurialManager = MainApplication.Container.Resolve<IBurialsManager>();
+            mUploaderManager = MainApplication.Container.Resolve<IUploaderManager>();
         }
 
         protected override async void OnHandleIntent(Intent intent)

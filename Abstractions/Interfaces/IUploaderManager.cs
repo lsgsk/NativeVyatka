@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NativeVyatkaCore
+﻿namespace Abstractions
 {
     public interface IUploaderManager
     {

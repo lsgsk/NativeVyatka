@@ -16,6 +16,7 @@ using Android.Support.V7.Widget;
 using NativeVyatkaCore;
 using Microsoft.Practices.Unity;
 using System.Threading.Tasks;
+using Abstractions;
 
 namespace NativeVyatkaAndroid
 {
@@ -31,7 +32,7 @@ namespace NativeVyatkaAndroid
         {
             base.OnCreate(savedInstanceState);
             SetHasOptionsMenu(true);
-            mBurialManager = AppApplication.Container.Resolve<IBurialsManager>();
+            mBurialManager = MainApplication.Container.Resolve<IBurialsManager>();
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -79,21 +80,20 @@ namespace NativeVyatkaAndroid
             }
             catch
             {
-                ShowErrorAction();
+                SetContentEmpty(true);
+                SetContentShown(true);  
+            }
+            finally
+            {
+                Refresher.Refreshing = false;
             }
         }
 
         private void BurialRecordItemClick (object sender, BaseEventArgs<BurialEntity> e)
         {
-            var intent = new Intent(this.Activity, typeof(BurialDetailActivity));
+            var intent = new Intent(Activity, typeof(BurialDetailActivity));
             intent.PutExtra(BurialDetailActivity.BURIAL_ID, e.Item.Id);
-            StartActivity(intent);
-        }
-
-        private void ShowErrorAction()
-        {
-            SetContentEmpty(true);
-            SetContentShown(true);  
+            StartActivityForResult(intent, MainActivity.OPEN_BURIAL);
         }
 
         public override void OnPrepareOptionsMenu(IMenu menu)
