@@ -50,14 +50,10 @@ namespace NativeVyatkaCore
         {
             var position = await GetGeoPosition();
             Item.HashId = Guid.NewGuid().ToString();
-            Item.Name = "Иванов Сергей Юрьевич";     
-            Item.Desctiption = "Быстрицкое кладбище. Рядом со входом";
             Item.Time = DateTime.UtcNow;
             Item.Latitude = position.Latitude;      
             Item.Longitude = position.Longitude;
             Item.PicturePath = mImageFactor.GetImagePath(name);
-            Item.BirthTime = new DateTime(1956, 10, 5);
-            Item.DeathTime = new DateTime(2004, 5, 9);
             Item.IsSended = false;           
         }
 

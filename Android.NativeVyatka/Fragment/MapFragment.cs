@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Android.Locations;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
+using Abstractions;
+using Microsoft.Practices.Unity;
 
 namespace NativeVyatkaAndroid
 {
@@ -20,6 +22,12 @@ namespace NativeVyatkaAndroid
         {
             mContentView = inflater.Inflate(Resource.Layout.Fragment_Map, container, false);
             return base.OnCreateView(inflater, container, savedInstanceState);
+        }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            mBurialManager = MainApplication.Container.Resolve<IBurialsManager>();
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
@@ -66,8 +74,6 @@ namespace NativeVyatkaAndroid
         {
             carmaGoogleMap = googleMap;
             carmaGoogleMap.MyLocationEnabled = true;
-            carmaGoogleMap.MarkerClick -= MapClick;
-            carmaGoogleMap.MarkerClick += MapClick;
             moveMapToMyLocation();
         }
 
@@ -88,20 +94,22 @@ namespace NativeVyatkaAndroid
             }
         }
 
-        private void SetMarkers()
+        public async Task UpdatePoints()
         {
-            /*var collection = CoreFacade.Instance.RequestMap(true);
+            await SetMarkers();
+        }
+
+        private async Task SetMarkers()
+        {
+            carmaGoogleMap.Clear();
+            var collection = await mBurialManager.GetAllBurials();
             foreach (var item in collection)
             {
                 var marker = new MarkerOptions();
-                marker.SetPosition(new LatLng(item.Location.Latitude, item.Location.Longitude));
-                marker.SetIcon(BitmapDescriptorFactory.FromBitmap(GetCircle()));
-
-                marker.SetSnippet("asd");
-                marker.SetTitle("qwe");
-
+                marker.SetPosition(new LatLng(item.Latitude, item.Longitude));
+                marker.SetTitle(item.Name);
                 carmaGoogleMap.AddMarker(marker); 
-            }*/
+            }
         }
 
         private static Bitmap GetCircle()
@@ -185,6 +193,7 @@ namespace NativeVyatkaAndroid
         private MapView carmaMap;
         private GoogleMap carmaGoogleMap;
         protected View mContentView;
+        private IBurialsManager mBurialManager;
         public const string MapFragmentTag = "MapFragmentTag";
     }
 }

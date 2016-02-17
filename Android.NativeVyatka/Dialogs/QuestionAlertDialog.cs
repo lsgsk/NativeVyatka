@@ -3,18 +3,9 @@ using AlertDialog = Android.Support.V7.App.AlertDialog;
 using Android.App;
 using Android.OS;
 using Android.Content;
-using Android.Views;
-using Android.Widget;
-using Android.Util;
 
 namespace NativeVyatkaAndroid
 {
-    public enum QuestionType
-    {
-        ContinueWithoutGps
-    }
-
-
     public class QuestionAlertDialog : DialogFragment
     {
         public static QuestionAlertDialog NewInstance(int message, int title, QuestionType type)
@@ -75,12 +66,6 @@ namespace NativeVyatkaAndroid
             listener = (IQuestionAlertDialogListener)context;
         }
 
-        private IQuestionAlertDialogListener listener;
-        public const string QuestionAlertDialogTag = "QuestionAlertDialogTag";
-        private const string MESSAGE = "message";
-        private const string TITLE = "title";
-        private const string TYPE = "type";
-
         private string Message
         {
             get
@@ -105,11 +90,23 @@ namespace NativeVyatkaAndroid
             }
         }
 
-        public interface IQuestionAlertDialogListener
-        {
-            void OnDialogPositiveClick(QuestionType type);
-            void OnDialogNegitiveClick(QuestionType type);
-        }
+        private IQuestionAlertDialogListener listener;
+        public const string QuestionAlertDialogTag = "QuestionAlertDialogTag";
+        private const string MESSAGE = "message";
+        private const string TITLE = "title";
+        private const string TYPE = "type";
+    }
+
+    public interface IQuestionAlertDialogListener
+    {
+        void OnDialogPositiveClick(QuestionType type);
+        void OnDialogNegitiveClick(QuestionType type);
+    }
+
+    public enum QuestionType
+    {
+        ContinueWithoutGps,
+        DeleteRecord
     }
 }
 

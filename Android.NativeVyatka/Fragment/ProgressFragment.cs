@@ -1,10 +1,10 @@
 ﻿using System;
-using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using Android.Support.V4.Widget;
 using Android.Views.Animations;
+using Android.Support.V4.App;
 
 namespace NativeVyatkaAndroid
 {
@@ -36,6 +36,11 @@ namespace NativeVyatkaAndroid
             mIsContentEmpty = false;
             mProgressContainer = mContentContainer = mContentView = mEmptyView = null;
             base.OnDestroyView();
+        }
+
+        public override void OnActivityResult(int requestCode, int resultCode, Android.Content.Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
         }
 
         public View ContentView

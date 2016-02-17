@@ -14,7 +14,7 @@ namespace NativeVyatkaAndroid
         public static void StartFetchAddressIntentService(Location location) 
         {
             var intent = new Intent(Application.Context, typeof(FetchAddressIntentService));
-            intent.PutExtra(Constants.LOCATION_DATA_EXTRA, location);
+            intent.PutExtra(FetchAddressConstants.LOCATION_DATA_EXTRA, location);
             Application.Context.StartService(intent);
         }
 
@@ -22,7 +22,7 @@ namespace NativeVyatkaAndroid
         {
             String errorMessage = "";
             // Get the location passed to this service through an extra.
-            Location location = intent.GetParcelableExtra(Constants.LOCATION_DATA_EXTRA).JavaCast<Location>();
+            Location location = intent.GetParcelableExtra(FetchAddressConstants.LOCATION_DATA_EXTRA).JavaCast<Location>();
             var geocoder = new Geocoder(this, Java.Util.Locale.Default);
             IList<Address> addresses = null;
             try
@@ -50,7 +50,7 @@ namespace NativeVyatkaAndroid
                 {
                     Console.WriteLine("no_address_found");
                 }
-                deliverResultToReceiver(Constants.FAILURE_RESULT, errorMessage);
+                deliverResultToReceiver(FetchAddressConstants.FAILURE_RESULT, errorMessage);
             }
             else
             {
@@ -64,14 +64,14 @@ namespace NativeVyatkaAndroid
                     addressFragments.Add(address.GetAddressLine(i));
                 }
                 Console.WriteLine("address_found");
-                deliverResultToReceiver(Constants.SUCCESS_RESULT,TextUtils.Join(Java.Lang.JavaSystem.GetProperty("line.separator"), addressFragments));
+                deliverResultToReceiver(FetchAddressConstants.SUCCESS_RESULT,TextUtils.Join(Java.Lang.JavaSystem.GetProperty("line.separator"), addressFragments));
             }
         }
         private void deliverResultToReceiver(int resultCode, String message) {
         }
-    }
+    
 
-    public static class Constants
+    public static class FetchAddressConstants
     {
         public const int SUCCESS_RESULT = 0;
         public const int FAILURE_RESULT = 1;
@@ -79,6 +79,7 @@ namespace NativeVyatkaAndroid
         public const string RECEIVER = PACKAGE_NAME + ".RECEIVER";
         public const string RESULT_DATA_KEY = PACKAGE_NAME + ".RESULT_DATA_KEY";
         public const string LOCATION_DATA_EXTRA = PACKAGE_NAME + ".LOCATION_DATA_EXTRA";
+    }
     }
 }
 

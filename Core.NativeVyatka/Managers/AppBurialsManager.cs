@@ -109,14 +109,38 @@ namespace NativeVyatkaCore
             }
         }
 
-        public Task DeleteBurial(BurialEntity item, CancellationToken? token = null)
+        public async Task DeleteBurial(BurialEntity item, CancellationToken? token = null)
         {
-            return null;
+            try
+            {
+                await mDataBase.DeleteBurialAsync(item);
+            }
+            catch (OperationCanceledException ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                throw;
+            }
         }
 
-        public Task UpdateBurial(BurialEntity item, CancellationToken? token = null)
+        public async Task UpdateBurial(BurialEntity item, CancellationToken? token = null)
         {
-            return null;
+            try
+            {
+                await mDataBase.InsertOrReplaceBurialAsync(item);
+            }
+            catch (OperationCanceledException ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                throw;
+            }
         }
 
         public IDatabase mDataBase { get; set; }

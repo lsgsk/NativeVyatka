@@ -8,12 +8,12 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 using IT.Sephiroth.Android.Library.Picasso;
 using System.Threading.Tasks;
 using Android.Support.V4.Widget;
-using Android.Content.PM;
 using NativeVyatkaCore;
 using Microsoft.Practices.Unity;
 using Abstractions;
 using Android.Views.Animations;
 using Android.Graphics;
+using Android.Content.PM;
 
 namespace NativeVyatkaAndroid
 {
@@ -22,18 +22,18 @@ namespace NativeVyatkaAndroid
     {
         protected async override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.Layout_BurialDetailActivity);
-            var id = Intent.GetIntExtra(BURIAL_ID, -1);
-            if (id == -1)
-            {
-                SetResult(Result.Canceled);
-                Intent.PutExtra(MainActivity.BURIAL_ACTIVITY_MESSAGE, "Ошибка открытия, неверный идентификатор");
-                Finish();
-                return;
+            base.OnCreate(savedInstanceState);          
+            var id = Intent.GetIntExtra(Constants.BURIAL_ID, -1);
+            if (id != -1)
+            {               
+                FindAndBindViews();
+                await InitBurial(id);
             }
-            FindAndBindViews();
-            await InitBurial(id);
+            else
+            {
+                Intent.PutExtra(Constants.BURIAL_RESULT_MESSAGE, "Ошибка открытия, неверный идентификатор");
+                Finish();
+            }
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -54,12 +54,13 @@ namespace NativeVyatkaAndroid
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.menu_detailes_bar,menu);
+            MenuInflater.Inflate(Resource.Menu.menu_detailes_bar, menu);
             return base.OnCreateOptionsMenu(menu);
         }
 
         private void FindAndBindViews()
         {          
+            SetContentView(Resource.Layout.Layout_BurialDetailActivity);
             var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             var collapsingToolbarLayout = FindViewById<CollapsingToolbarLayout>(Resource.Id.collapsing_toolbar);
             var fabChangePhoto = FindViewById<FloatingActionButton>(Resource.Id.fabChangePhoto);
@@ -83,7 +84,7 @@ namespace NativeVyatkaAndroid
         private async Task InitBurial(int id)
         {
             var ct = MainApplication.Container;
-            mBurial = await BurialEssence.GetAsync(id, ct.Resolve<IBurialsManager>(),  ct.Resolve<IImageFactor>());
+            mBurial = await BurialEssence.GetAsync(id, ct.Resolve<IBurialsManager>(), ct.Resolve<IImageFactor>());
             var item = mBurial.Item;
             SupportActionBar.Title = item.Name;
             Picasso.With(Application.Context).Load(item.PicturePath).Into(imgPhoto);
@@ -122,7 +123,6 @@ namespace NativeVyatkaAndroid
         private NestedScrollView nestedscroll;
         private RelativeLayout rlProgressPanel;
 
-        public const string BURIAL_ID = "burial_id";
     }
 }
 

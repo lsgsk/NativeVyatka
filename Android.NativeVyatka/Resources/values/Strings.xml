@@ -38,4 +38,9 @@
     <string name="navigation_additional">Дополнительно</string>
     <string name="navigation_settings">Настройки</string>
     <string name="navigation_about">О программе</string>
+
+
+    <!-- Диалоги -->
+    <string name="dialogs_loadings">Загрузка...</string>
+
 </resources>

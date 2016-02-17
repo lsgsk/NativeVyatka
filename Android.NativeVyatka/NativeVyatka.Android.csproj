@@ -16,7 +16,6 @@
     <AssemblyName>NativeVyatkaAndroid</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
-    <AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +29,7 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -41,6 +41,7 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <AndroidSupportedAbis>armeabi;armeabi-v7a</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -53,19 +54,7 @@
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\packages\Unity.4.0.1\lib\portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="SQLite-net">
-      <HintPath>..\packages\sqlite-net-pcl.1.0.11\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Android.Export" />
-    <Reference Include="Xamarin.GooglePlayServices.Basement">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Basement.27.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Basement.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.Base">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Base.27.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.Maps">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Maps.27.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Maps.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\packages\Xamarin.Android.Support.v4.23.1.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
@@ -87,12 +76,6 @@
     <Reference Include="Plugin.CurrentActivity">
       <HintPath>..\packages\Plugin.CurrentActivity.1.0.1\lib\MonoAndroid10\Plugin.CurrentActivity.dll</HintPath>
     </Reference>
-    <Reference Include="Plugin.Geolocator.Abstractions">
-      <HintPath>..\packages\Xam.Plugin.Geolocator.3.0.3\lib\MonoAndroid10\Plugin.Geolocator.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.Geolocator">
-      <HintPath>..\packages\Xam.Plugin.Geolocator.3.0.3\lib\MonoAndroid10\Plugin.Geolocator.dll</HintPath>
-    </Reference>
     <Reference Include="PCLStorage.Abstractions">
       <HintPath>..\packages\PCLStorage.1.0.2\lib\monoandroid\PCLStorage.Abstractions.dll</HintPath>
     </Reference>
@@ -100,10 +83,28 @@
       <HintPath>..\packages\PCLStorage.1.0.2\lib\monoandroid\PCLStorage.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Permissions.Abstractions">
-      <HintPath>..\packages\Plugin.Permissions.1.1.4\lib\MonoAndroid10\Plugin.Permissions.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Plugin.Permissions.1.1.7\lib\MonoAndroid10\Plugin.Permissions.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Permissions">
-      <HintPath>..\packages\Plugin.Permissions.1.1.4\lib\MonoAndroid10\Plugin.Permissions.dll</HintPath>
+      <HintPath>..\packages\Plugin.Permissions.1.1.7\lib\MonoAndroid10\Plugin.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Geolocator.Abstractions">
+      <HintPath>..\packages\Xam.Plugin.Geolocator.3.0.4\lib\MonoAndroid10\Plugin.Geolocator.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Geolocator">
+      <HintPath>..\packages\Xam.Plugin.Geolocator.3.0.4\lib\MonoAndroid10\Plugin.Geolocator.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite-net">
+      <HintPath>..\packages\sqlite-net-pcl.1.1.1\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Basement">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Basement.29.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Basement.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Base">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Base.29.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Maps">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Maps.29.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Maps.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +141,9 @@
     <Compile Include="MainApplication.cs" />
     <Compile Include="Utilities\ImageFuctor.cs" />
     <Compile Include="Activities\BuriaEditActivity.cs" />
+    <Compile Include="Dialogs\MaterialProgressDialog.cs" />
+    <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Utilities\SimpleDividerItemDecoration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -181,6 +185,9 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_mode_edit_white.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_send_white.png" />
     <AndroidResource Include="Resources\layout\Layout_BurialDetailActivity.axml" />
+    <AndroidResource Include="Resources\layout\Layout_BurialEditDetailActivity.axml" />
+    <AndroidResource Include="Resources\menu\menu_edit_bar.xml" />
+    <AndroidResource Include="Resources\drawable\line_divider.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
@@ -196,9 +203,10 @@
     <Folder Include="Dialogs\" />
     <Folder Include="Sync\" />
     <Folder Include="Utilities\ Extensions\" />
+    <Folder Include="Activities\BaseActivities\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <Import Project="..\packages\SQLitePCL.raw_basic.0.8.4\build\MonoAndroid\SQLitePCL.raw_basic.targets" Condition="Exists('..\packages\SQLitePCL.raw_basic.0.8.4\build\MonoAndroid\SQLitePCL.raw_basic.targets')" />
+  <Import Project="..\packages\SQLitePCL.raw.0.8.6\build\MonoAndroid\SQLitePCL.raw.targets" Condition="Exists('..\packages\SQLitePCL.raw.0.8.6\build\MonoAndroid\SQLitePCL.raw.targets')" />
   <ItemGroup>
     <ProjectReference Include="..\Android.Libraries\CircularImageView\CircularImageView.csproj">
       <Project>{94251AC3-7C95-41F4-8672-537E8F383AFD}</Project>
@@ -220,9 +228,9 @@
       <Project>{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}</Project>
       <Name>Abstractions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Android.Libraries\FabProgressCircle\FabProgressCircle.csproj">
-      <Project>{653AEC9F-3174-47E3-9805-811725438A13}</Project>
-      <Name>FabProgressCircle</Name>
+    <ProjectReference Include="..\Plugins\Plugins\Plugins.csproj">
+      <Project>{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}</Project>
+      <Name>Plugins</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

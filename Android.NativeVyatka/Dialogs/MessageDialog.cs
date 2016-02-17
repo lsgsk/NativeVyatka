@@ -2,7 +2,7 @@
 using Android.Support.V7.App;
 using Android.Content;
 using Android.App;
-using DialogFragment =  Android.Support.V4.App.DialogFragment;
+using DialogFragment = Android.Support.V4.App.DialogFragment;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace NativeVyatkaAndroid
@@ -35,10 +35,10 @@ namespace NativeVyatkaAndroid
             {
                 adb.SetTitle(Title)
                    .SetMessage(Message)
-                   .SetPositiveButton(Resource.String.dialog_ok, (s,e) => meListener.OnDialogPositiveClick());      
+                   .SetPositiveButton(Resource.String.dialog_ok, (s, e) => meListener.OnDialogPositiveClick());      
                 return adb.Create();
             }
-        } 
+        }
 
         public override void OnAttach(Context context)
         {
@@ -46,10 +46,6 @@ namespace NativeVyatkaAndroid
             meListener = (IMessageDialogListener)context;
         }
 
-        private IMessageDialogListener meListener;
-        public const string MessageDialogTag = "MessageDialogTag";
-        private const string MESSAGE = "message";
-        private const string TITLE = "title";
         private string Message
         {
             get
@@ -57,6 +53,7 @@ namespace NativeVyatkaAndroid
                 return  Arguments.GetString(MESSAGE) ?? Resources.GetString(Arguments.GetInt(MESSAGE));
             }
         }
+
         private string Title
         {
             get
@@ -64,10 +61,16 @@ namespace NativeVyatkaAndroid
                 return Arguments.GetString(TITLE) ?? Resources.GetString(Arguments.GetInt(TITLE));
             }
         }
+
         public interface IMessageDialogListener
         {
             void OnDialogPositiveClick();
         }
+
+        private IMessageDialogListener meListener;
+        public const string MessageDialogTag = "MessageDialogTag";
+        private const string MESSAGE = "message";
+        private const string TITLE = "title";
     }
 }
 

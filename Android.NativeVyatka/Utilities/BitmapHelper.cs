@@ -42,11 +42,20 @@ namespace NativeVyatkaAndroid
             }
         }
 
-        public async static Task<byte[]> ToByteArray(Bitmap b)
+        public async static Task<byte[]> ToByteArrayAsync(Bitmap b)
         {
             using (var stream = new MemoryStream())
             {
                 await b.CompressAsync(Bitmap.CompressFormat.Png, 70, stream);
+                return stream.ToArray();
+            }
+        }
+
+        public static byte[] ToByteArray(Bitmap b)
+        {
+            using (var stream = new MemoryStream())
+            {
+                b.Compress(Bitmap.CompressFormat.Png, 70, stream);
                 return stream.ToArray();
             }
         }

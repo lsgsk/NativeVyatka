@@ -38,7 +38,7 @@ namespace NativeVyatkaAndroid
             }
         }
 
-        void OnClick (int position)
+        void OnClick(int position)
         { 
             var temp = Volatile.Read(ref ItemClick);
             if (temp != null)
@@ -46,7 +46,7 @@ namespace NativeVyatkaAndroid
                 var item = new BaseEventArgs<T>() { Item = GetItem(position), Position = position };
                 temp(this, item);
             }
-        }     
+        }
 
         public T GetItem(int position)
         {            
@@ -60,20 +60,33 @@ namespace NativeVyatkaAndroid
                 mContext = context;
                 mBindHolder = bindHolder;
                 mBindHolder.FindViews(itemView);
-                itemView.Click += (sender, e) => listener (AdapterPosition);
+                itemView.Click += (sender, e) => listener(AdapterPosition);
             }
 
             public void BindItem(S item)
             {
                 mBindHolder.BindItem(item);
             }
+
             protected readonly M mBindHolder;
             protected readonly Context mContext;
         }
 
+        public void UpdateItems(IList<T> newItems)
+        {
+            mItems.Clear();       
+            foreach (var item in newItems)
+            {
+                mItems.Add(item);
+            }
+            NotifyDataSetChanged();
+        }
+
         protected readonly Context mContext;
         private readonly LayoutInflater mInflater;
+
         public event EventHandler<BaseEventArgs<T>> ItemClick;
+
         protected readonly IList<T> mItems;
         private readonly int mLayout;
     }

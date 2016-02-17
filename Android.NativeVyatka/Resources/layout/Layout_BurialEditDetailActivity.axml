@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    </android.support.design.widget.AppBarLayout>
+    <ScrollView
+        android:layout_below="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:fitsSystemWindows="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/base_margin">
+            <FrameLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:clickable="true"
+                    android:onClick="OnRetakePhoto"
+                    android:id="@+id/imgPhoto"
+                    android:layout_width="@dimen/profile_size"
+                    android:layout_height="@dimen/profile_size"
+                    android:src="@drawable/icon"
+                    android:layout_gravity="center" />
+            </FrameLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/base_margin">
+                <TextView
+                    android:text="Имя захоронения"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
+                <EditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="qqwe"
+                    android:gravity="top"
+                    android:minLines="2" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/base_margin">
+                <TextView
+                    android:text="Описание"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etDescription"
+                    android:minLines="2" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/base_margin">
+                <TextView
+                    android:text="Дата съемки"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical" />
+                <EditText
+                    android:layout_marginLeft="@dimen/base_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etPhotoTime"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
+                    style="@style/Widget.AppCompat.Spinner.Underlined" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/base_margin">
+                <TextView
+                    android:text="Дата рождения"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical" />
+                <EditText
+                    android:layout_marginLeft="@dimen/base_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etBirthTime"
+                    android:editable="false"
+                    android:onClick="OnSetBirthTime"
+                    android:clickable="true"
+                    android:focusableInTouchMode="false"
+                    style="@style/Widget.AppCompat.Spinner.Underlined" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/base_margin">
+                <TextView
+                    android:text="Дата смерти"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical" />
+                <EditText
+                    android:layout_marginLeft="@dimen/base_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etDeathTime"
+                    android:onClick="OnSetDeathTime"
+                    android:editable="false"
+                    android:clickable="true"
+                    android:focusableInTouchMode="false"
+                    style="@style/Widget.AppCompat.Spinner.Underlined" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/base_margin">
+                <TextView
+                    android:text="Координаты Съемки"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical" />
+                <EditText
+                    android:layout_marginLeft="@dimen/base_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etPlaceTime"
+                    android:focusableInTouchMode="false"
+                    android:editable="false" />
+            </LinearLayout>
+            <com.google.android.gms.maps.MapView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/map_size"
+                app:mapType="hybrid"
+                app:uiCompass="false"
+                app:uiZoomControls="false"
+                android:id="@+id/mapView" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
