@@ -186,7 +186,7 @@ namespace NativeVyatkaAndroid
                 var burial = await BurialEssence.CreateAsync(BitmapHelper.ToByteArray(bitmap), ct.Resolve<IBurialsManager>(), ct.Resolve<IImageFactor>());
                 ShowSnack("Запись создана");
                 await UpdateRecordsList();
-                var intent = new Intent(this, typeof(BuriaEditActivity));
+                var intent = new Intent(this, typeof(BurialEditActivity));
                 intent.PutExtra(Constants.BURIAL_ID, burial.Item.Id);
                 StartActivityForResult(intent, (int)ActivityActions.OPEN_BURIAL);
             }

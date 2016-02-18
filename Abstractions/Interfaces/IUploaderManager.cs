@@ -2,8 +2,9 @@
 {
     public interface IUploaderManager
     {
-        void ReqestBulialsUploading();
-        void NotifiController(bool uploadResult);        
+        bool  UploadingState { get; }
+        void UploadingStarted();
+        void UploadingFinished(bool uploadResult, string message);
     }
 }
 

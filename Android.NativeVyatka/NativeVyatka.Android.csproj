@@ -121,7 +121,6 @@
     <Compile Include="Utilities\Adapters\ViewHolders\IBindViewHolder.cs" />
     <Compile Include="Utilities\Adapters\ViewHolders\BurialRecordViewHolder.cs" />
     <Compile Include="Utilities\Adapters\ViewHolders\BaseEventArgs.cs" />
-    <Compile Include="Activities\BurialDetailActivity.cs" />
     <Compile Include="Activities\BaseAppCompatActivity.cs" />
     <Compile Include="Utilities\BitmapHelper.cs" />
     <Compile Include="Dialogs\MessageDialog.cs" />
@@ -140,10 +139,10 @@
     <Compile Include="Sync\SyncConstants.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Utilities\ImageFuctor.cs" />
-    <Compile Include="Activities\BuriaEditActivity.cs" />
     <Compile Include="Dialogs\MaterialProgressDialog.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\SimpleDividerItemDecoration.cs" />
+    <Compile Include="Activities\BurialEditActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -172,7 +171,6 @@
     <AndroidResource Include="Resources\layout\Layout_MainActivity.axml" />
     <AndroidResource Include="Resources\drawable\katya.jpg" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_add_a_photo_white.png" />
-    <AndroidResource Include="Resources\layout\View_BurialDetailDescription.axml" />
     <AndroidResource Include="Resources\drawable\drawer_header.jpg" />
     <AndroidResource Include="Resources\drawable\round_point.xml" />
     <AndroidResource Include="Resources\layout\Layout_FrameActivity.axml" />
@@ -181,10 +179,8 @@
     <AndroidResource Include="Resources\xml\syncadapter.xml" />
     <AndroidResource Include="Resources\layout\Layout_LoginActivity.axml" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_delete_white.png" />
-    <AndroidResource Include="Resources\menu\menu_detailes_bar.xml" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_mode_edit_white.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_send_white.png" />
-    <AndroidResource Include="Resources\layout\Layout_BurialDetailActivity.axml" />
     <AndroidResource Include="Resources\layout\Layout_BurialEditDetailActivity.axml" />
     <AndroidResource Include="Resources\menu\menu_edit_bar.xml" />
     <AndroidResource Include="Resources\drawable\line_divider.xml" />

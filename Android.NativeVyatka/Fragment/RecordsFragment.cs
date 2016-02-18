@@ -68,6 +68,7 @@ namespace NativeVyatkaAndroid
             try
             {
                 SetContentShown(false);
+                BackgroundUploadService.UploadBurials();
                 var items = await mBurialManager.GetAllBurials(mLoadRecordTokenSource.Token);
                 mAdapter = new BaseRecyclerViewAdapter<BurialEntity, BurialRecordViewHolder>(Activity, items, Resource.Layout.Item_BurialRecord);
                 mAdapter.ItemClick -= BurialRecordItemClick;
@@ -89,7 +90,7 @@ namespace NativeVyatkaAndroid
 
         private void BurialRecordItemClick (object sender, BaseEventArgs<BurialEntity> e)
         {
-            var intent = new Intent(Activity, typeof(BuriaEditActivity));
+            var intent = new Intent(Activity, typeof(BurialEditActivity));
             intent.PutExtra(Constants.BURIAL_ID, e.Item.Id);
             Activity.StartActivityForResult(intent, (int)ActivityActions.OPEN_BURIAL);
         }

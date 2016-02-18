@@ -15,14 +15,13 @@ using Android.Graphics;
 using IT.Sephiroth.Android.Library.Picasso;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Android.Gms.Maps;
-using Android.Locations;
 using Android.Gms.Maps.Model;
 using Android.OS;
 
 namespace NativeVyatkaAndroid
 {
     [Activity(Label = "BurialDetailActivity", Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]            
-    public class BuriaEditActivity : BaseAppCompatActivity, IOnMapReadyCallback, IQuestionAlertDialogListener
+    public class BurialEditActivity : BaseAppCompatActivity, IOnMapReadyCallback, IQuestionAlertDialogListener
     {
         //http://www.icons4android.com/ - иконки
         protected async override void OnCreate(Bundle savedInstanceState)
@@ -103,6 +102,7 @@ namespace NativeVyatkaAndroid
 
             var item = mBurial.Item;
             Picasso.With(Application.Context).Load(item.PicturePath).Into(imgPhoto);
+            SupportActionBar.Title = item.Name;
             etName.Text = item.Name;
             etDescription.Text = item.Desctiption;
             etPhotoTime.Text = item.Time.ToLongDateString();
@@ -190,7 +190,7 @@ namespace NativeVyatkaAndroid
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.menu_detailes_bar, menu);
+            MenuInflater.Inflate(Resource.Menu.menu_edit_bar, menu);
             return base.OnCreateOptionsMenu(menu);
         }
 
@@ -201,6 +201,8 @@ namespace NativeVyatkaAndroid
                 case Android.Resource.Id.Home:
                     OnBackPressed();
                     return true;
+                case Resource.Id.action_sync:
+                    break;
                 case Resource.Id.action_save:
                     Task.Run(async () => await SaveRecordChanges(mBurial.Item));
                     break;

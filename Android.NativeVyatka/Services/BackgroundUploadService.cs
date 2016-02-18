@@ -14,7 +14,7 @@ namespace NativeVyatkaAndroid
     {
         public static void UploadBurials()
         {
-            Intent intent = new Intent(Application.Context, typeof(BackgroundUploadService));
+            var intent = new Intent(Application.Context, typeof(BackgroundUploadService));
             Application.Context.StartService(intent);
         }
 

@@ -21,6 +21,8 @@ namespace NativeVyatkaAndroid
             if(!string.IsNullOrEmpty(message))
                 Snackbar.Make(FindViewById(Resource.Id.content_frame), message, Snackbar.LengthShort).Show();
         }
+
+
     }
 }
 
