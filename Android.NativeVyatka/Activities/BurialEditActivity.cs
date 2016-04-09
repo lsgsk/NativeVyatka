@@ -17,6 +17,8 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.OS;
+using Android.Views.Animations;
+using Android.Support.V4.View;
 
 namespace NativeVyatkaAndroid
 {
@@ -188,8 +190,10 @@ namespace NativeVyatkaAndroid
             }
         }
 
+        private IMenu mMenu;
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
+            mMenu = menu;
             MenuInflater.Inflate(Resource.Menu.menu_edit_bar, menu);
             return base.OnCreateOptionsMenu(menu);
         }
@@ -202,6 +206,7 @@ namespace NativeVyatkaAndroid
                     OnBackPressed();
                     return true;
                 case Resource.Id.action_sync:
+                    BackgroundUploadService.UploadBurials(mBurial.Item.Id);
                     break;
                 case Resource.Id.action_save:
                     Task.Run(async () => await SaveRecordChanges(mBurial.Item));
@@ -211,6 +216,35 @@ namespace NativeVyatkaAndroid
                     break;
             }
             return base.OnOptionsItemSelected(item);
+        }
+
+        public override void UploadingStarted()
+        {
+            Refresh(true);
+        }
+
+        public void Refresh(bool update) 
+        {
+            var item = mMenu.FindItem(Resource.Id.action_sync);
+            if (update)
+            {
+                var inflater = (LayoutInflater)GetSystemService(Context.LayoutInflaterService);
+                var view = inflater.Inflate(Resource.Layout.View_ActionRefresh, null);
+                Animation rotation = AnimationUtils.LoadAnimation(this, Resource.Animation.rotate);
+                rotation.RepeatCount = Animation.Infinite;
+                view.FindViewById<ImageView>(Resource.Id.imgRefresh).StartAnimation(rotation);
+                MenuItemCompat.SetActionView(item, view);
+            }
+            else
+            {
+                MenuItemCompat.GetActionView(item).ClearAnimation();
+                MenuItemCompat.SetActionView(item, null);
+            }
+        }
+
+        public override void UploadingFinished(bool uploadResult)
+        {  
+            Refresh(false);
         }
 
         private async Task SaveRecordChanges(BurialEntity burial)

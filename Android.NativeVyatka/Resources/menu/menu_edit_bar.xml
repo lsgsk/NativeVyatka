@@ -4,11 +4,12 @@
    xmlns:app="http://schemas.android.com/apk/res-auto">
    <item 
      android:id="@+id/action_sync" 
-     android:icon="@drawable/Icon" 
+     android:icon="@drawable/ic_autorenew_white"
+     android:actionLayout="@layout/view_actionrefresh" 
      app:showAsAction="always" />
    <item 
      android:id="@+id/action_save" 
-     android:icon="@drawable/Icon" 
+     android:icon="@drawable/ic_action_save" 
      app:showAsAction="always" />
    <item 
      android:id="@+id/action_delete" 

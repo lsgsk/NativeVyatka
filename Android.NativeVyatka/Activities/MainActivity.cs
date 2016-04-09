@@ -201,6 +201,11 @@ namespace NativeVyatkaAndroid
             }
         }
 
+        public async override void UploadingFinished(bool uploadResult)
+        {            
+            await UpdateRecordsList();
+        }
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.menu_action_bar, menu);
@@ -214,7 +219,9 @@ namespace NativeVyatkaAndroid
                 case Android.Resource.Id.Home:
                     mDrawerLayout.OpenDrawer(GravityCompat.Start); 
                     return true;
-
+                case Resource.Id.action_sync:
+                    BackgroundUploadService.UploadBurials();
+                    break;
             }
             return base.OnOptionsItemSelected(item);
         }

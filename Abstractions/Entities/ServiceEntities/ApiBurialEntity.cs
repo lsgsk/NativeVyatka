@@ -2,7 +2,7 @@
 
 namespace Abstractions
 {
-    public class BurialEntityRequest
+    public class ApiBurialEntity
     {
         /// <summary>
         /// Уникальный глобальный идентификатор записи, генерируется на устройстве в момент съемки
@@ -17,11 +17,11 @@ namespace Abstractions
         /// Дата рождения
         /// </summary>
         /// <value>The death time.</value>
-        public DateTime BirthTime { get; set; }
+        public DateTime? BirthTime { get; set; }
         /// <summary>
         /// Дата смерти
         /// </summary>
-        public DateTime DeathTime { get; set; }
+        public DateTime? DeathTime { get; set; }
         /// <summary>
         /// Дополнительное описание
         /// </summary>

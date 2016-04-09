@@ -28,6 +28,9 @@ namespace NativeVyatkaAndroid
 		{
 			global::PCLStorage.Resource.String.ApplicationName = global::NativeVyatkaAndroid.Resource.String.ApplicationName;
 			global::PCLStorage.Resource.String.Hello = global::NativeVyatkaAndroid.Resource.String.Hello;
+			global::Plugins.Resource.String.library_name = global::NativeVyatkaAndroid.Resource.String.library_name;
+			global::ServiceStack.Pcl.Android.Resource.String.ApplicationName = global::NativeVyatkaAndroid.Resource.String.ApplicationName;
+			global::ServiceStack.Pcl.Android.Resource.String.Hello = global::NativeVyatkaAndroid.Resource.String.Hello;
 		}
 		
 		public partial class Animation
@@ -74,6 +77,9 @@ namespace NativeVyatkaAndroid
 			
 			// aapt resource value: 0x7f05000d
 			public const int design_snackbar_out = 2131034125;
+			
+			// aapt resource value: 0x7f05000e
+			public const int rotate = 2131034126;
 			
 			static Animation()
 			{
@@ -2193,34 +2199,40 @@ namespace NativeVyatkaAndroid
 			public const int drawer_header = 2130837617;
 			
 			// aapt resource value: 0x7f020072
-			public const int ic_add_a_photo_white = 2130837618;
+			public const int ic_action_save = 2130837618;
 			
 			// aapt resource value: 0x7f020073
-			public const int ic_delete_white = 2130837619;
+			public const int ic_add_a_photo_white = 2130837619;
 			
 			// aapt resource value: 0x7f020074
-			public const int ic_mode_edit_white = 2130837620;
+			public const int ic_autorenew_white = 2130837620;
 			
 			// aapt resource value: 0x7f020075
-			public const int ic_send_white = 2130837621;
+			public const int ic_delete_white = 2130837621;
 			
 			// aapt resource value: 0x7f020076
-			public const int Icon = 2130837622;
+			public const int ic_mode_edit_white = 2130837622;
 			
 			// aapt resource value: 0x7f020077
-			public const int item_selector_row = 2130837623;
+			public const int ic_send_white = 2130837623;
 			
 			// aapt resource value: 0x7f020078
-			public const int katya = 2130837624;
+			public const int Icon = 2130837624;
 			
 			// aapt resource value: 0x7f020079
-			public const int line_divider = 2130837625;
-			
-			// aapt resource value: 0x7f02007b
-			public const int notification_template_icon_bg = 2130837627;
+			public const int item_selector_row = 2130837625;
 			
 			// aapt resource value: 0x7f02007a
-			public const int round_point = 2130837626;
+			public const int katya = 2130837626;
+			
+			// aapt resource value: 0x7f02007b
+			public const int line_divider = 2130837627;
+			
+			// aapt resource value: 0x7f02007d
+			public const int notification_template_icon_bg = 2130837629;
+			
+			// aapt resource value: 0x7f02007c
+			public const int round_point = 2130837628;
 			
 			static Drawable()
 			{
@@ -2235,14 +2247,14 @@ namespace NativeVyatkaAndroid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0b00aa
-			public const int ProfileEmail = 2131427498;
-			
-			// aapt resource value: 0x7f0b00a9
-			public const int ProfileName = 2131427497;
-			
 			// aapt resource value: 0x7f0b00ab
-			public const int ProfilePhoto = 2131427499;
+			public const int ProfileEmail = 2131427499;
+			
+			// aapt resource value: 0x7f0b00aa
+			public const int ProfileName = 2131427498;
+			
+			// aapt resource value: 0x7f0b00ac
+			public const int ProfilePhoto = 2131427500;
 			
 			// aapt resource value: 0x7f0b009c
 			public const int action0 = 2131427484;
@@ -2271,14 +2283,14 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b0066
 			public const int action_context_bar = 2131427430;
 			
-			// aapt resource value: 0x7f0b00b0
-			public const int action_delete = 2131427504;
+			// aapt resource value: 0x7f0b00b1
+			public const int action_delete = 2131427505;
 			
 			// aapt resource value: 0x7f0b00a0
 			public const int action_divider = 2131427488;
 			
-			// aapt resource value: 0x7f0b00ad
-			public const int action_filter = 2131427501;
+			// aapt resource value: 0x7f0b00ae
+			public const int action_filter = 2131427502;
 			
 			// aapt resource value: 0x7f0b0003
 			public const int action_menu_divider = 2131427331;
@@ -2295,14 +2307,14 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b0047
 			public const int action_mode_close_button = 2131427399;
 			
+			// aapt resource value: 0x7f0b00b0
+			public const int action_save = 2131427504;
+			
 			// aapt resource value: 0x7f0b00af
-			public const int action_save = 2131427503;
+			public const int action_search = 2131427503;
 			
-			// aapt resource value: 0x7f0b00ae
-			public const int action_search = 2131427502;
-			
-			// aapt resource value: 0x7f0b00ac
-			public const int action_sync = 2131427500;
+			// aapt resource value: 0x7f0b00ad
+			public const int action_sync = 2131427501;
 			
 			// aapt resource value: 0x7f0b0048
 			public const int activity_chooser_view_content = 2131427400;
@@ -2505,6 +2517,9 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b0087
 			public const int imgPhoto = 2131427463;
 			
+			// aapt resource value: 0x7f0b00a9
+			public const int imgRefresh = 2131427497;
+			
 			// aapt resource value: 0x7f0b00a7
 			public const int info = 2131427495;
 			
@@ -2553,8 +2568,8 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b0020
 			public const int multiply = 2131427360;
 			
-			// aapt resource value: 0x7f0b00b4
-			public const int navigation_about = 2131427508;
+			// aapt resource value: 0x7f0b00b5
+			public const int navigation_about = 2131427509;
 			
 			// aapt resource value: 0x7f0b009b
 			public const int navigation_drawer = 2131427483;
@@ -2562,14 +2577,14 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b0076
 			public const int navigation_header_container = 2131427446;
 			
-			// aapt resource value: 0x7f0b00b2
-			public const int navigation_map_records = 2131427506;
-			
-			// aapt resource value: 0x7f0b00b1
-			public const int navigation_my_records = 2131427505;
-			
 			// aapt resource value: 0x7f0b00b3
-			public const int navigation_settings = 2131427507;
+			public const int navigation_map_records = 2131427507;
+			
+			// aapt resource value: 0x7f0b00b2
+			public const int navigation_my_records = 2131427506;
+			
+			// aapt resource value: 0x7f0b00b4
+			public const int navigation_settings = 2131427508;
 			
 			// aapt resource value: 0x7f0b002b
 			public const int never = 2131427371;
@@ -3012,7 +3027,10 @@ namespace NativeVyatkaAndroid
 			public const int support_simple_spinner_dropdown_item = 2130968631;
 			
 			// aapt resource value: 0x7f040038
-			public const int View_DrawerHeader = 2130968632;
+			public const int View_ActionRefresh = 2130968632;
+			
+			// aapt resource value: 0x7f040039
+			public const int View_DrawerHeader = 2130968633;
 			
 			static Layout()
 			{
@@ -3128,23 +3146,23 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f070031
 			public const int abc_toolbar_collapse_description = 2131165233;
 			
-			// aapt resource value: 0x7f070048
-			public const int action_filter = 2131165256;
-			
 			// aapt resource value: 0x7f070049
-			public const int action_search = 2131165257;
+			public const int action_filter = 2131165257;
 			
 			// aapt resource value: 0x7f07004a
-			public const int action_search_hint = 2131165258;
+			public const int action_search = 2131165258;
 			
-			// aapt resource value: 0x7f07003b
-			public const int action_sign_in = 2131165243;
+			// aapt resource value: 0x7f07004b
+			public const int action_search_hint = 2131165259;
 			
 			// aapt resource value: 0x7f07003c
-			public const int action_sign_in_short = 2131165244;
+			public const int action_sign_in = 2131165244;
 			
-			// aapt resource value: 0x7f070037
-			public const int app_name = 2131165239;
+			// aapt resource value: 0x7f07003d
+			public const int action_sign_in_short = 2131165245;
+			
+			// aapt resource value: 0x7f070038
+			public const int app_name = 2131165240;
 			
 			// aapt resource value: 0x7f070033
 			public const int appbar_scrolling_view_behavior = 2131165235;
@@ -3245,68 +3263,71 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f07001e
 			public const int common_signin_button_text_long = 2131165214;
 			
+			// aapt resource value: 0x7f070048
+			public const int desciption_unknown = 2131165256;
+			
 			// aapt resource value: 0x7f070047
-			public const int desciption_unknown = 2131165255;
+			public const int dialog_cancel = 2131165255;
 			
 			// aapt resource value: 0x7f070046
-			public const int dialog_cancel = 2131165254;
+			public const int dialog_ok = 2131165254;
 			
-			// aapt resource value: 0x7f070045
-			public const int dialog_ok = 2131165253;
-			
-			// aapt resource value: 0x7f070050
-			public const int dialogs_loadings = 2131165264;
-			
-			// aapt resource value: 0x7f07003f
-			public const int error_field_required = 2131165247;
-			
-			// aapt resource value: 0x7f07003e
-			public const int error_incorrect_password = 2131165246;
-			
-			// aapt resource value: 0x7f07003d
-			public const int error_invalid_email = 2131165245;
-			
-			// aapt resource value: 0x7f070038
-			public const int hello = 2131165240;
-			
-			// aapt resource value: 0x7f07004f
-			public const int navigation_about = 2131165263;
-			
-			// aapt resource value: 0x7f07004d
-			public const int navigation_additional = 2131165261;
-			
-			// aapt resource value: 0x7f070043
-			public const int navigation_drawer_close = 2131165251;
-			
-			// aapt resource value: 0x7f070042
-			public const int navigation_drawer_open = 2131165250;
-			
-			// aapt resource value: 0x7f07004c
-			public const int navigation_map_records = 2131165260;
-			
-			// aapt resource value: 0x7f07004b
-			public const int navigation_my_records = 2131165259;
-			
-			// aapt resource value: 0x7f07004e
-			public const int navigation_settings = 2131165262;
-			
-			// aapt resource value: 0x7f070041
-			public const int null_content = 2131165249;
+			// aapt resource value: 0x7f070051
+			public const int dialogs_loadings = 2131165265;
 			
 			// aapt resource value: 0x7f070040
-			public const int permission_rationale = 2131165248;
+			public const int error_field_required = 2131165248;
+			
+			// aapt resource value: 0x7f07003f
+			public const int error_incorrect_password = 2131165247;
+			
+			// aapt resource value: 0x7f07003e
+			public const int error_invalid_email = 2131165246;
 			
 			// aapt resource value: 0x7f070039
-			public const int prompt_email = 2131165241;
+			public const int hello = 2131165241;
+			
+			// aapt resource value: 0x7f070037
+			public const int library_name = 2131165239;
+			
+			// aapt resource value: 0x7f070050
+			public const int navigation_about = 2131165264;
+			
+			// aapt resource value: 0x7f07004e
+			public const int navigation_additional = 2131165262;
+			
+			// aapt resource value: 0x7f070044
+			public const int navigation_drawer_close = 2131165252;
+			
+			// aapt resource value: 0x7f070043
+			public const int navigation_drawer_open = 2131165251;
+			
+			// aapt resource value: 0x7f07004d
+			public const int navigation_map_records = 2131165261;
+			
+			// aapt resource value: 0x7f07004c
+			public const int navigation_my_records = 2131165260;
+			
+			// aapt resource value: 0x7f07004f
+			public const int navigation_settings = 2131165263;
+			
+			// aapt resource value: 0x7f070042
+			public const int null_content = 2131165250;
+			
+			// aapt resource value: 0x7f070041
+			public const int permission_rationale = 2131165249;
 			
 			// aapt resource value: 0x7f07003a
-			public const int prompt_password = 2131165242;
+			public const int prompt_email = 2131165242;
+			
+			// aapt resource value: 0x7f07003b
+			public const int prompt_password = 2131165243;
 			
 			// aapt resource value: 0x7f070032
 			public const int status_bar_notification_info_overflow = 2131165234;
 			
-			// aapt resource value: 0x7f070044
-			public const int unknown = 2131165252;
+			// aapt resource value: 0x7f070045
+			public const int unknown = 2131165253;
 			
 			static String()
 			{

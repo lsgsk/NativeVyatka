@@ -106,6 +106,18 @@
     <Reference Include="Xamarin.GooglePlayServices.Maps">
       <HintPath>..\packages\Xamarin.GooglePlayServices.Maps.29.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Maps.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\packages\ServiceStack.Interfaces.4.0.52\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\packages\ServiceStack.Text.4.0.52\lib\portable-net45+win8+monotouch+monoandroid+xamarin.ios10\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Client">
+      <HintPath>..\packages\ServiceStack.Client.4.0.52\lib\MonoAndroid\ServiceStack.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Pcl.Android">
+      <HintPath>..\packages\ServiceStack.Client.4.0.52\lib\MonoAndroid\ServiceStack.Pcl.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -121,7 +133,6 @@
     <Compile Include="Utilities\Adapters\ViewHolders\IBindViewHolder.cs" />
     <Compile Include="Utilities\Adapters\ViewHolders\BurialRecordViewHolder.cs" />
     <Compile Include="Utilities\Adapters\ViewHolders\BaseEventArgs.cs" />
-    <Compile Include="Activities\BaseAppCompatActivity.cs" />
     <Compile Include="Utilities\BitmapHelper.cs" />
     <Compile Include="Dialogs\MessageDialog.cs" />
     <Compile Include="Dialogs\QuestionAlertDialog.cs" />
@@ -143,6 +154,10 @@
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\SimpleDividerItemDecoration.cs" />
     <Compile Include="Activities\BurialEditActivity.cs" />
+    <Compile Include="Utilities\UploaderListener.cs" />
+    <Compile Include="Utilities\Network\RestServiceDataProvider.cs" />
+    <Compile Include="Activities\BaseActivities\BaseAppCompatActivity.cs" />
+    <Compile Include="Controlls\SquareLayout.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -184,13 +199,16 @@
     <AndroidResource Include="Resources\layout\Layout_BurialEditDetailActivity.axml" />
     <AndroidResource Include="Resources\menu\menu_edit_bar.xml" />
     <AndroidResource Include="Resources\drawable\line_divider.xml" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_autorenew_white.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_action_save.png" />
+    <AndroidResource Include="Resources\anim\rotate.xml" />
+    <AndroidResource Include="Resources\layout\View_ActionRefresh.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="Fragment\" />
     <Folder Include="Activities\" />
     <Folder Include="Resources\menu\" />
-    <Folder Include="Adapters\" />
     <Folder Include="Utilities\" />
     <Folder Include="Utilities\Adapters\" />
     <Folder Include="Utilities\Adapters\ViewHolders\" />
@@ -200,6 +218,9 @@
     <Folder Include="Sync\" />
     <Folder Include="Utilities\ Extensions\" />
     <Folder Include="Activities\BaseActivities\" />
+    <Folder Include="Utilities\Network\" />
+    <Folder Include="Resources\anim\" />
+    <Folder Include="Controlls\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\SQLitePCL.raw.0.8.6\build\MonoAndroid\SQLitePCL.raw.targets" Condition="Exists('..\packages\SQLitePCL.raw.0.8.6\build\MonoAndroid\SQLitePCL.raw.targets')" />
@@ -224,9 +245,9 @@
       <Project>{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}</Project>
       <Name>Abstractions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugins\Plugins\Plugins.csproj">
-      <Project>{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}</Project>
-      <Name>Plugins</Name>
+    <ProjectReference Include="..\Plugins\Plugin.Android\Plugins.Android.csproj">
+      <Project>{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}</Project>
+      <Name>Plugins.Android</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

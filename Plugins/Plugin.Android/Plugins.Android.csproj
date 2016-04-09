@@ -62,6 +62,10 @@
       <Link>CrossFetchAddress.cs</Link>
     </Compile>
     <Compile Include="Realizations\FetchAddressRealization.cs" />
+    <Compile Include="..\Plugins\CrossImageHelper.cs">
+      <Link>CrossImageHelper.cs</Link>
+    </Compile>
+    <Compile Include="Realizations\ImageHelperRealization.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

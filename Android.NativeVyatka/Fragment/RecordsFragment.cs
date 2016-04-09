@@ -68,7 +68,6 @@ namespace NativeVyatkaAndroid
             try
             {
                 SetContentShown(false);
-                BackgroundUploadService.UploadBurials();
                 var items = await mBurialManager.GetAllBurials(mLoadRecordTokenSource.Token);
                 mAdapter = new BaseRecyclerViewAdapter<BurialEntity, BurialRecordViewHolder>(Activity, items, Resource.Layout.Item_BurialRecord);
                 mAdapter.ItemClick -= BurialRecordItemClick;
