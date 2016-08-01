@@ -18,11 +18,12 @@ using Microsoft.Practices.Unity;
 using Abstractions;
 using Android.Content.PM;
 using Java.Interop;
+using Android.Widget;
 
 namespace NativeVyatkaAndroid
 {
     [Activity(Label = "MainActivity", Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]            
-    public class MainActivity : BaseAppCompatActivity, NavigationView.IOnNavigationItemSelectedListener, IQuestionAlertDialogListener
+    public class MainActivity : BaseAppCompatActivity, NavigationView.IOnNavigationItemSelectedListener, IQuestionAlertDialogListener, IMessageDialogListener
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -47,12 +48,19 @@ namespace NativeVyatkaAndroid
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             mNavigationView = FindViewById<NavigationView>(Resource.Id.navigation_drawer);
             var toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
-
-            mDrawerLayout.SetDrawerListener(toggle);
             toggle.SyncState();
             SetSupportActionBar(mToolbar);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             mNavigationView.SetNavigationItemSelectedListener(this);
+            SetProfile();
+        }
+
+        private void SetProfile()
+        {
+            var sp = Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this);
+            var header = mNavigationView.GetHeaderView(0);
+            header.FindViewById<TextView>(Resource.Id.tvProfileName).Text = sp.GetString(GetString(Resource.String.key_user_name), GetString(Resource.String.pref_default));
+            header.FindViewById<TextView>(Resource.Id.tvProfileEmail).Text = sp.GetString(GetString(Resource.String.key_user_email), GetString(Resource.String.pref_default));
         }
 
         public bool OnNavigationItemSelected(IMenuItem menuItem)
@@ -78,8 +86,11 @@ namespace NativeVyatkaAndroid
                     tag = MapFragment.MapFragmentTag;
                     break;
                 case Resource.Id.navigation_settings:
+                    StartActivity(new Intent(this, typeof(SettingsActivity)));
                     break;
                 case Resource.Id.navigation_about:
+                    var aboutDialog = MessageDialog.NewInstance(Resource.String.dialogs_about_message, Resource.String.dialogs_about_title);
+                    aboutDialog.Show(SupportFragmentManager, MessageDialog.MessageDialogTag);
                     break;
             }
             if (fragment != null)
@@ -126,7 +137,7 @@ namespace NativeVyatkaAndroid
         {           
             if (!CrossGeolocator.Current.IsGeolocationAvailable)
             {
-                var dialog = QuestionAlertDialog.NewInstance("В настоящее время gps не доступен. Вы действительно хотите добавить запись?", "Внимание", QuestionType.ContinueWithoutGps);
+                var dialog = QuestionAlertDialog.NewInstance("В настоящее время gps не доступен. Вы действительно хотите добавить запись?", "Внимание", DialogType.ContinueWithoutGps);
                 dialog.Show(SupportFragmentManager, QuestionAlertDialog.QuestionAlertDialogTag);
             }
             else
@@ -141,17 +152,17 @@ namespace NativeVyatkaAndroid
             StartActivityForResult(intent, (int)ActivityActions.TAKE_PHOTO);
         }
 
-        public void OnDialogPositiveClick(QuestionType type)
+        public void OnDialogPositiveClick(DialogType type)
         {
             switch (type)
             {
-                case QuestionType.ContinueWithoutGps:
+                case DialogType.ContinueWithoutGps:
                     OpenCamera();
                     break;
             }
         }
 
-        public void OnDialogNegitiveClick(QuestionType type)
+        public void OnDialogNegitiveClick(DialogType type)
         {            
         }
 

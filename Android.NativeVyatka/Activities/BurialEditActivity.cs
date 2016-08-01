@@ -30,16 +30,20 @@ namespace NativeVyatkaAndroid
         {
             base.OnCreate(savedInstanceState);
             var id = Intent.GetIntExtra(Constants.BURIAL_ID, -1);
-            if (id != -1 && await InitBurial(id))
+            if (id != -1)
             {    
-                FindAndBindViews();
-                SetMap(savedInstanceState);
+                if (await InitBurial(id))
+                {
+                    FindAndBindViews();
+                    SetMap(savedInstanceState);
+                }
             }
             else
             {
                 FinishActivitySession();
             }
         }
+
         protected override void OnResume()
         {
             base.OnResume();
@@ -145,8 +149,11 @@ namespace NativeVyatkaAndroid
         [Export("OnSetBirthTime")]
         public void OnSetBirthTime(View view)
         {
-            DateTime time = DateTime.UtcNow;
-            DateTime.TryParse(etBirthTime.Text, out time);                   
+            DateTime time;
+            if (!DateTime.TryParse(etBirthTime.Text, out time))
+            {
+                time = DateTime.UtcNow;
+            }
             var tpd = new DatePickerDialog(this, HandleDateBirthSet, time.Year, time.Month, time.Day);
             tpd.Show();
         }
@@ -154,8 +161,11 @@ namespace NativeVyatkaAndroid
         [Export("OnSetDeathTime")]
         public void OnSetDeathTime(View view)
         {
-            DateTime time = DateTime.UtcNow;
-            DateTime.TryParse(etDeathTime.Text, out time);                
+            DateTime time;
+            if (!DateTime.TryParse(etDeathTime.Text, out time))
+            {
+                time = DateTime.UtcNow;
+            }
             var tpd = new DatePickerDialog(this, HandleDateDeathSet, time.Year, time.Month, time.Day);
             tpd.Show();
         }
@@ -191,6 +201,7 @@ namespace NativeVyatkaAndroid
         }
 
         private IMenu mMenu;
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             mMenu = menu;
@@ -219,27 +230,30 @@ namespace NativeVyatkaAndroid
         }
 
         public override void UploadingStarted()
-        {
+        {           
             Refresh(true);
         }
 
-        public void Refresh(bool update) 
+        public void Refresh(bool update)
         {
-            var item = mMenu.FindItem(Resource.Id.action_sync);
-            if (update)
-            {
-                var inflater = (LayoutInflater)GetSystemService(Context.LayoutInflaterService);
-                var view = inflater.Inflate(Resource.Layout.View_ActionRefresh, null);
-                Animation rotation = AnimationUtils.LoadAnimation(this, Resource.Animation.rotate);
-                rotation.RepeatCount = Animation.Infinite;
-                view.FindViewById<ImageView>(Resource.Id.imgRefresh).StartAnimation(rotation);
-                MenuItemCompat.SetActionView(item, view);
-            }
-            else
-            {
-                MenuItemCompat.GetActionView(item).ClearAnimation();
-                MenuItemCompat.SetActionView(item, null);
-            }
+            RunOnUiThread(() =>
+                {
+                    var item = mMenu.FindItem(Resource.Id.action_sync);
+                    if (update)
+                    {
+                        var inflater = (LayoutInflater)GetSystemService(Context.LayoutInflaterService);
+                        var view = inflater.Inflate(Resource.Layout.View_ActionRefresh, null);
+                        Animation rotation = AnimationUtils.LoadAnimation(this, Resource.Animation.rotate);
+                        rotation.RepeatCount = Animation.Infinite;
+                        view.FindViewById<ImageView>(Resource.Id.imgRefresh).StartAnimation(rotation);
+                        MenuItemCompat.SetActionView(item, view);
+                    }
+                    else
+                    {
+                        MenuItemCompat.GetActionView(item).ClearAnimation();
+                        MenuItemCompat.SetActionView(item, null);
+                    }
+                });
         }
 
         public override void UploadingFinished(bool uploadResult)
@@ -282,7 +296,7 @@ namespace NativeVyatkaAndroid
 
         private void AskDeleteRecords()
         {
-            var dialog = QuestionAlertDialog.NewInstance("Вы действительно хотите удалить запись?", "Внимание", QuestionType.DeleteRecord);
+            var dialog = QuestionAlertDialog.NewInstance("Вы действительно хотите удалить запись?", "Внимание", DialogType.DeleteRecord);
             dialog.Show(SupportFragmentManager, QuestionAlertDialog.QuestionAlertDialogTag);
         }
 
@@ -325,17 +339,17 @@ namespace NativeVyatkaAndroid
             }
         }
 
-        public async void OnDialogPositiveClick(QuestionType type)
+        public async void OnDialogPositiveClick(DialogType type)
         {
             switch (type)
             {
-                case QuestionType.DeleteRecord:
+                case DialogType.DeleteRecord:
                     await DeleteRecord(mBurial.Item);
                     break;
             }
         }
 
-        public void OnDialogNegitiveClick(QuestionType type)
+        public void OnDialogNegitiveClick(DialogType type)
         {
 
         }

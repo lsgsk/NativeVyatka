@@ -95,10 +95,10 @@ namespace NativeVyatkaAndroid
         }
 
         public override void OnPrepareOptionsMenu(IMenu menu)
-        {           
-            menu.FindItem(Resource.Id.action_filter).SetVisible(false);
-            menu.FindItem(Resource.Id.action_search).SetVisible(true);               
+        {      
             base.OnPrepareOptionsMenu(menu);
+            //menu.FindItem(Resource.Id.action_filter).SetVisible(false);
+            //menu.FindItem(Resource.Id.action_search).SetVisible(true);             
         }
         private IBurialsManager mBurialManager;
         private RecyclerView mRecyclerView;

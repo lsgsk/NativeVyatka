@@ -4,17 +4,19 @@ using Android.Content;
 using Android.App;
 using DialogFragment = Android.Support.V4.App.DialogFragment;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
+using NativeVyatkaCore;
 
 namespace NativeVyatkaAndroid
 {
     public sealed class MessageDialog : DialogFragment
     {
-        public static MessageDialog NewInstance(int message, int title)
+        public static MessageDialog NewInstance(int message, int title, DialogType type = DialogType.Null )
         {
             var dialog = new MessageDialog();    
             var args = new Bundle();
             args.PutInt(MESSAGE, message);
             args.PutInt(TITLE, title);
+            args.PutInt(TYPE, (int)type);
             dialog.Arguments = args;
             return dialog;
         }
@@ -35,7 +37,7 @@ namespace NativeVyatkaAndroid
             {
                 adb.SetTitle(Title)
                    .SetMessage(Message)
-                   .SetPositiveButton(Resource.String.dialog_ok, (s, e) => meListener.OnDialogPositiveClick());      
+                   .SetPositiveButton(Resource.String.dialog_ok, (s, e) => meListener.OnDialogPositiveClick(Type));      
                 return adb.Create();
             }
         }
@@ -62,15 +64,24 @@ namespace NativeVyatkaAndroid
             }
         }
 
-        public interface IMessageDialogListener
+        private DialogType Type
         {
-            void OnDialogPositiveClick();
+            get
+            {
+                return (DialogType)Arguments.GetInt(TYPE);
+            }
         }
 
         private IMessageDialogListener meListener;
         public const string MessageDialogTag = "MessageDialogTag";
         private const string MESSAGE = "message";
         private const string TITLE = "title";
+        private const string TYPE = "type";
+    }
+
+    public interface IMessageDialogListener
+    {
+        void OnDialogPositiveClick(DialogType type);
     }
 }
 

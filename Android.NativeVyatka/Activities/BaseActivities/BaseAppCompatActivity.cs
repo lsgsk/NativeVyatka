@@ -23,7 +23,6 @@ namespace NativeVyatkaAndroid
             mUploaderNotifier.SetControllerListener(null);
         }
 
-
         public static void OnRefresh(Account account)
         {
             var extras = new Bundle();
@@ -38,7 +37,7 @@ namespace NativeVyatkaAndroid
             {
                 using (var handler = new Handler(Application.MainLooper))
                 {
-                    handler.Post(() => Snackbar.Make(FindViewById(Resource.Id.content_frame), message, Snackbar.LengthShort).Show());
+                    handler.Post(() => Snackbar.Make(Window.DecorView, message, Snackbar.LengthShort).Show()); //FindViewById(Resource.Id.content_frame)
                 }
             }
         }
