@@ -11,8 +11,7 @@ namespace NativeVyatkaAndroid
     {
         public BaseRecyclerViewAdapter(Context context, IList<T> items, int layout)
         {
-            this.mContext = context;
-            this.mInflater = LayoutInflater.From(mContext);
+            this.mInflater = LayoutInflater.From(context);
             this.mItems = new List<T>(items);
             this.mLayout = layout;
         }
@@ -21,7 +20,7 @@ namespace NativeVyatkaAndroid
         {
             var view = mInflater.Inflate(mLayout, parent, false);
             var bindHolder = new K();
-            return new ViewHolder<T,K>(parent.Context, view, bindHolder, OnClick);
+            return new ViewHolder<T,K>(view, bindHolder, OnClick);
         }
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
@@ -55,9 +54,8 @@ namespace NativeVyatkaAndroid
 
         private class ViewHolder<S, M> : RecyclerView.ViewHolder where M: IBindViewHolder<S>
         {
-            public ViewHolder(Context context, View itemView, M bindHolder, Action<int> listener) : base(itemView)
+            public ViewHolder(View itemView, M bindHolder, Action<int> listener) : base(itemView)
             {
-                mContext = context;
                 mBindHolder = bindHolder;
                 mBindHolder.FindViews(itemView);
                 itemView.Click += (sender, e) => listener(AdapterPosition);
@@ -69,7 +67,6 @@ namespace NativeVyatkaAndroid
             }
 
             protected readonly M mBindHolder;
-            protected readonly Context mContext;
         }
 
         public void UpdateItems(IList<T> newItems)
@@ -82,11 +79,8 @@ namespace NativeVyatkaAndroid
             NotifyDataSetChanged();
         }
 
-        protected readonly Context mContext;
         private readonly LayoutInflater mInflater;
-
         public event EventHandler<BaseEventArgs<T>> ItemClick;
-
         protected readonly IList<T> mItems;
         private readonly int mLayout;
     }

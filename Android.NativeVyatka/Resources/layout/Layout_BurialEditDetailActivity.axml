@@ -54,11 +54,35 @@
                 <EditText
                     android:layout_margin="@dimen/base_margin"
                     android:id="@+id/etName"
-                    android:hint="Имя захоронения"
+                    android:hint="Имя"
                     android:maxLines="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
+          <android.support.design.widget.TextInputLayout
+                android:layout_margin="@dimen/base_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <EditText
+                android:layout_margin="@dimen/base_margin"
+                android:id="@+id/etSurname"
+                android:hint="Фамилия"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+          </android.support.design.widget.TextInputLayout>
+          <android.support.design.widget.TextInputLayout
+                android:layout_margin="@dimen/base_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <EditText
+                android:layout_margin="@dimen/base_margin"
+                android:id="@+id/etPatronymic"
+                android:hint="Отчество"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+          </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_margin="@dimen/base_margin"
                 android:layout_width="match_parent"
@@ -114,20 +138,7 @@
                     android:clickable="true"
                     android:focusableInTouchMode="false"
                     style="@style/Widget.AppCompat.Spinner.Underlined" />
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:layout_margin="@dimen/base_margin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:hint="Координаты Съемки"
-                    android:layout_margin="@dimen/base_margin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/etPlaceTime"
-                    android:focusableInTouchMode="false"
-                    android:editable="false" />
-            </android.support.design.widget.TextInputLayout>
+            </android.support.design.widget.TextInputLayout>            
             <com.google.android.gms.maps.MapView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/map_size"

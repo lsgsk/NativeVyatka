@@ -1,46 +1,47 @@
 ﻿using System;
 using Android.App;
 using Android.Content.PM;
-using System.Threading.Tasks;
 using Android.Widget;
 using Java.Interop;
 using Android.Views;
-using NativeVyatkaCore;
 using Microsoft.Practices.Unity;
-using Abstractions;
 using Plugins;
 using Android.Content;
-using Android.Provider;
-using Android.Graphics;
-using IT.Sephiroth.Android.Library.Picasso;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.OS;
-using Android.Views.Animations;
-using Android.Support.V4.View;
+using Abstractions.Interfaces.Controllers;
+using Abstractions.Interfaces.Plugins;
+using Newtonsoft.Json;
+using Abstractions.Models.AppModels;
+using Square.Picasso;
 
 namespace NativeVyatkaAndroid
 {
-    [Activity(Label = "BurialDetailActivity", Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]            
-    public class BurialEditActivity : BaseAppCompatActivity, IOnMapReadyCallback, IQuestionAlertDialogListener
+    [Activity(Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
+    public class BurialEditActivity : BaseAppCompatActivity, IOnMapReadyCallback
     {
         //http://www.icons4android.com/ - иконки
-        protected async override void OnCreate(Bundle savedInstanceState)
+        public BurialEditActivity()
+        {
+            mController = App.Container.Resolve<IBurialEditController>();
+            mController.BurialUpdated += OnBurialUpdated;
+        }       
+
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            var id = Intent.GetIntExtra(Constants.BURIAL_ID, -1);
-            if (id != -1)
-            {    
-                if (await InitBurial(id))
-                {
-                    FindAndBindViews();
-                    SetMap(savedInstanceState);
-                }
-            }
-            else
+            FindAndBindViews(savedInstanceState);            
+            try
             {
-                FinishActivitySession();
+                mController.Burial = JsonConvert.DeserializeObject<BurialModel>(Intent.GetStringExtra(FormBundleConstants.BurialModel));
+                OnDisplayBurial(mController.Burial);
+            }
+            catch (Exception ex)
+            {
+                iConsole.Error(ex);
+                mController.GoBackWithMeassage("Ошибка открытия захоронения");
             }
         }
 
@@ -59,6 +60,7 @@ namespace NativeVyatkaAndroid
         protected override void OnDestroy()
         {
             base.OnDestroy();
+            mController.Dispose();
             carmaMap?.OnDestroy();
         }
 
@@ -68,145 +70,106 @@ namespace NativeVyatkaAndroid
             carmaMap?.OnLowMemory();
         }
 
-        protected override void OnStop()
+        private void OnDisplayBurial(BurialModel burial)
         {
-            base.OnStop();
-            SetResult(Result.Ok, Intent);
+            Picasso.With(BaseContext).Load(new Java.IO.File(burial.PicturePath)).Into(imgPhoto);
+            SupportActionBar.Title = $"{burial.Name} {burial.Surname} {burial.Patronymic}";
+            etName.Text = burial.Name;
+            etSurname.Text = burial.Surname;
+            etPatronymic.Text = burial.Patronymic;
+            etDescription.Text = burial.Desctiption;
+            DisplayDate(etPhotoTime, burial.RecordTime);
+            DisplayDate(etBirthTime, burial.BirthDay);
+            DisplayDate(etDeathTime, burial.DeathDay);
+            carmaMap.GetMapAsync(this);
         }
 
-        private void FinishActivitySession()
+        private void DisplayDate(EditText et, DateTime? time)
         {
-            Intent.PutExtra(Constants.BURIAL_RESULT_MESSAGE, "Ошибка открытия, неверный идентификатор");
-            Finish();
+            et.Text = time.HasValue ? time.Value.ToShortDateString() : "Неизвестно";
         }
 
-        protected async override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        private void FindAndBindViews(Bundle savedInstanceState)
         {
-            if (requestCode == (int)ActivityActions.RETAKE_PHOTO && resultCode == Result.Ok)
-            {               
-                using (var bitmap = data.Extras.Get("data") as Bitmap)
-                {
-                    await SaveNewPhoto(bitmap);   
-                }
-            }
-            base.OnActivityResult(requestCode, resultCode, data);
-        }
-
-        private void FindAndBindViews()
-        {    
             SetContentView(Resource.Layout.Layout_BurialEditDetailActivity);
             var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             imgPhoto = FindViewById<ImageView>(Resource.Id.imgPhoto);
-            etName = FindViewById<EditText>(Resource.Id.etName);       
+            etName = FindViewById<EditText>(Resource.Id.etName);
+            etName.TextChanged += (s, e) =>
+            {
+                mController.Burial.Name = e.Text.ToString();
+                BurialNeedToBeUpdated(etName);
+            };
+            etSurname = FindViewById<EditText>(Resource.Id.etSurname);
+            etSurname.TextChanged += (s, e) =>
+            {
+                mController.Burial.Surname = e.Text.ToString();
+                BurialNeedToBeUpdated(etSurname);
+            };
+            etPatronymic = FindViewById<EditText>(Resource.Id.etPatronymic);
+            etPatronymic.TextChanged += (s, e) =>
+            {
+                mController.Burial.Patronymic = e.Text.ToString();
+                BurialNeedToBeUpdated(etPatronymic);
+            };
             etDescription = FindViewById<EditText>(Resource.Id.etDescription);
+            etDescription.TextChanged += (s, e) =>
+            {
+                mController.Burial.Desctiption = e.Text.ToString();
+                BurialNeedToBeUpdated(etDescription);
+            };
             etPhotoTime = FindViewById<EditText>(Resource.Id.etPhotoTime);
-            etBirthTime = FindViewById<EditText>(Resource.Id.etBirthTime);    
+            etBirthTime = FindViewById<EditText>(Resource.Id.etBirthTime);
             etDeathTime = FindViewById<EditText>(Resource.Id.etDeathTime);
-            etPlaceTime = FindViewById<EditText>(Resource.Id.etPlaceTime);
-
-            var item = mBurial.Item;
-            Picasso.With(Application.Context).Load(item.PicturePath).Into(imgPhoto);
-            SupportActionBar.Title = item.Name;
-            etName.Text = item.Name;
-            etDescription.Text = item.Desctiption;
-            etPhotoTime.Text = item.Time.ToLongDateString();
-            etBirthTime.Text = item.BirthTime.HasValue ? item.BirthTime.Value.ToShortDateString() : "Неизвестно";   
-            etDeathTime.Text = item.DeathTime.HasValue ? item.DeathTime.Value.ToShortDateString() : "Неизвестно";   
-            etPlaceTime.Text = string.Format("широта: {0} / долгота: {1}", Math.Round(item.Latitude, 5), Math.Round(item.Longitude, 5));
-        }
-
-        private void SetMap(Bundle savedInstanceState)
-        {
             carmaMap = FindViewById<MapView>(Resource.Id.mapView);
-            carmaMap.OnCreate(savedInstanceState); 
+            carmaMap.OnCreate(savedInstanceState);
             carmaMap.GetMapAsync(this);
         }
 
-        private async Task<bool> InitBurial(int id)
+        private void BurialNeedToBeUpdated(EditText view)
         {
-            try
-            {                
-                mBurial = await BurialEssence.GetAsync(id, mBurialsManager, MainApplication.Container.Resolve<IImageFactor>());
-                return mBurial.Item != null;
-            }
-            catch (Exception ex)
+            if (view.Tag == null)
             {
-                iConsole.Error(ex);
-                FinishActivitySession();
-                return false;
+                view.Tag = true;
+            }
+            else
+            {
+                mController.Updated = true;
             }
         }
 
         [Export("OnRetakePhoto")]
-        public void OnRetakePhoto(View view)
+        public async void OnRetakePhoto(View view)
         {
-            var intent = new Intent(MediaStore.ActionImageCapture);
-            StartActivityForResult(intent, (int)ActivityActions.RETAKE_PHOTO);
+            var path = await mController.RetakePhotoAsync();
+            Picasso.With(BaseContext).Load(new Java.IO.File(path)).Into(imgPhoto);
         }
 
         [Export("OnSetBirthTime")]
-        public void OnSetBirthTime(View view)
+        public async void OnSetBirthTime(View view)
         {
-            DateTime time;
-            if (!DateTime.TryParse(etBirthTime.Text, out time))
-            {
-                time = DateTime.UtcNow;
-            }
-            var tpd = new DatePickerDialog(this, HandleDateBirthSet, time.Year, time.Month, time.Day);
-            tpd.Show();
+            DisplayDate(etBirthTime, await mController.SetBirthTimeAsync());
         }
 
         [Export("OnSetDeathTime")]
-        public void OnSetDeathTime(View view)
+        public async void OnSetDeathTime(View view)
         {
-            DateTime time;
-            if (!DateTime.TryParse(etDeathTime.Text, out time))
-            {
-                time = DateTime.UtcNow;
-            }
-            var tpd = new DatePickerDialog(this, HandleDateDeathSet, time.Year, time.Month, time.Day);
-            tpd.Show();
+            DisplayDate(etDeathTime, await mController.SetDeathTimeAsync());
         }
-
-        private void HandleDateBirthSet(object sender, DatePickerDialog.DateSetEventArgs e)
-        {
-            mBurial.Item.BirthTime = e.Date;
-            etBirthTime.Text = e.Date.ToShortDateString();
-        }
-
-        private void HandleDateDeathSet(object sender, DatePickerDialog.DateSetEventArgs e)
-        {
-            mBurial.Item.DeathTime = e.Date;
-            etDeathTime.Text = e.Date.ToShortDateString();
-        }
-
-        private async Task SaveNewPhoto(Bitmap bitmap)
-        {
-            try
-            {                
-                var array = BitmapHelper.ToByteArray(bitmap);
-                var name = System.IO.Path.GetRandomFileName() + ".png";
-                var fuctor = MainApplication.Container.Resolve<IImageFactor>();
-                await fuctor.SaveImageToFileSystemAsync(array, name);
-                mBurial.Item.PicturePath = fuctor.GetImagePath(name);
-                Picasso.With(Application.Context).Load(mBurial.Item.PicturePath).Into(imgPhoto);
-                bitmap.Recycle();
-            }
-            catch (Exception ex)
-            {
-                iConsole.Error(ex);
-            }
-        }
-
-        private IMenu mMenu;
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            mMenu = menu;
             MenuInflater.Inflate(Resource.Menu.menu_edit_bar, menu);
+            mSaveIcon = menu.FindItem(Resource.Id.action_save);
+            mSaveIcon.SetVisible(mController.Updated);
             return base.OnCreateOptionsMenu(menu);
+        }
+
+        private void OnBurialUpdated(object sender, bool e)
+        {
+            mSaveIcon?.SetVisible(e);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -214,164 +177,47 @@ namespace NativeVyatkaAndroid
             switch (item.ItemId)
             {
                 case Android.Resource.Id.Home:
-                    OnBackPressed();
+                    mController.SaveAndUploadBurialAndGoBackAsync();
                     return true;
-                case Resource.Id.action_sync:
-                    BackgroundUploadService.UploadBurials(mBurial.Item.Id);
-                    break;
                 case Resource.Id.action_save:
-                    Task.Run(async () => await SaveRecordChanges(mBurial.Item));
+                    mController.SaveAndUploadBurialAsync();
                     break;
                 case Resource.Id.action_delete:
-                    AskDeleteRecords();
+                    mController.DeleteRecordAsync();
                     break;
             }
             return base.OnOptionsItemSelected(item);
         }
 
-        public override void UploadingStarted()
-        {           
-            Refresh(true);
-        }
-
-        public void Refresh(bool update)
+        public async override void OnBackPressed()
         {
-            RunOnUiThread(() =>
-                {
-                    var item = mMenu.FindItem(Resource.Id.action_sync);
-                    if (update)
-                    {
-                        var inflater = (LayoutInflater)GetSystemService(Context.LayoutInflaterService);
-                        var view = inflater.Inflate(Resource.Layout.View_ActionRefresh, null);
-                        Animation rotation = AnimationUtils.LoadAnimation(this, Resource.Animation.rotate);
-                        rotation.RepeatCount = Animation.Infinite;
-                        view.FindViewById<ImageView>(Resource.Id.imgRefresh).StartAnimation(rotation);
-                        MenuItemCompat.SetActionView(item, view);
-                    }
-                    else
-                    {
-                        MenuItemCompat.GetActionView(item).ClearAnimation();
-                        MenuItemCompat.SetActionView(item, null);
-                    }
-                });
-        }
-
-        public override void UploadingFinished(bool uploadResult)
-        {  
-            Refresh(false);
-        }
-
-        private async Task SaveRecordChanges(BurialEntity burial)
-        {
-            var progress = MaterialProgressDialog.NewInstance();
-            try
-            {
-                SupportFragmentManager.BeginTransaction().Add(progress, MaterialProgressDialog.MaterialProgressDialogTag).CommitAllowingStateLoss();
-                burial.Name = etName.Text;
-                burial.Desctiption = etDescription.Text;
-                DateTime time;
-                if (DateTime.TryParse(etBirthTime.Text, out time))
-                {
-                    burial.BirthTime = time;
-                }
-                if (DateTime.TryParse(etDeathTime.Text, out time))
-                {
-                    burial.DeathTime = time;
-                }
-                await mBurialsManager.UpdateBurial(burial);     
-                Intent.PutExtra(Constants.BURIAL_RESULT_MESSAGE, "Запись обновлена");
-               
-            }
-            catch (Exception ex)
-            {
-                iConsole.Error(ex);
-                Intent.PutExtra(Constants.BURIAL_RESULT_MESSAGE, "Ошибка сохранения");
-            }
-            finally
-            {                
-                Finish();
-                progress.Dismiss();
-            }
-        }
-
-        private void AskDeleteRecords()
-        {
-            var dialog = QuestionAlertDialog.NewInstance("Вы действительно хотите удалить запись?", "Внимание", DialogType.DeleteRecord);
-            dialog.Show(SupportFragmentManager, QuestionAlertDialog.QuestionAlertDialogTag);
-        }
-
-        private async Task DeleteRecord(BurialEntity burial)
-        {
-            var progress = MaterialProgressDialog.NewInstance();
-            try
-            {               
-                SupportFragmentManager.BeginTransaction().Add(progress, MaterialProgressDialog.MaterialProgressDialogTag).CommitAllowingStateLoss();
-                await mBurialsManager.DeleteBurial(burial);  
-                Intent.PutExtra(Constants.BURIAL_RESULT_MESSAGE, "Запись удалена");
-            }
-            catch (Exception ex)
-            {
-                iConsole.Error(ex);
-                Intent.PutExtra(Constants.BURIAL_RESULT_MESSAGE, "Ошибка удаления");
-            }
-            finally
-            {  
-                Finish();
-                progress.Dismiss();
-            }
+            await mController.SaveAndUploadBurialAndGoBackAsync();
         }
 
         public void OnMapReady(GoogleMap googleMap)
         {
-            var item = mBurial.Item;
-            if (googleMap != null)
+            var item = mController.Burial;
+            if (googleMap != null && item != null)
             {
                 carmaMap?.OnResume();
-                var position = new LatLng(item.Latitude, item.Longitude);          
+                var position = new LatLng(item.Location.Latitude, item.Location.Longitude);
                 var camPos = new CameraPosition.Builder().Target(position).Zoom(15f).Build();
                 var camUpdate = CameraUpdateFactory.NewCameraPosition(camPos);
                 googleMap.MoveCamera(camUpdate);
-              
+
                 var marker = new MarkerOptions();
                 marker.SetPosition(position);
                 marker.SetTitle(item.Name);
-                googleMap.AddMarker(marker);             
+                googleMap.AddMarker(marker); 
             }
         }
 
-        public async void OnDialogPositiveClick(DialogType type)
-        {
-            switch (type)
-            {
-                case DialogType.DeleteRecord:
-                    await DeleteRecord(mBurial.Item);
-                    break;
-            }
-        }
 
-        public void OnDialogNegitiveClick(DialogType type)
-        {
-
-        }
-
-        private static IBurialsManager mBurialsManager
-        {
-            get
-            {
-                return MainApplication.Container.Resolve<IBurialsManager>();
-            }
-        }
-
-        private BurialEssence mBurial;
+        private readonly IBurialEditController mController;
         private ImageView imgPhoto;
-        private EditText etName;
-        private EditText etDescription;
-        private EditText etPhotoTime;
-        private EditText etBirthTime;
-        private EditText etDeathTime;
-        private EditText etPlaceTime;
-
+        private EditText etName, etSurname, etPatronymic, etDescription, etPhotoTime, etBirthTime, etDeathTime;
         private MapView carmaMap;
+        private IMenuItem mSaveIcon;
     }
 }
 

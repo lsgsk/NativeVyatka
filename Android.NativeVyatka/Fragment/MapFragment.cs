@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Android.Locations;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
-using Abstractions;
-using Microsoft.Practices.Unity;
+using System.Collections.Generic;
+using Abstractions.Models.AppModels;
 
 namespace NativeVyatkaAndroid
 {
@@ -27,7 +27,6 @@ namespace NativeVyatkaAndroid
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            mBurialManager = MainApplication.Container.Resolve<IBurialsManager>();
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
@@ -102,11 +101,11 @@ namespace NativeVyatkaAndroid
         private async Task SetMarkers()
         {
             carmaGoogleMap.Clear();
-            var collection = await mBurialManager.GetAllBurials();
+            var collection = new List<BurialModel>();// await mBurialManager.GetAllBurials();
             foreach (var item in collection)
             {
                 var marker = new MarkerOptions();
-                marker.SetPosition(new LatLng(item.Latitude, item.Longitude));
+                marker.SetPosition(new LatLng(item.Location.Latitude, item.Location.Longitude));
                 marker.SetTitle(item.Name);
                 carmaGoogleMap.AddMarker(marker); 
             }
@@ -193,7 +192,6 @@ namespace NativeVyatkaAndroid
         private MapView carmaMap;
         private GoogleMap carmaGoogleMap;
         protected View mContentView;
-        private IBurialsManager mBurialManager;
         public const string MapFragmentTag = "MapFragmentTag";
     }
 }

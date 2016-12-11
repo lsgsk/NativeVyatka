@@ -26,11 +26,47 @@ namespace NativeVyatkaAndroid
 		
 		public static void UpdateIdValues()
 		{
+			global::AndroidHUD.Resource.Attribute.ahBarColor = global::NativeVyatkaAndroid.Resource.Attribute.ahBarColor;
+			global::AndroidHUD.Resource.Attribute.ahBarLength = global::NativeVyatkaAndroid.Resource.Attribute.ahBarLength;
+			global::AndroidHUD.Resource.Attribute.ahBarWidth = global::NativeVyatkaAndroid.Resource.Attribute.ahBarWidth;
+			global::AndroidHUD.Resource.Attribute.ahCircleColor = global::NativeVyatkaAndroid.Resource.Attribute.ahCircleColor;
+			global::AndroidHUD.Resource.Attribute.ahDelayMillis = global::NativeVyatkaAndroid.Resource.Attribute.ahDelayMillis;
+			global::AndroidHUD.Resource.Attribute.ahRadius = global::NativeVyatkaAndroid.Resource.Attribute.ahRadius;
+			global::AndroidHUD.Resource.Attribute.ahRimColor = global::NativeVyatkaAndroid.Resource.Attribute.ahRimColor;
+			global::AndroidHUD.Resource.Attribute.ahRimWidth = global::NativeVyatkaAndroid.Resource.Attribute.ahRimWidth;
+			global::AndroidHUD.Resource.Attribute.ahSpinSpeed = global::NativeVyatkaAndroid.Resource.Attribute.ahSpinSpeed;
+			global::AndroidHUD.Resource.Attribute.ahText = global::NativeVyatkaAndroid.Resource.Attribute.ahText;
+			global::AndroidHUD.Resource.Attribute.ahTextColor = global::NativeVyatkaAndroid.Resource.Attribute.ahTextColor;
+			global::AndroidHUD.Resource.Attribute.ahTextSize = global::NativeVyatkaAndroid.Resource.Attribute.ahTextSize;
+			global::AndroidHUD.Resource.Drawable.ic_errorstatus = global::NativeVyatkaAndroid.Resource.Drawable.ic_errorstatus;
+			global::AndroidHUD.Resource.Drawable.ic_successstatus = global::NativeVyatkaAndroid.Resource.Drawable.ic_successstatus;
+			global::AndroidHUD.Resource.Drawable.roundedbg = global::NativeVyatkaAndroid.Resource.Drawable.roundedbg;
+			global::AndroidHUD.Resource.Drawable.roundedbgdark = global::NativeVyatkaAndroid.Resource.Drawable.roundedbgdark;
+			global::AndroidHUD.Resource.Id.loadingImage = global::NativeVyatkaAndroid.Resource.Id.loadingImage;
+			global::AndroidHUD.Resource.Id.loadingProgressBar = global::NativeVyatkaAndroid.Resource.Id.loadingProgressBar;
+			global::AndroidHUD.Resource.Id.loadingProgressWheel = global::NativeVyatkaAndroid.Resource.Id.loadingProgressWheel;
+			global::AndroidHUD.Resource.Id.textViewStatus = global::NativeVyatkaAndroid.Resource.Id.textViewStatus;
+			global::AndroidHUD.Resource.Layout.loading = global::NativeVyatkaAndroid.Resource.Layout.loading;
+			global::AndroidHUD.Resource.Layout.loadingimage = global::NativeVyatkaAndroid.Resource.Layout.loadingimage;
+			global::AndroidHUD.Resource.Layout.loadingprogress = global::NativeVyatkaAndroid.Resource.Layout.loadingprogress;
+			global::AndroidHUD.Resource.String.library_name = global::NativeVyatkaAndroid.Resource.String.library_name;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarColor = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahBarColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarLength = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahBarLength;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarWidth = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahBarWidth;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahCircleColor = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahCircleColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahDelayMillis = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahDelayMillis;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRadius = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahRadius;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRimColor = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahRimColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRimWidth = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahRimWidth;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahSpinSpeed = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahSpinSpeed;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahText = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahText;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahTextColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahTextSize;
 			global::PCLStorage.Resource.String.ApplicationName = global::NativeVyatkaAndroid.Resource.String.ApplicationName;
 			global::PCLStorage.Resource.String.Hello = global::NativeVyatkaAndroid.Resource.String.Hello;
 			global::Plugins.Resource.String.library_name = global::NativeVyatkaAndroid.Resource.String.library_name;
-			global::ServiceStack.Pcl.Android.Resource.String.ApplicationName = global::NativeVyatkaAndroid.Resource.String.ApplicationName;
-			global::ServiceStack.Pcl.Android.Resource.String.Hello = global::NativeVyatkaAndroid.Resource.String.Hello;
+			global::Splat.Resource.String.library_name = global::NativeVyatkaAndroid.Resource.String.library_name;
 		}
 		
 		public partial class Animation
@@ -201,6 +237,42 @@ namespace NativeVyatkaAndroid
 			
 			// aapt resource value: 0x7f0100b4
 			public const int activityChooserViewStyle = 2130772148;
+			
+			// aapt resource value: 0x7f010188
+			public const int ahBarColor = 2130772360;
+			
+			// aapt resource value: 0x7f010190
+			public const int ahBarLength = 2130772368;
+			
+			// aapt resource value: 0x7f01018f
+			public const int ahBarWidth = 2130772367;
+			
+			// aapt resource value: 0x7f01018d
+			public const int ahCircleColor = 2130772365;
+			
+			// aapt resource value: 0x7f01018c
+			public const int ahDelayMillis = 2130772364;
+			
+			// aapt resource value: 0x7f01018e
+			public const int ahRadius = 2130772366;
+			
+			// aapt resource value: 0x7f010189
+			public const int ahRimColor = 2130772361;
+			
+			// aapt resource value: 0x7f01018a
+			public const int ahRimWidth = 2130772362;
+			
+			// aapt resource value: 0x7f01018b
+			public const int ahSpinSpeed = 2130772363;
+			
+			// aapt resource value: 0x7f010185
+			public const int ahText = 2130772357;
+			
+			// aapt resource value: 0x7f010186
+			public const int ahTextColor = 2130772358;
+			
+			// aapt resource value: 0x7f010187
+			public const int ahTextSize = 2130772359;
 			
 			// aapt resource value: 0x7f0100d7
 			public const int alertDialogButtonGroupStyle = 2130772183;
@@ -2430,31 +2502,43 @@ namespace NativeVyatkaAndroid
 			public const int ic_delete_white = 2130837627;
 			
 			// aapt resource value: 0x7f02007c
-			public const int ic_mode_edit_white = 2130837628;
+			public const int ic_errorstatus = 2130837628;
 			
 			// aapt resource value: 0x7f02007d
-			public const int ic_send_white = 2130837629;
+			public const int ic_mode_edit_white = 2130837629;
 			
 			// aapt resource value: 0x7f02007e
-			public const int Icon = 2130837630;
+			public const int ic_send_white = 2130837630;
 			
 			// aapt resource value: 0x7f02007f
-			public const int item_selector_row = 2130837631;
+			public const int ic_successstatus = 2130837631;
 			
 			// aapt resource value: 0x7f020080
-			public const int katya = 2130837632;
+			public const int Icon = 2130837632;
 			
 			// aapt resource value: 0x7f020081
-			public const int line_divider = 2130837633;
-			
-			// aapt resource value: 0x7f020084
-			public const int notification_template_icon_bg = 2130837636;
+			public const int item_selector_row = 2130837633;
 			
 			// aapt resource value: 0x7f020082
-			public const int preference_list_divider_material = 2130837634;
+			public const int katya = 2130837634;
 			
 			// aapt resource value: 0x7f020083
-			public const int round_point = 2130837635;
+			public const int line_divider = 2130837635;
+			
+			// aapt resource value: 0x7f020088
+			public const int notification_template_icon_bg = 2130837640;
+			
+			// aapt resource value: 0x7f020084
+			public const int preference_list_divider_material = 2130837636;
+			
+			// aapt resource value: 0x7f020085
+			public const int round_point = 2130837637;
+			
+			// aapt resource value: 0x7f020086
+			public const int roundedbg = 2130837638;
+			
+			// aapt resource value: 0x7f020087
+			public const int roundedbgdark = 2130837639;
 			
 			static Drawable()
 			{
@@ -2469,11 +2553,11 @@ namespace NativeVyatkaAndroid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0b00b2
-			public const int ProfilePhoto = 2131427506;
+			// aapt resource value: 0x7f0b00b5
+			public const int ProfilePhoto = 2131427509;
 			
-			// aapt resource value: 0x7f0b009e
-			public const int action0 = 2131427486;
+			// aapt resource value: 0x7f0b00a1
+			public const int action0 = 2131427489;
 			
 			// aapt resource value: 0x7f0b0065
 			public const int action_bar = 2131427429;
@@ -2499,14 +2583,14 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b0066
 			public const int action_context_bar = 2131427430;
 			
+			// aapt resource value: 0x7f0b00ba
+			public const int action_delete = 2131427514;
+			
+			// aapt resource value: 0x7f0b00a5
+			public const int action_divider = 2131427493;
+			
 			// aapt resource value: 0x7f0b00b7
-			public const int action_delete = 2131427511;
-			
-			// aapt resource value: 0x7f0b00a2
-			public const int action_divider = 2131427490;
-			
-			// aapt resource value: 0x7f0b00b4
-			public const int action_filter = 2131427508;
+			public const int action_filter = 2131427511;
 			
 			// aapt resource value: 0x7f0b0003
 			public const int action_menu_divider = 2131427331;
@@ -2523,14 +2607,14 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b0047
 			public const int action_mode_close_button = 2131427399;
 			
+			// aapt resource value: 0x7f0b00b9
+			public const int action_save = 2131427513;
+			
+			// aapt resource value: 0x7f0b00b8
+			public const int action_search = 2131427512;
+			
 			// aapt resource value: 0x7f0b00b6
-			public const int action_save = 2131427510;
-			
-			// aapt resource value: 0x7f0b00b5
-			public const int action_search = 2131427509;
-			
-			// aapt resource value: 0x7f0b00b3
-			public const int action_sync = 2131427507;
+			public const int action_sync = 2131427510;
 			
 			// aapt resource value: 0x7f0b0048
 			public const int activity_chooser_view_content = 2131427400;
@@ -2562,8 +2646,8 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b004f
 			public const int buttonPanel = 2131427407;
 			
-			// aapt resource value: 0x7f0b009f
-			public const int cancel_action = 2131427487;
+			// aapt resource value: 0x7f0b00a2
+			public const int cancel_action = 2131427490;
 			
 			// aapt resource value: 0x7f0b0036
 			public const int center = 2131427382;
@@ -2577,8 +2661,8 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b005d
 			public const int checkbox = 2131427421;
 			
-			// aapt resource value: 0x7f0b00a5
-			public const int chronometer = 2131427493;
+			// aapt resource value: 0x7f0b00a8
+			public const int chronometer = 2131427496;
 			
 			// aapt resource value: 0x7f0b003e
 			public const int clip_horizontal = 2131427390;
@@ -2601,8 +2685,8 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b0087
 			public const int content_frame = 2131427463;
 			
-			// aapt resource value: 0x7f0b009b
-			public const int coordinator = 2131427483;
+			// aapt resource value: 0x7f0b009a
+			public const int coordinator = 2131427482;
 			
 			// aapt resource value: 0x7f0b005b
 			public const int custom = 2131427419;
@@ -2637,26 +2721,17 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b001a
 			public const int disableHome = 2131427354;
 			
-			// aapt resource value: 0x7f0b009a
-			public const int drawer_layout = 2131427482;
+			// aapt resource value: 0x7f0b0099
+			public const int drawer_layout = 2131427481;
 			
 			// aapt resource value: 0x7f0b0067
 			public const int edit_query = 2131427431;
 			
-			// aapt resource value: 0x7f0b0096
-			public const int email = 2131427478;
-			
-			// aapt resource value: 0x7f0b0095
-			public const int email_login_form = 2131427477;
-			
-			// aapt resource value: 0x7f0b0099
-			public const int email_sign_in_button = 2131427481;
-			
 			// aapt resource value: 0x7f0b0027
 			public const int end = 2131427367;
 			
-			// aapt resource value: 0x7f0b00aa
-			public const int end_padder = 2131427498;
+			// aapt resource value: 0x7f0b00ad
+			public const int end_padder = 2131427501;
 			
 			// aapt resource value: 0x7f0b002e
 			public const int enterAlways = 2131427374;
@@ -2664,23 +2739,26 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b002f
 			public const int enterAlwaysCollapsed = 2131427375;
 			
+			// aapt resource value: 0x7f0b0091
+			public const int etBirthTime = 2131427473;
+			
+			// aapt resource value: 0x7f0b0092
+			public const int etDeathTime = 2131427474;
+			
 			// aapt resource value: 0x7f0b008f
-			public const int etBirthTime = 2131427471;
-			
-			// aapt resource value: 0x7f0b0090
-			public const int etDeathTime = 2131427472;
-			
-			// aapt resource value: 0x7f0b008d
-			public const int etDescription = 2131427469;
+			public const int etDescription = 2131427471;
 			
 			// aapt resource value: 0x7f0b008c
 			public const int etName = 2131427468;
 			
 			// aapt resource value: 0x7f0b008e
-			public const int etPhotoTime = 2131427470;
+			public const int etPatronymic = 2131427470;
 			
-			// aapt resource value: 0x7f0b0091
-			public const int etPlaceTime = 2131427473;
+			// aapt resource value: 0x7f0b0090
+			public const int etPhotoTime = 2131427472;
+			
+			// aapt resource value: 0x7f0b008d
+			public const int etSurname = 2131427469;
 			
 			// aapt resource value: 0x7f0b0030
 			public const int exitUntilCollapsed = 2131427376;
@@ -2691,11 +2769,11 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b005c
 			public const int expanded_menu = 2131427420;
 			
-			// aapt resource value: 0x7f0b0092
-			public const int fabChangePhoto = 2131427474;
+			// aapt resource value: 0x7f0b0093
+			public const int fabChangePhoto = 2131427475;
 			
-			// aapt resource value: 0x7f0b009c
-			public const int fabNewPhoto = 2131427484;
+			// aapt resource value: 0x7f0b009b
+			public const int fabNewPhoto = 2131427483;
 			
 			// aapt resource value: 0x7f0b0040
 			public const int fill = 2131427392;
@@ -2721,8 +2799,8 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b004d
 			public const int icon = 2131427405;
 			
-			// aapt resource value: 0x7f0b00ab
-			public const int icon_frame = 2131427499;
+			// aapt resource value: 0x7f0b00ae
+			public const int icon_frame = 2131427502;
 			
 			// aapt resource value: 0x7f0b0012
 			public const int icon_only = 2131427346;
@@ -2739,11 +2817,11 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b008a
 			public const int imgPhoto = 2131427466;
 			
-			// aapt resource value: 0x7f0b00af
-			public const int imgRefresh = 2131427503;
+			// aapt resource value: 0x7f0b00b2
+			public const int imgRefresh = 2131427506;
 			
-			// aapt resource value: 0x7f0b00a9
-			public const int info = 2131427497;
+			// aapt resource value: 0x7f0b00ac
+			public const int info = 2131427500;
 			
 			// aapt resource value: 0x7f0b0000
 			public const int item_touch_helper_previous_elevation = 2131427328;
@@ -2754,38 +2832,44 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b0017
 			public const int light = 2131427351;
 			
-			// aapt resource value: 0x7f0b00a3
-			public const int line1 = 2131427491;
+			// aapt resource value: 0x7f0b00a6
+			public const int line1 = 2131427494;
 			
-			// aapt resource value: 0x7f0b00a7
-			public const int line3 = 2131427495;
+			// aapt resource value: 0x7f0b00aa
+			public const int line3 = 2131427498;
 			
-			// aapt resource value: 0x7f0b00ad
-			public const int list = 2131427501;
+			// aapt resource value: 0x7f0b00b0
+			public const int list = 2131427504;
 			
 			// aapt resource value: 0x7f0b0018
 			public const int listMode = 2131427352;
 			
-			// aapt resource value: 0x7f0b00ac
-			public const int list_container = 2131427500;
+			// aapt resource value: 0x7f0b00af
+			public const int list_container = 2131427503;
 			
 			// aapt resource value: 0x7f0b004c
 			public const int list_item = 2131427404;
 			
+			// aapt resource value: 0x7f0b0095
+			public const int llEmailLoginForm = 2131427477;
+			
+			// aapt resource value: 0x7f0b009f
+			public const int loadingImage = 2131427487;
+			
+			// aapt resource value: 0x7f0b009d
+			public const int loadingProgressBar = 2131427485;
+			
+			// aapt resource value: 0x7f0b00a0
+			public const int loadingProgressWheel = 2131427488;
+			
 			// aapt resource value: 0x7f0b0098
 			public const int login = 2131427480;
-			
-			// aapt resource value: 0x7f0b0094
-			public const int login_form = 2131427476;
-			
-			// aapt resource value: 0x7f0b0093
-			public const int login_progress = 2131427475;
 			
 			// aapt resource value: 0x7f0b007d
 			public const int mapView = 2131427453;
 			
-			// aapt resource value: 0x7f0b00a1
-			public const int media_actions = 2131427489;
+			// aapt resource value: 0x7f0b00a4
+			public const int media_actions = 2131427492;
 			
 			// aapt resource value: 0x7f0b0028
 			public const int middle = 2131427368;
@@ -2796,23 +2880,23 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b0021
 			public const int multiply = 2131427361;
 			
-			// aapt resource value: 0x7f0b00bb
-			public const int navigation_about = 2131427515;
+			// aapt resource value: 0x7f0b00be
+			public const int navigation_about = 2131427518;
 			
-			// aapt resource value: 0x7f0b009d
-			public const int navigation_drawer = 2131427485;
+			// aapt resource value: 0x7f0b009c
+			public const int navigation_drawer = 2131427484;
 			
 			// aapt resource value: 0x7f0b0078
 			public const int navigation_header_container = 2131427448;
 			
-			// aapt resource value: 0x7f0b00b9
-			public const int navigation_map_records = 2131427513;
+			// aapt resource value: 0x7f0b00bc
+			public const int navigation_map_records = 2131427516;
 			
-			// aapt resource value: 0x7f0b00b8
-			public const int navigation_my_records = 2131427512;
+			// aapt resource value: 0x7f0b00bb
+			public const int navigation_my_records = 2131427515;
 			
-			// aapt resource value: 0x7f0b00ba
-			public const int navigation_settings = 2131427514;
+			// aapt resource value: 0x7f0b00bd
+			public const int navigation_settings = 2131427517;
 			
 			// aapt resource value: 0x7f0b002c
 			public const int never = 2131427372;
@@ -2828,9 +2912,6 @@ namespace NativeVyatkaAndroid
 			
 			// aapt resource value: 0x7f0b0051
 			public const int parentPanel = 2131427409;
-			
-			// aapt resource value: 0x7f0b0097
-			public const int password = 2131427479;
 			
 			// aapt resource value: 0x7f0b0034
 			public const int pin = 2131427380;
@@ -2955,14 +3036,17 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b003c
 			public const int start = 2131427388;
 			
-			// aapt resource value: 0x7f0b00a0
-			public const int status_bar_latest_event_content = 2131427488;
+			// aapt resource value: 0x7f0b00a3
+			public const int status_bar_latest_event_content = 2131427491;
 			
 			// aapt resource value: 0x7f0b0070
 			public const int submit_area = 2131427440;
 			
-			// aapt resource value: 0x7f0b00ae
-			public const int switchWidget = 2131427502;
+			// aapt resource value: 0x7f0b0094
+			public const int svLoginForm = 2131427476;
+			
+			// aapt resource value: 0x7f0b00b1
+			public const int switchWidget = 2131427505;
 			
 			// aapt resource value: 0x7f0b0019
 			public const int tabMode = 2131427353;
@@ -2970,17 +3054,20 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b000f
 			public const int terrain = 2131427343;
 			
-			// aapt resource value: 0x7f0b00a8
-			public const int text = 2131427496;
+			// aapt resource value: 0x7f0b00ab
+			public const int text = 2131427499;
 			
-			// aapt resource value: 0x7f0b00a6
-			public const int text2 = 2131427494;
+			// aapt resource value: 0x7f0b00a9
+			public const int text2 = 2131427497;
 			
 			// aapt resource value: 0x7f0b0058
 			public const int textSpacerNoButtons = 2131427416;
 			
-			// aapt resource value: 0x7f0b00a4
-			public const int time = 2131427492;
+			// aapt resource value: 0x7f0b009e
+			public const int textViewStatus = 2131427486;
+			
+			// aapt resource value: 0x7f0b00a7
+			public const int time = 2131427495;
 			
 			// aapt resource value: 0x7f0b004e
 			public const int title = 2131427406;
@@ -3003,14 +3090,20 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0b0085
 			public const int tvDescription = 2131427461;
 			
+			// aapt resource value: 0x7f0b0096
+			public const int tvEmail = 2131427478;
+			
 			// aapt resource value: 0x7f0b0084
 			public const int tvName = 2131427460;
 			
-			// aapt resource value: 0x7f0b00b1
-			public const int tvProfileEmail = 2131427505;
+			// aapt resource value: 0x7f0b0097
+			public const int tvPassword = 2131427479;
 			
-			// aapt resource value: 0x7f0b00b0
-			public const int tvProfileName = 2131427504;
+			// aapt resource value: 0x7f0b00b4
+			public const int tvProfileEmail = 2131427508;
+			
+			// aapt resource value: 0x7f0b00b3
+			public const int tvProfileName = 2131427507;
 			
 			// aapt resource value: 0x7f0b0009
 			public const int up = 2131427337;
@@ -3240,82 +3333,91 @@ namespace NativeVyatkaAndroid
 			public const int Layout_SettingsActivity = 2130968621;
 			
 			// aapt resource value: 0x7f04002e
-			public const int notification_media_action = 2130968622;
+			public const int loading = 2130968622;
 			
 			// aapt resource value: 0x7f04002f
-			public const int notification_media_cancel_action = 2130968623;
+			public const int loadingimage = 2130968623;
 			
 			// aapt resource value: 0x7f040030
-			public const int notification_template_big_media = 2130968624;
+			public const int loadingprogress = 2130968624;
 			
 			// aapt resource value: 0x7f040031
-			public const int notification_template_big_media_narrow = 2130968625;
+			public const int notification_media_action = 2130968625;
 			
 			// aapt resource value: 0x7f040032
-			public const int notification_template_lines = 2130968626;
+			public const int notification_media_cancel_action = 2130968626;
 			
 			// aapt resource value: 0x7f040033
-			public const int notification_template_media = 2130968627;
+			public const int notification_template_big_media = 2130968627;
 			
 			// aapt resource value: 0x7f040034
-			public const int notification_template_part_chronometer = 2130968628;
+			public const int notification_template_big_media_narrow = 2130968628;
 			
 			// aapt resource value: 0x7f040035
-			public const int notification_template_part_time = 2130968629;
+			public const int notification_template_lines = 2130968629;
 			
 			// aapt resource value: 0x7f040036
-			public const int preference = 2130968630;
+			public const int notification_template_media = 2130968630;
 			
 			// aapt resource value: 0x7f040037
-			public const int preference_category = 2130968631;
+			public const int notification_template_part_chronometer = 2130968631;
 			
 			// aapt resource value: 0x7f040038
-			public const int preference_category_material = 2130968632;
+			public const int notification_template_part_time = 2130968632;
 			
 			// aapt resource value: 0x7f040039
-			public const int preference_dialog_edittext = 2130968633;
+			public const int preference = 2130968633;
 			
 			// aapt resource value: 0x7f04003a
-			public const int preference_information = 2130968634;
+			public const int preference_category = 2130968634;
 			
 			// aapt resource value: 0x7f04003b
-			public const int preference_information_material = 2130968635;
+			public const int preference_category_material = 2130968635;
 			
 			// aapt resource value: 0x7f04003c
-			public const int preference_list_fragment = 2130968636;
+			public const int preference_dialog_edittext = 2130968636;
 			
 			// aapt resource value: 0x7f04003d
-			public const int preference_material = 2130968637;
+			public const int preference_information = 2130968637;
 			
 			// aapt resource value: 0x7f04003e
-			public const int preference_recyclerview = 2130968638;
+			public const int preference_information_material = 2130968638;
 			
 			// aapt resource value: 0x7f04003f
-			public const int preference_widget_checkbox = 2130968639;
+			public const int preference_list_fragment = 2130968639;
 			
 			// aapt resource value: 0x7f040040
-			public const int preference_widget_switch = 2130968640;
+			public const int preference_material = 2130968640;
 			
 			// aapt resource value: 0x7f040041
-			public const int preference_widget_switch_compat = 2130968641;
+			public const int preference_recyclerview = 2130968641;
 			
 			// aapt resource value: 0x7f040042
-			public const int select_dialog_item_material = 2130968642;
+			public const int preference_widget_checkbox = 2130968642;
 			
 			// aapt resource value: 0x7f040043
-			public const int select_dialog_multichoice_material = 2130968643;
+			public const int preference_widget_switch = 2130968643;
 			
 			// aapt resource value: 0x7f040044
-			public const int select_dialog_singlechoice_material = 2130968644;
+			public const int preference_widget_switch_compat = 2130968644;
 			
 			// aapt resource value: 0x7f040045
-			public const int support_simple_spinner_dropdown_item = 2130968645;
+			public const int select_dialog_item_material = 2130968645;
 			
 			// aapt resource value: 0x7f040046
-			public const int View_ActionRefresh = 2130968646;
+			public const int select_dialog_multichoice_material = 2130968646;
 			
 			// aapt resource value: 0x7f040047
-			public const int View_DrawerHeader = 2130968647;
+			public const int select_dialog_singlechoice_material = 2130968647;
+			
+			// aapt resource value: 0x7f040048
+			public const int support_simple_spinner_dropdown_item = 2130968648;
+			
+			// aapt resource value: 0x7f040049
+			public const int View_ActionRefresh = 2130968649;
+			
+			// aapt resource value: 0x7f04004a
+			public const int View_DrawerHeader = 2130968650;
 			
 			static Layout()
 			{
@@ -3368,11 +3470,11 @@ namespace NativeVyatkaAndroid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f070039
-			public const int ApplicationName = 2131165241;
+			// aapt resource value: 0x7f07003a
+			public const int ApplicationName = 2131165242;
 			
-			// aapt resource value: 0x7f070038
-			public const int Hello = 2131165240;
+			// aapt resource value: 0x7f070039
+			public const int Hello = 2131165241;
 			
 			// aapt resource value: 0x7f070021
 			public const int abc_action_bar_home_description = 2131165217;
@@ -3593,8 +3695,8 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f07003d
 			public const int key_user_name = 2131165245;
 			
-			// aapt resource value: 0x7f07003a
-			public const int library_name = 2131165242;
+			// aapt resource value: 0x7f070038
+			public const int library_name = 2131165240;
 			
 			// aapt resource value: 0x7f07005d
 			public const int navigation_about = 2131165277;
@@ -6609,6 +6711,56 @@ namespace NativeVyatkaAndroid
 			
 			// aapt resource value: 9
 			public const int PreferenceTheme_yesNoPreferenceStyle = 9;
+			
+			public static int[] ProgressWheel = new int[] {
+					2130772357,
+					2130772358,
+					2130772359,
+					2130772360,
+					2130772361,
+					2130772362,
+					2130772363,
+					2130772364,
+					2130772365,
+					2130772366,
+					2130772367,
+					2130772368};
+			
+			// aapt resource value: 3
+			public const int ProgressWheel_ahBarColor = 3;
+			
+			// aapt resource value: 11
+			public const int ProgressWheel_ahBarLength = 11;
+			
+			// aapt resource value: 10
+			public const int ProgressWheel_ahBarWidth = 10;
+			
+			// aapt resource value: 8
+			public const int ProgressWheel_ahCircleColor = 8;
+			
+			// aapt resource value: 7
+			public const int ProgressWheel_ahDelayMillis = 7;
+			
+			// aapt resource value: 9
+			public const int ProgressWheel_ahRadius = 9;
+			
+			// aapt resource value: 4
+			public const int ProgressWheel_ahRimColor = 4;
+			
+			// aapt resource value: 5
+			public const int ProgressWheel_ahRimWidth = 5;
+			
+			// aapt resource value: 6
+			public const int ProgressWheel_ahSpinSpeed = 6;
+			
+			// aapt resource value: 0
+			public const int ProgressWheel_ahText = 0;
+			
+			// aapt resource value: 1
+			public const int ProgressWheel_ahTextColor = 1;
+			
+			// aapt resource value: 2
+			public const int ProgressWheel_ahTextSize = 2;
 			
 			public static int[] RecyclerView = new int[] {
 					16842948,

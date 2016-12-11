@@ -8,42 +8,43 @@ using Android.Content;
 using Android.Provider;
 using System;
 using Android.OS;
-using Android.Graphics;
 using System.Threading.Tasks;
 using Android.Support.V7.App;
-using NativeVyatkaCore;
 using Android.Support.V4.View;
-using Plugin.Geolocator;
 using Microsoft.Practices.Unity;
-using Abstractions;
 using Android.Content.PM;
 using Java.Interop;
 using Android.Widget;
+using Abstractions.Interfaces.Controllers;
+using Plugin.Geolocator;
 
 namespace NativeVyatkaAndroid
 {
-    [Activity(Label = "MainActivity", Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]            
-    public class MainActivity : BaseAppCompatActivity, NavigationView.IOnNavigationItemSelectedListener, IQuestionAlertDialogListener, IMessageDialogListener
+    [Activity(Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]            
+    public class MainActivity : BaseAppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.Layout_MainActivity);
+            mController = App.Container.Resolve<IMainController>();
             FindAndBindViews();
             if (savedInstanceState == null)
             {
                 SelectItem(Resource.Id.navigation_my_records);
                 mNavigationView.Menu.GetItem(0).SetChecked(true);
             }
+            await CrossGeolocator.Current.StartListeningAsync(10000, 5, true);
         }
 
-        protected override void OnSaveInstanceState(Bundle outState)
+        protected async override void OnDestroy()
         {
-            //No call for super(). Bug on API Level > 11.
+            base.OnDestroy();
+            await CrossGeolocator.Current.StopListeningAsync();
         }
 
         private void FindAndBindViews()
         {
+            SetContentView(Resource.Layout.Layout_MainActivity);
             mToolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             mNavigationView = FindViewById<NavigationView>(Resource.Id.navigation_drawer);
@@ -89,8 +90,8 @@ namespace NativeVyatkaAndroid
                     StartActivity(new Intent(this, typeof(SettingsActivity)));
                     break;
                 case Resource.Id.navigation_about:
-                    var aboutDialog = MessageDialog.NewInstance(Resource.String.dialogs_about_message, Resource.String.dialogs_about_title);
-                    aboutDialog.Show(SupportFragmentManager, MessageDialog.MessageDialogTag);
+                    //var aboutDialog = MessageDialog.NewInstance(Resource.String.dialogs_about_message, Resource.String.dialogs_about_title);
+                    //aboutDialog.Show(SupportFragmentManager, MessageDialog.MessageDialogTag);
                     break;
             }
             if (fragment != null)
@@ -101,7 +102,7 @@ namespace NativeVyatkaAndroid
 
         public async Task UpdateRecordsList()
         {
-            var records = SupportFragmentManager.FindFragmentByTag(RecordsFragment.RecordsFragmentTag) as RecordsFragment;
+            /*var records = SupportFragmentManager.FindFragmentByTag(RecordsFragment.RecordsFragmentTag) as RecordsFragment;
             if (records != null)
             {
                 await records.UpdateList();
@@ -110,7 +111,7 @@ namespace NativeVyatkaAndroid
             if (maps != null)
             {
                 await maps.UpdatePoints();
-            }
+            }*/
         }
 
         public override void OnBackPressed()
@@ -133,49 +134,21 @@ namespace NativeVyatkaAndroid
         }
 
         [Export("OnTakeNewPhoto")]
-        public void OnTakeNewPhoto(View view)
-        {           
-            if (!CrossGeolocator.Current.IsGeolocationAvailable)
-            {
-                var dialog = QuestionAlertDialog.NewInstance("В настоящее время gps не доступен. Вы действительно хотите добавить запись?", "Внимание", DialogType.ContinueWithoutGps);
-                dialog.Show(SupportFragmentManager, QuestionAlertDialog.QuestionAlertDialogTag);
-            }
-            else
-            {
-                OpenCamera();
-            }
-        }
-
-        private void OpenCamera()
+        public async void OnTakeNewPhoto(View view)
         {
-            var intent = new Intent(MediaStore.ActionImageCapture);
-            StartActivityForResult(intent, (int)ActivityActions.TAKE_PHOTO);
+            await mController.CreateNewBurial();
         }
-
-        public void OnDialogPositiveClick(DialogType type)
-        {
-            switch (type)
-            {
-                case DialogType.ContinueWithoutGps:
-                    OpenCamera();
-                    break;
-            }
-        }
-
-        public void OnDialogNegitiveClick(DialogType type)
-        {            
-        }
-
+        
         protected async override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {          
-            switch ((ActivityActions)requestCode)
+            /*switch ((ActivityActions)requestCode)
             {
                 case ActivityActions.TAKE_PHOTO:   
                     if (resultCode == Result.Ok)
                     {
                         using (var bitmap = data.Extras.Get("data") as Bitmap)
                         {
-                            await CreateAndSaveNewBurial(bitmap);   
+                            //await CreateAndSaveNewBurial(bitmap);   
                         }
                     }
                     break;
@@ -184,38 +157,8 @@ namespace NativeVyatkaAndroid
                     ShowSnack(data?.GetStringExtra(Constants.BURIAL_RESULT_MESSAGE));
                     break;               
             }
-            base.OnActivityResult(requestCode, resultCode, data);
-        }
-
-        private async Task CreateAndSaveNewBurial(Bitmap bitmap)
-        {
-            var progress = MaterialProgressDialog.NewInstance();
-            try
-            {       
-                var ct = MainApplication.Container;
-                SupportFragmentManager.BeginTransaction().Add(progress, MaterialProgressDialog.MaterialProgressDialogTag).CommitAllowingStateLoss();
-                var burial = await BurialEssence.CreateAsync(BitmapHelper.ToByteArray(bitmap), ct.Resolve<IBurialsManager>(), ct.Resolve<IImageFactor>());
-                ShowSnack("Запись создана");
-                await UpdateRecordsList();
-                var intent = new Intent(this, typeof(BurialEditActivity));
-                intent.PutExtra(Constants.BURIAL_ID, burial.Item.Id);
-                StartActivityForResult(intent, (int)ActivityActions.OPEN_BURIAL);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                ShowSnack("Ошибка создания записи");
-            }
-            finally
-            {
-                progress.Dismiss();
-            }
-        }
-
-        public async override void UploadingFinished(bool uploadResult)
-        {            
-            await UpdateRecordsList();
-        }
+            base.OnActivityResult(requestCode, resultCode, data);*/
+        }        
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
@@ -237,6 +180,7 @@ namespace NativeVyatkaAndroid
             return base.OnOptionsItemSelected(item);
         }
 
+        public IMainController mController;
         protected DrawerLayout mDrawerLayout;
         protected NavigationView mNavigationView;
         protected Toolbar mToolbar;

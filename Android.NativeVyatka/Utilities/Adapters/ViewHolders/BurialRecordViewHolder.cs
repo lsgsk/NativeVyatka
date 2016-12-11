@@ -1,13 +1,12 @@
 ﻿using Android.Widget;
 using Android.Views;
-using Android.App;
-using IT.Sephiroth.Android.Library.Picasso;
 using Java.IO;
-using Abstractions;
+using Abstractions.Models.AppModels;
+using Square.Picasso;
 
 namespace NativeVyatkaAndroid
 {
-    public class BurialRecordViewHolder : IBindViewHolder<BurialEntity>
+    public class BurialRecordViewHolder : IBindViewHolder<BurialModel>
     {
         public TextView tvName { get; private set; }
         public TextView tvDescription { get; private set; }
@@ -22,15 +21,11 @@ namespace NativeVyatkaAndroid
             vIsSended = view.FindViewById<View>(Resource.Id.vIsSended);
         }
 
-        public void BindItem(BurialEntity item)
+        public void BindItem(BurialModel burial)
         {       
-            tvName.Text = item.Name;
-            tvDescription.Text = item.Desctiption;
-            vIsSended.Visibility = item.IsSended ? ViewStates.Invisible : ViewStates.Visible;
-            if (item.PicturePath != null)
-            {
-                Picasso.With(imgImage.Context).Load(item.PicturePath).Resize(100, 100).CenterCrop().Into(imgImage);
-            }
+            tvName.Text = $"{burial.Name} {burial.Surname} {burial.Patronymic}";
+            tvDescription.Text = burial.Desctiption;
+            Picasso.With(imgImage.Context).Load(new File(burial.PicturePath)).Resize(100, 100).CenterCrop().Into(imgImage);            
         }
     }
 }

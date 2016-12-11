@@ -3,14 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.github.rahatarmanahmed.cpv.CircularProgressView
-        android:layout_centerInParent="true"
-        android:layout_width="@dimen/base_progress_bar_size"
-        android:layout_height="@dimen/base_progress_bar_size"
-        app:cpv_animAutostart="true"
-        app:cpv_indeterminate="true"
-        android:id="@+id/login_progress"
-        android:visibility="gone" />
     <LinearLayout
         app:layout_marginTopPercent="25%"
         android:layout_width="match_parent"
@@ -19,19 +11,19 @@
         android:orientation="vertical"
         android:padding="@dimen/base_margin">
         <ScrollView
-            android:id="@+id/login_form"
+            android:id="@+id/svLoginForm"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
-                android:id="@+id/email_login_form"
+                android:id="@+id/llEmailLoginForm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <AutoCompleteTextView
-                        android:id="@+id/email"
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/tvEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_email"
@@ -42,8 +34,8 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <EditText
-                        android:id="@+id/password"
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/tvPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_password"
@@ -55,11 +47,11 @@
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
                 <Button
-                    android:id="@+id/email_sign_in_button"
+                    android:onClick="OnSignInClick"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/base_margin"
                     android:text="@string/action_sign_in"
                     android:textStyle="bold" />
             </LinearLayout>

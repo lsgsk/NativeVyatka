@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using Android.Content;
-using Android.OS;
+﻿using Android.OS;
 using Android.Views;
-using System.Threading;
 using Android.Support.V7.Widget;
-using Microsoft.Practices.Unity;
 using System.Threading.Tasks;
-using Abstractions;
+using System.Collections.Generic;
+using Abstractions.Models.AppModels;
+using Android.Content;
+using Abstractions.Interfaces.Controllers;
 
 namespace NativeVyatkaAndroid
 {
@@ -18,19 +17,23 @@ namespace NativeVyatkaAndroid
             return fragment;
         }
 
+        public override void OnAttach(Context context)
+        {
+            base.OnAttach(context);
+            mController = (context as MainActivity).mController;
+        }
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             HasOptionsMenu = true;
-            mBurialManager = MainApplication.Container.Resolve<IBurialsManager>();
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {            
-            mLoadRecordTokenSource = new CancellationTokenSource();
             mContentView = inflater.Inflate(Resource.Layout.Fragment_Records, null);
             return base.OnCreateView(inflater, container, savedInstanceState);
-        }
+        }        
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
@@ -41,26 +44,26 @@ namespace NativeVyatkaAndroid
             mRecyclerView.HasFixedSize = true;
             mRecyclerView.SetLayoutManager(new LinearLayoutManager(Activity.BaseContext));
             mRecyclerView.AddItemDecoration(new SimpleDividerItemDecoration(Activity));
+            mAdapter = new BaseRecyclerViewAdapter<BurialModel, BurialRecordViewHolder>(Activity, new List<BurialModel>(), Resource.Layout.Item_BurialRecord);
+            mAdapter.ItemClick += BurialRecordItemClick;
+            mRecyclerView.SetAdapter(mAdapter);
         }
 
-        public override void OnDestroyView()
-        {
-            mLoadRecordTokenSource.Cancel();
-            base.OnDestroyView();
-        }
-
-        public override async void OnActivityCreated(Bundle savedInstanceState)
+        public override void OnActivityCreated(Bundle savedInstanceState)
         {
             base.OnActivityCreated(savedInstanceState);
             SetContentView(mContentView);
             SetEmptyText(Resource.String.null_content);
-            await ObtainData(savedInstanceState == null);
+            DisplayVisitors();
         }
 
-        public async Task UpdateList()
+        protected void DisplayVisitors()
         {
-            var items = await mBurialManager.GetAllBurials(mLoadRecordTokenSource.Token);
+            SetContentShown(false);
+            var items = mController.GetBurials();
             mAdapter.UpdateItems(items);
+            SetContentEmpty(false);
+            SetContentShown(true);
         }
 
         protected async Task ObtainData(bool force = false)
@@ -68,18 +71,15 @@ namespace NativeVyatkaAndroid
             try
             {
                 SetContentShown(false);
-                var items = await mBurialManager.GetAllBurials(mLoadRecordTokenSource.Token);
-                mAdapter = new BaseRecyclerViewAdapter<BurialEntity, BurialRecordViewHolder>(Activity, items, Resource.Layout.Item_BurialRecord);
-                mAdapter.ItemClick -= BurialRecordItemClick;
-                mAdapter.ItemClick += BurialRecordItemClick;
-                mRecyclerView.SetAdapter(mAdapter);
+                var items = mController.GetBurials();
+                mAdapter.UpdateItems(items);
                 SetContentEmpty(false);
-                SetContentShown(true); 
+                SetContentShown(true);
             }
             catch
             {
                 SetContentEmpty(true);
-                SetContentShown(true);  
+                SetContentShown(true);
             }
             finally
             {
@@ -87,11 +87,9 @@ namespace NativeVyatkaAndroid
             }
         }
 
-        private void BurialRecordItemClick (object sender, BaseEventArgs<BurialEntity> e)
+        private void BurialRecordItemClick (object sender, BaseEventArgs<BurialModel> e)
         {
-            var intent = new Intent(Activity, typeof(BurialEditActivity));
-            intent.PutExtra(Constants.BURIAL_ID, e.Item.Id);
-            Activity.StartActivityForResult(intent, (int)ActivityActions.OPEN_BURIAL);
+            mController.DisplayBurial(e.Item);
         }
 
         public override void OnPrepareOptionsMenu(IMenu menu)
@@ -100,13 +98,12 @@ namespace NativeVyatkaAndroid
             //menu.FindItem(Resource.Id.action_filter).SetVisible(false);
             //menu.FindItem(Resource.Id.action_search).SetVisible(true);             
         }
-        private IBurialsManager mBurialManager;
         private RecyclerView mRecyclerView;
-        private BaseRecyclerViewAdapter<BurialEntity, BurialRecordViewHolder> mAdapter;
+        private BaseRecyclerViewAdapter<BurialModel, BurialRecordViewHolder> mAdapter;
         private View mContentView;
         public const string RecordsFragmentTag = "RecordsFragmentTag";
 
-        private CancellationTokenSource mLoadRecordTokenSource;
+        private IMainRecordsController mController;
     }
 }
 

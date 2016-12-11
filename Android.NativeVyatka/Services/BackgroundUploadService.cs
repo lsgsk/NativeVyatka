@@ -8,6 +8,7 @@ using Plugins;
 using NativeVyatkaCore;
 using System.Linq;
 using System.Collections.Generic;
+using Abstractions.Models.DatabaseModels;
 
 namespace NativeVyatkaAndroid
 {
@@ -26,9 +27,6 @@ namespace NativeVyatkaAndroid
 
         public BackgroundUploadService() : base("BackgroundUploadService")
         {
-            mBurialManager = MainApplication.Container.Resolve<IBurialsManager>();
-            mUploaderNotifier = MainApplication.Container.Resolve<IUploaderListener>();
-            mRestManager = MainApplication.Container.Resolve<IRestServiceDataProvider>();
         }
 
         protected override async void OnHandleIntent(Intent intent)
@@ -41,15 +39,15 @@ namespace NativeVyatkaAndroid
                 try
                 {
                     Uploading = true;
-                    mUploaderNotifier.UploadingStarted(message);
+                    //mUploaderNotifier.UploadingStarted(message);
                     var tokensource = new CancellationTokenSource();
                     var id = intent.GetIntExtra(ID, -1);
-                    var items = id == -1 ? await mBurialManager.GetUnsendedBurials(tokensource.Token) : new List<BurialEntity>(1) { await mBurialManager.GetBurial(id, tokensource.Token) };
+                    /*var items = id == -1 ? await mBurialManager.GetUnsendedBurials(tokensource.Token) : new List<BurialEntity>(1) { await mBurialManager.GetBurial(id, tokensource.Token) };
                     if (await mRestManager.UploadNewBurials(items))
                     {
-                        items.All(x => x.IsSended = true);
+                        //---items.All(x => x.IsSended = true);
                         await mBurialManager.UpdateSendedBurial(items, tokensource.Token);
-                    }
+                    }*/
                     message = "Отправка записей успешна закончена";
                     result = true;
                 }
@@ -60,16 +58,13 @@ namespace NativeVyatkaAndroid
                 }
                 finally
                 {
-                    mUploaderNotifier.UploadingFinished(result, message);
+                    //mUploaderNotifier.UploadingFinished(result, message);
                     Uploading = false; 
                 }
             }           
         }
 
         private static bool Uploading = false;
-        private readonly IBurialsManager mBurialManager;
-        private readonly IUploaderListener mUploaderNotifier;
-        private readonly IRestServiceDataProvider mRestManager;
         private const string ID = "id";
     }
 }

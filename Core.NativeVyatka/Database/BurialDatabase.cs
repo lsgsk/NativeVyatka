@@ -1,90 +1,51 @@
 ﻿using SQLite;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Abstractions;
+using Plugins;
+using Abstractions.Models.DatabaseModels;
+using System.IO;
 
-namespace NativeVyatkaCore
+namespace NativeVyatkaCore.Database
 {
-    public class BurialDatabase : SQLiteAsyncConnection, IDatabase
+    public sealed partial class BurialDatabase : IDatabase
     {
-        public BurialDatabase(string path) : base(path)
+        public static void InitILobbyPhoneDatabase(string path)
         {
-            CreateTableAsync<BurialEntity>().ContinueWith(t => { Debug.WriteLine("Burial table created!"); });
-        }
-
-        public Task<int> BurialCountAsync()
-        {
-            lock (locker)
+            mPathToDatabase = Path.Combine(path, DbName);
+            using (var conn = GetConnection())
             {
-                return Table<BurialEntity>().CountAsync();
+                conn.CreateTable<DbVersionEntity>();
+                var v = conn.Table<DbVersionEntity>().FirstOrDefault();
+                mVersion = v?.Value ?? 0;
+                if (mVersion == 0)
+                {
+                    iConsole.WriteLine("(^_^)");
+                }
+                conn.CreateTable<BurialEntity>();
+                conn.CreateTable<ProfileEntity>();
             }
         }
 
-        public Task<List<BurialEntity>> GetAllBurialAsync()
+        public BurialDatabase()
         {
-            lock (locker)
-            {
-                return Table<BurialEntity>().ToListAsync();
-            }
         }
 
-        public Task<List<BurialEntity>> GetAllUnsendedBurialAsync()
+        private static SQLiteConnection GetConnection()
         {
-            lock (locker)
-            {
-                return Table<BurialEntity>().Where(x => !x.IsSended).ToListAsync();
-            }
+            return new SQLiteConnection(mPathToDatabase);
         }
 
-        public Task<BurialEntity> GetBurialAsync(int id)
+        public void ClearDataBase()
         {
-            lock (locker)
+            using (var conn = GetConnection())
             {
-                return Table<BurialEntity>().Where(x => x.Id == id).FirstOrDefaultAsync();
+                conn.DeleteAll<BurialEntity>();
+                conn.DeleteAll<ProfileEntity>();
             }
-        }
+        }           
 
-        public Task<int> InsertBurialAsync(BurialEntity item)
-        {
-            lock (locker)
-            {
-                return InsertAsync(item);
-            }
-        }
-
-        public Task<int> InsertOrReplaceBurialAsync(BurialEntity item)
-        {
-            lock (locker)
-            {
-                return InsertOrReplaceAsync(item);
-            }
-        }
-
-        public Task<int> UpdateAllBurialAsync(IEnumerable<BurialEntity> items)
-        {
-            lock (locker)
-            {
-                return UpdateAllAsync(items);
-            }
-        }
-
-        public Task<int> DeleteBurialAsync(BurialEntity item)
-        {
-            lock (locker)
-            {
-                return DeleteAsync(item);
-            }
-        }
-
-        public Task DeleteAllBurialAsync()
-        {
-            lock (locker)
-            {
-                return ExecuteAsync(string.Format("DELETE FROM {0}", BurialEntity.TableName));
-            }
-        }
-        private readonly object locker = new object();
+        private const string DbName = "burials.db";
+        private static string mPathToDatabase;
+        private static int mVersion = 0;
     }
 }
 
