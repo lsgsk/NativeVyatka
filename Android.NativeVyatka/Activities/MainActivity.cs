@@ -24,10 +24,10 @@ namespace NativeVyatkaAndroid
     {
         public MainActivity()
         {
-            //mController = App.Container.Resolve<IMainController>();
+            mController = App.Container.Resolve<IMainController>();
         }
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);            
             FindAndBindViews();
@@ -49,9 +49,8 @@ namespace NativeVyatkaAndroid
 
         private void FindAndBindViews()
         {
-            //android:background="@drawable/drawer_header"
             SetContentView(Resource.Layout.Layout_MainActivity);
-            mToolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+            var mToolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             mNavigationView = FindViewById<NavigationView>(Resource.Id.navigation_drawer);
             new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close).SyncState();
@@ -152,7 +151,6 @@ namespace NativeVyatkaAndroid
         public readonly IMainController mController;
         protected DrawerLayout mDrawerLayout;
         protected NavigationView mNavigationView;
-        protected Toolbar mToolbar;
     }
 }
 
