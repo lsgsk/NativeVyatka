@@ -5,8 +5,6 @@ using Android.Support.Design.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Fragment = Android.Support.V4.App.Fragment;
 using Android.Content;
-using Android.Provider;
-using System;
 using Android.OS;
 using System.Threading.Tasks;
 using Android.Support.V7.App;
@@ -17,17 +15,23 @@ using Java.Interop;
 using Android.Widget;
 using Abstractions.Interfaces.Controllers;
 using Plugin.Geolocator;
+using Square.Picasso;
 
 namespace NativeVyatkaAndroid
 {
     [Activity(Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]            
     public class MainActivity : BaseAppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
-        protected async override void OnCreate(Bundle savedInstanceState)
+        public MainActivity()
         {
-            base.OnCreate(savedInstanceState);
-            mController = App.Container.Resolve<IMainController>();
+            //mController = App.Container.Resolve<IMainController>();
+        }
+
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);            
             FindAndBindViews();
+            SetProfile();
             if (savedInstanceState == null)
             {
                 SelectItem(Resource.Id.navigation_my_records);
@@ -39,29 +43,29 @@ namespace NativeVyatkaAndroid
         protected async override void OnDestroy()
         {
             base.OnDestroy();
+            mController.Dispose();
             await CrossGeolocator.Current.StopListeningAsync();
         }
 
         private void FindAndBindViews()
         {
+            //android:background="@drawable/drawer_header"
             SetContentView(Resource.Layout.Layout_MainActivity);
             mToolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             mNavigationView = FindViewById<NavigationView>(Resource.Id.navigation_drawer);
-            var toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
-            toggle.SyncState();
+            new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close).SyncState();
             SetSupportActionBar(mToolbar);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-            mNavigationView.SetNavigationItemSelectedListener(this);
-            SetProfile();
+            mNavigationView.SetNavigationItemSelectedListener(this);            
         }
 
         private void SetProfile()
         {
-            var sp = Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this);
-            var header = mNavigationView.GetHeaderView(0);
-            header.FindViewById<TextView>(Resource.Id.tvProfileName).Text = sp.GetString(GetString(Resource.String.key_user_name), GetString(Resource.String.pref_default));
-            header.FindViewById<TextView>(Resource.Id.tvProfileEmail).Text = sp.GetString(GetString(Resource.String.key_user_email), GetString(Resource.String.pref_default));
+            View header = mNavigationView.GetHeaderView(0);
+            header.FindViewById<TextView>(Resource.Id.tvProfileName).Text = mController.Profile.Name;
+            header.FindViewById<TextView>(Resource.Id.tvProfileEmail).Text = mController.Profile.Email;
+            Picasso.With(BaseContext).Load(mController.Profile.PictureUrl).Resize(200, 200).CenterCrop().Into(header.FindViewById<ImageView>(Resource.Id.imgProfilePhoto));
         }
 
         public bool OnNavigationItemSelected(IMenuItem menuItem)
@@ -100,20 +104,6 @@ namespace NativeVyatkaAndroid
             }
         }
 
-        public async Task UpdateRecordsList()
-        {
-            /*var records = SupportFragmentManager.FindFragmentByTag(RecordsFragment.RecordsFragmentTag) as RecordsFragment;
-            if (records != null)
-            {
-                await records.UpdateList();
-            }
-            var maps = SupportFragmentManager.FindFragmentByTag(MapFragment.MapFragmentTag) as MapFragment;
-            if (maps != null)
-            {
-                await maps.UpdatePoints();
-            }*/
-        }
-
         public override void OnBackPressed()
         {
             if (mDrawerLayout.IsDrawerOpen(GravityCompat.Start))
@@ -139,27 +129,6 @@ namespace NativeVyatkaAndroid
             await mController.CreateNewBurial();
         }
         
-        protected async override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        {          
-            /*switch ((ActivityActions)requestCode)
-            {
-                case ActivityActions.TAKE_PHOTO:   
-                    if (resultCode == Result.Ok)
-                    {
-                        using (var bitmap = data.Extras.Get("data") as Bitmap)
-                        {
-                            //await CreateAndSaveNewBurial(bitmap);   
-                        }
-                    }
-                    break;
-                case ActivityActions.OPEN_BURIAL:
-                    await UpdateRecordsList();
-                    ShowSnack(data?.GetStringExtra(Constants.BURIAL_RESULT_MESSAGE));
-                    break;               
-            }
-            base.OnActivityResult(requestCode, resultCode, data);*/
-        }        
-
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.menu_action_bar, menu);
@@ -180,7 +149,7 @@ namespace NativeVyatkaAndroid
             return base.OnOptionsItemSelected(item);
         }
 
-        public IMainController mController;
+        public readonly IMainController mController;
         protected DrawerLayout mDrawerLayout;
         protected NavigationView mNavigationView;
         protected Toolbar mToolbar;

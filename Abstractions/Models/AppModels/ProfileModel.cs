@@ -18,7 +18,9 @@ namespace Abstractions.Models.AppModels
 
         public ProfileModel(ProfileEntity entity)
         {
-
+            this.Name = entity.Name;
+            this.Email = entity.Email;
+            this.PictureUrl = entity.PictureUrl;
         }
 
         public ProfileEntity ToProfileEntity()

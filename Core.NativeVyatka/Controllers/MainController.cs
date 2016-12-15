@@ -44,6 +44,16 @@ namespace NativeVyatkaCore.Controllers
             }            
         }
 
+        private ProfileModel profile;
+        public ProfileModel Profile
+        {
+            get
+            {
+                profile = profile ?? mStorage.GetProfile();
+                return profile;
+            }
+        }
+
         public List<BurialModel> GetBurials()
         {
             return mStorage.GetBurials();
@@ -59,7 +69,5 @@ namespace NativeVyatkaCore.Controllers
 
         private readonly IDatabase mStorage;
         private readonly ICrossPageNavigator mNavigator;
-        public event EventHandler<List<BurialModel>> BurialsReady;
-        public event EventHandler<ProfileModel> ProfileReady;
     }
 }

@@ -14,14 +14,12 @@
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone">
-            <com.github.rahatarmanahmed.cpv.CircularProgressView
+          <ProgressBar
+                style="@style/Base.Widget.AppCompat.ProgressBar"
                 android:id="@android:id/progress"
                 android:layout_width="@dimen/base_progress_size"
                 android:layout_height="@dimen/base_progress_size"
-                app:cpv_indeterminate="true"
-                app:cpv_animAutostart="true"
-                app:cpv_color="@color/color_primary"
-                app:cpv_thickness="5dp" />
+                android:indeterminate="true"/>
             <TextView
                 android:id="@+id/progress_text"
                 android:layout_width="wrap_content"

@@ -8,8 +8,7 @@ namespace Abstractions.Interfaces.Controllers
     public interface IMainController : IMainRecordsController, IBaseController
     {
         Task CreateNewBurial();
-        event EventHandler<ProfileModel> ProfileReady;
-        event EventHandler<List<BurialModel>> BurialsReady;
+        ProfileModel Profile { get; }
     }
 
     public interface IMainRecordsController
