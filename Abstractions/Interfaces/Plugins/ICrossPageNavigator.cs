@@ -17,6 +17,5 @@ namespace Abstractions.Interfaces.Plugins
     public static class FormBundleConstants
     { 
         public const string BurialModel = "BurialModel";
-        public const string BackMessage = "BackException";
     }
 }

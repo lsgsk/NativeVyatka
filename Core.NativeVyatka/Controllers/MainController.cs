@@ -8,6 +8,7 @@ using Abstractions.Models;
 using Plugin.Geolocator;
 using Newtonsoft.Json;
 using Abstractions;
+using Abstractions.Exceptions;
 
 namespace NativeVyatkaCore.Controllers
 {
@@ -29,12 +30,19 @@ namespace NativeVyatkaCore.Controllers
                 if(!string.IsNullOrEmpty(path))
                 {
                     burial.PicturePath = path;
-                    var position = await CrossGeolocator.Current.GetPositionAsync();
-                    burial.Location.Latitude = position.Latitude;
-                    burial.Location.Longitude = position.Longitude;
-                    burial.Location.Altitude = position.Altitude;
-                    burial.Location.Heading = position.Heading;
-                    DisplayBurial(burial);                   
+                    try
+                    {
+                        var position = await CrossGeolocator.Current.GetPositionAsync(10000);
+                        burial.Location.Latitude = position.Latitude;
+                        burial.Location.Longitude = position.Longitude;
+                        burial.Location.Altitude = position.Altitude;
+                        burial.Location.Heading = position.Heading;
+                        DisplayBurial(burial);
+                    }
+                    catch(Exception ex)
+                    {
+                        await AlertAsync("В настоящее время gps не доступен. Сделать запись невозможно", "Внимание");
+                    }                 
                 }
                 Progress = false;
             }
@@ -66,6 +74,21 @@ namespace NativeVyatkaCore.Controllers
                 [FormBundleConstants.BurialModel] = JsonConvert.SerializeObject(burial)
             });
         }
+
+        public async Task ForceSyncBurials()
+        {
+            try
+            {
+                Progress = true;
+                await Task.Delay(1500);
+                Progress = false;
+            }
+            catch (BurialSyncException)
+            {
+                Progress = false;
+                await AlertAsync("Синхранизация не удалась");
+            }
+        }      
 
         private readonly IDatabase mStorage;
         private readonly ICrossPageNavigator mNavigator;

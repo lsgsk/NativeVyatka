@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
-    android:accountType="vyatka.lsgsk.account"
-    android:allowParallelSyncs="false"
-    android:contentAuthority="com.lsgsk.records"
-    android:isAlwaysSyncable="true"
-    android:supportsUploading="false"
-    android:userVisible="true" />

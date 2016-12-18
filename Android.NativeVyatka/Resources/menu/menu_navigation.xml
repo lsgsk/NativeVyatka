@@ -10,17 +10,5 @@
       android:id="@+id/navigation_map_records"
       android:icon="@drawable/Icon"
       android:title="@string/navigation_map_records"/>
-  </group>
-  <item android:title="@string/navigation_additional">
-    <menu>
-      <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/Icon"
-        android:title="@string/navigation_settings" />
-      <item
-        android:id="@+id/navigation_about"
-        android:icon="@drawable/Icon"
-        android:title="@string/navigation_about" />
-     </menu>
-  </item>
+  </group>  
 </menu>

@@ -274,8 +274,6 @@
     <Compile Include="Utilities\SimpleDividerItemDecoration.cs" />
     <Compile Include="Activities\BurialEditActivity.cs" />
     <Compile Include="Activities\BaseActivities\BaseAppCompatActivity.cs" />
-    <Compile Include="Activities\SettingsActivity.cs" />
-    <Compile Include="Fragment\SettingsFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -305,12 +303,9 @@
     <AndroidResource Include="Resources\layout\Layout_MainActivity.axml" />
     <AndroidResource Include="Resources\drawable\katya.jpg" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_add_a_photo_white.png" />
-    <AndroidResource Include="Resources\drawable\drawer_header.jpg" />
-    <AndroidResource Include="Resources\drawable\round_point.xml" />
+    <AndroidResource Include="Resources\drawable-xhdpi\drawer_header.jpg" />
     <AndroidResource Include="Resources\layout\Layout_FrameActivity.axml" />
     <AndroidResource Include="Resources\layout\Fragment_Map.axml" />
-    <AndroidResource Include="Resources\xml\authenticator.xml" />
-    <AndroidResource Include="Resources\xml\syncadapter.xml" />
     <AndroidResource Include="Resources\layout\Layout_LoginActivity.axml" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_delete_white.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_mode_edit_white.png" />
@@ -322,8 +317,6 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_action_save.png" />
     <AndroidResource Include="Resources\anim\rotate.xml" />
     <AndroidResource Include="Resources\layout\View_ActionRefresh.axml" />
-    <AndroidResource Include="Resources\layout\Layout_SettingsActivity.axml" />
-    <AndroidResource Include="Resources\xml\settings.xml" />
     <AndroidResource Include="Resources\values\SettingsStrings.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +336,9 @@
       <Project>{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}</Project>
       <Name>Plugins.Android</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\round_point.xml" />
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

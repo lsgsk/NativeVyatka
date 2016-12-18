@@ -1,22 +1,24 @@
 ﻿using Abstractions;
+using Abstractions.Exceptions;
 using Abstractions.Interfaces.Controllers;
 using Abstractions.Interfaces.Database.Tables;
+using Abstractions.Interfaces.Network;
 using Abstractions.Interfaces.Plugins;
 using Abstractions.Models;
 using Abstractions.Models.AppModels;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NativeVyatkaCore.Controllers
 {
     public class BurialEditController : BaseController, IBurialEditController
     {
-        public BurialEditController(ICrossPageNavigator navigator,IBurialImageGuide burialImageGuide, IBurialStorage storage)
+        public BurialEditController(ICrossPageNavigator navigator, IBurialImageGuide burialImageGuide, IBurialStorage storage, IBurialsDataProvider burialsDataProvider)
         {
             this.mNavigator = navigator;
             this.mBurialImageGuide = burialImageGuide;
             this.mStorage = storage;
+            this.mBurialsDataProvider = burialsDataProvider;
         }
 
         private BurialModel burial;
@@ -24,7 +26,7 @@ namespace NativeVyatkaCore.Controllers
         {
             get
             {
-                return burial;
+                return burial ?? BurialModel.Null;
             }
             set
             {
@@ -34,16 +36,20 @@ namespace NativeVyatkaCore.Controllers
                     //это создание, а не редактирование
                     burial.RecordTime = DateTime.UtcNow;
                     Updated = true;
+                    Creating = true;
+                }
+                if(!burial.Updated)
+                {
+                    //запись не синхранизирована, предлагаем сохранить
+                    Updated = true;
                 }
             }
         }
 
-        public void GoBackWithMeassage(string messgae)
+        public async void ForceGoBack()
         {
-            mNavigator.GoToPage(PageStates.BulialListPage, new Dictionary<string, string>()
-            {
-                [FormBundleConstants.BackMessage] = messgae
-            });         
+            await AlertAsync("Ошибка открытия захоронения", "Внимание");
+            mNavigator.GoToPage(PageStates.BulialListPage);        
         }
 
         public async Task<string> RetakePhotoAsync()
@@ -83,11 +89,19 @@ namespace NativeVyatkaCore.Controllers
         public async Task SaveAndUploadBurialAsync()
         {
             Progress = true;
+            Burial.Updated = false;
             mStorage.InsertOrUpdateBurial(Burial);
-            await Task.Delay(1000);
-            //отправить,если успешно установть дату синхранизации
-            Updated = false;
-            Progress = false;            
+            try
+            {
+                await mBurialsDataProvider.UploadBurial(Burial);
+                Updated = Progress = false;
+                await AlertAsync("Запись обновлена и синхранизирована");
+            }
+            catch (BurialSyncException)
+            {
+                Progress = false;
+                await AlertAsync("Синхранизация не удалась");
+            }
         }
 
         public async Task SaveAndUploadBurialAndGoBackAsync()
@@ -97,13 +111,10 @@ namespace NativeVyatkaCore.Controllers
                 var confirm = await ConfirmAsync("Сохранить измения и сихранизировать запись?");
                 if (confirm)
                 {
-                    await SaveAndUploadBurialAsync();
+                    await SaveAndUploadBurialAsync();                    
                 }
             }
-            mNavigator.GoToPage(PageStates.BulialListPage, new Dictionary<string, string>()
-            {
-                [FormBundleConstants.BackMessage] = "Запись обновлена"
-            });
+            mNavigator.GoToPage(PageStates.BulialListPage);
         }
 
         public async Task DeleteRecordAsync()
@@ -112,11 +123,9 @@ namespace NativeVyatkaCore.Controllers
             if(confirm)
             {
                 mStorage.DeleteBurial(Burial.CloudId);
+                await AlertAsync("Запись удалена");
             }
-            mNavigator.GoToPage(PageStates.BulialListPage, new Dictionary<string, string>()
-            {
-                [FormBundleConstants.BackMessage] = "Запись удалена"
-            });
+            mNavigator.GoToPage(PageStates.BulialListPage);
         }      
         public event EventHandler<bool> BurialUpdated;
         private bool updated = false;
@@ -132,8 +141,10 @@ namespace NativeVyatkaCore.Controllers
                 BurialUpdated?.Invoke(this, value);
             }
         }
+        public bool Creating { get; private set; } = false;
         private readonly ICrossPageNavigator mNavigator;
         private readonly IBurialImageGuide mBurialImageGuide;
         private readonly IBurialStorage mStorage;
+        private readonly IBurialsDataProvider mBurialsDataProvider;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Abstractions.Models.AppModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace Abstractions.Interfaces.Network
     public interface IBurialsDataProvider
     {
         Task DownloadBurialsAsync();
+        Task UploadBurial(BurialModel burial);
     }
 }

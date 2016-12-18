@@ -41,7 +41,7 @@ namespace NativeVyatkaAndroid
             catch (Exception ex)
             {
                 iConsole.Error(ex);
-                mController.GoBackWithMeassage("Ошибка открытия захоронения");
+                mController.ForceGoBack();
             }
         }
 
@@ -125,7 +125,6 @@ namespace NativeVyatkaAndroid
             etDeathTime = FindViewById<EditText>(Resource.Id.etDeathTime);
             carmaMap = FindViewById<MapView>(Resource.Id.mapView);
             carmaMap.OnCreate(savedInstanceState);
-            carmaMap.GetMapAsync(this);
         }
 
         private void BurialNeedToBeUpdated(EditText view)
@@ -164,6 +163,7 @@ namespace NativeVyatkaAndroid
             MenuInflater.Inflate(Resource.Menu.menu_edit_bar, menu);
             mSaveIcon = menu.FindItem(Resource.Id.action_save);
             mSaveIcon.SetVisible(mController.Updated);
+            menu.FindItem(Resource.Id.action_delete).SetVisible(!mController.Creating);
             return base.OnCreateOptionsMenu(menu);
         }
 
@@ -197,13 +197,14 @@ namespace NativeVyatkaAndroid
         public void OnMapReady(GoogleMap googleMap)
         {
             var item = mController.Burial;
-            if (googleMap != null && item != null)
+            if (googleMap != null && item != BurialModel.Null)
             {
                 carmaMap?.OnResume();
                 var position = new LatLng(item.Location.Latitude, item.Location.Longitude);
                 var camPos = new CameraPosition.Builder().Target(position).Zoom(15f).Build();
                 var camUpdate = CameraUpdateFactory.NewCameraPosition(camPos);
                 googleMap.MoveCamera(camUpdate);
+                googleMap.UiSettings.ScrollGesturesEnabled = false;
 
                 var marker = new MarkerOptions();
                 marker.SetPosition(position);

@@ -43,8 +43,8 @@
         </LinearLayout>
     </LinearLayout>
     <View
-        android:orientation="horizontal"
         android:id="@+id/vIsSended"
+        android:visibility="gone"
         android:background="@drawable/round_point"
         android:layout_width="@dimen/round_point"
         android:layout_height="@dimen/round_point"

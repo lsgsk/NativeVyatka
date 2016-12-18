@@ -9,6 +9,7 @@ using Android.Gms.Maps.Model;
 using Android.Graphics;
 using System.Collections.Generic;
 using Abstractions.Models.AppModels;
+using Plugin.Geolocator;
 
 namespace NativeVyatkaAndroid
 {
@@ -33,7 +34,7 @@ namespace NativeVyatkaAndroid
         {
             base.OnViewCreated(view, savedInstanceState);
             carmaMap = mContentView.FindViewById<MapView>(Resource.Id.mapView);
-            carmaMap.OnCreate(savedInstanceState); 
+            carmaMap.OnCreate(savedInstanceState);
             carmaMap.GetMapAsync(this);
             Refresher.Enabled = false;
         }
@@ -51,11 +52,11 @@ namespace NativeVyatkaAndroid
             try
             {
                 SetContentShown(false);
-          
+
                 //****
 
                 SetContentEmpty(false);
-                SetContentShown(true); 
+                SetContentShown(true);
             }
             catch
             {
@@ -66,7 +67,7 @@ namespace NativeVyatkaAndroid
         private void ShowErrorAction()
         {
             SetContentEmpty(true);
-            SetContentShown(true);  
+            SetContentShown(true);
         }
 
         public void OnMapReady(GoogleMap googleMap)
@@ -89,7 +90,7 @@ namespace NativeVyatkaAndroid
                     CameraUpdate camUpdate = CameraUpdateFactory.NewCameraPosition(camPos);
                     carmaGoogleMap.MoveCamera(camUpdate);
                 }
-                SetMarkers();              
+                SetMarkers();
             }
         }
 
@@ -101,7 +102,19 @@ namespace NativeVyatkaAndroid
         private async Task SetMarkers()
         {
             carmaGoogleMap.Clear();
-            var collection = new List<BurialModel>();// await mBurialManager.GetAllBurials();
+            var position = await CrossGeolocator.Current.GetPositionAsync(10000);
+            var collection = new List<BurialModel>()
+            {
+                new BurialModel()
+                {
+                    Name = "Игнатий",
+                    Location = new BurialModel.Position()
+                    {
+                        Latitude = position.Latitude,
+                        Longitude = position.Longitude
+                    }
+                }
+            };     
             foreach (var item in collection)
             {
                 var marker = new MarkerOptions();
@@ -183,9 +196,7 @@ namespace NativeVyatkaAndroid
         }
 
         public override void OnPrepareOptionsMenu(IMenu menu)
-        {           
-            menu.FindItem(Resource.Id.action_filter).SetVisible(false);
-            menu.FindItem(Resource.Id.action_search).SetVisible(true);               
+        {          
             base.OnPrepareOptionsMenu(menu);
         }
 

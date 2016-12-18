@@ -22,11 +22,13 @@ namespace NativeVyatkaAndroid
         }
 
         public void BindItem(BurialModel burial)
-        {       
-            tvName.Text = $"{burial.Name} {burial.Surname} {burial.Patronymic}";
-            tvDescription.Text = burial.Desctiption;
-            Picasso.With(imgImage.Context).Load(new File(burial.PicturePath)).Resize(100, 100).CenterCrop().Into(imgImage);            
+        {
+            var name = $"{burial.Surname} {burial.Name} {burial.Patronymic}";
+            tvName.Text = string.IsNullOrWhiteSpace(name) ? "Неизвестное захоронение" : name;
+            tvDescription.Text = string.IsNullOrEmpty(burial.Desctiption) ? "Без описания" : burial.Desctiption;
+            Picasso.With(imgImage.Context).Load(new File(burial.PicturePath)).Resize(100, 100).CenterCrop().Into(imgImage);
+            vIsSended.Visibility = burial.Updated ? ViewStates.Gone : ViewStates.Visible;
         }
-    }
+    }    
 }
 

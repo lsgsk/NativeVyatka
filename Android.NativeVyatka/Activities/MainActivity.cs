@@ -6,7 +6,6 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Fragment = Android.Support.V4.App.Fragment;
 using Android.Content;
 using Android.OS;
-using System.Threading.Tasks;
 using Android.Support.V7.App;
 using Android.Support.V4.View;
 using Microsoft.Practices.Unity;
@@ -27,9 +26,9 @@ namespace NativeVyatkaAndroid
             mController = App.Container.Resolve<IMainController>();
         }
 
-        protected async override void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);            
+            base.OnCreate(savedInstanceState);
             FindAndBindViews();
             SetProfile();
             if (savedInstanceState == null)
@@ -37,14 +36,14 @@ namespace NativeVyatkaAndroid
                 SelectItem(Resource.Id.navigation_my_records);
                 mNavigationView.Menu.GetItem(0).SetChecked(true);
             }
-            await CrossGeolocator.Current.StartListeningAsync(10000, 5, true);
+            CrossGeolocator.Current.StartListeningAsync(10000, 5, true);
         }
 
-        protected async override void OnDestroy()
+        protected override void OnDestroy()
         {
             base.OnDestroy();
             mController.Dispose();
-            await CrossGeolocator.Current.StopListeningAsync();
+            CrossGeolocator.Current.StopListeningAsync();
         }
 
         private void FindAndBindViews()
@@ -88,13 +87,6 @@ namespace NativeVyatkaAndroid
                 case Resource.Id.navigation_map_records:
                     fragment = MapFragment.NewInstance();
                     tag = MapFragment.MapFragmentTag;
-                    break;
-                case Resource.Id.navigation_settings:
-                    StartActivity(new Intent(this, typeof(SettingsActivity)));
-                    break;
-                case Resource.Id.navigation_about:
-                    //var aboutDialog = MessageDialog.NewInstance(Resource.String.dialogs_about_message, Resource.String.dialogs_about_title);
-                    //aboutDialog.Show(SupportFragmentManager, MessageDialog.MessageDialogTag);
                     break;
             }
             if (fragment != null)
@@ -147,7 +139,6 @@ namespace NativeVyatkaAndroid
             }
             return base.OnOptionsItemSelected(item);
         }
-
         public readonly IMainController mController;
         protected DrawerLayout mDrawerLayout;
         protected NavigationView mNavigationView;

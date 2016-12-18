@@ -15,5 +15,6 @@ namespace Abstractions.Interfaces.Controllers
     {
         List<BurialModel> GetBurials();
         void DisplayBurial(BurialModel burial);
+        Task ForceSyncBurials();
     }
 }

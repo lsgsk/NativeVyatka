@@ -13,8 +13,7 @@ namespace NativeVyatkaAndroid
     {
         public static RecordsFragment NewInstance()
         {
-            var fragment = new RecordsFragment();
-            return fragment;
+           return new RecordsFragment();
         }
 
         public override void OnAttach(Context context)
@@ -38,8 +37,8 @@ namespace NativeVyatkaAndroid
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
-            Refresher.Refresh += async (sender, e) => await ObtainData(true); 
-            RepeatClick += async (sender, e) => await ObtainData(true);
+            Refresher.Refresh += async (sender, e) => await ObtainData(); 
+            RepeatClick += async (sender, e) => await ObtainData();
             mRecyclerView = mContentView.FindViewById<RecyclerView>(Resource.Id.rvRecordsList);
             mRecyclerView.HasFixedSize = true;
             mRecyclerView.SetLayoutManager(new LinearLayoutManager(Activity.BaseContext));
@@ -62,29 +61,15 @@ namespace NativeVyatkaAndroid
             SetContentShown(false);
             var items = mController.GetBurials();
             mAdapter.UpdateItems(items);
-            SetContentEmpty(false);
+            SetContentEmpty(items.Count == 0);
             SetContentShown(true);
         }
 
-        protected async Task ObtainData(bool force = false)
+        protected async Task ObtainData()
         {
-            try
-            {
-                SetContentShown(false);
-                var items = mController.GetBurials();
-                mAdapter.UpdateItems(items);
-                SetContentEmpty(false);
-                SetContentShown(true);
-            }
-            catch
-            {
-                SetContentEmpty(true);
-                SetContentShown(true);
-            }
-            finally
-            {
-                Refresher.Refreshing = false;
-            }
+            await mController.ForceSyncBurials();
+            DisplayVisitors();
+            Refresher.Refreshing = false;
         }
 
         private void BurialRecordItemClick (object sender, BaseEventArgs<BurialModel> e)
@@ -95,14 +80,13 @@ namespace NativeVyatkaAndroid
         public override void OnPrepareOptionsMenu(IMenu menu)
         {      
             base.OnPrepareOptionsMenu(menu);
-            //menu.FindItem(Resource.Id.action_filter).SetVisible(false);
-            //menu.FindItem(Resource.Id.action_search).SetVisible(true);             
-        }
+            var sync = menu.FindItem(Resource.Id.action_sync).SetVisible(false);             
+        }     
+
         private RecyclerView mRecyclerView;
         private BaseRecyclerViewAdapter<BurialModel, BurialRecordViewHolder> mAdapter;
         private View mContentView;
         public const string RecordsFragmentTag = "RecordsFragmentTag";
-
         private IMainRecordsController mController;
     }
 }
