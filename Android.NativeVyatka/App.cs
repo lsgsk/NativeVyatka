@@ -7,6 +7,7 @@ using NativeVyatkaCore;
 using Acr.UserDialogs;
 using NativeVyatkaCore.Database;
 using Plugin.Geolocator;
+using NativeVyatkaCore.Utilities;
 
 namespace NativeVyatkaAndroid
 {
@@ -23,10 +24,9 @@ namespace NativeVyatkaAndroid
             RegisterActivityLifecycleCallbacks(this);
             RegisterTypesIntoDI.InitContainer(Container);
             BurialDatabase.InitILobbyPhoneDatabase(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
-            UserDialogs.Init(() => CrossCurrentActivity.Current.Activity);            
-        }
-
-        
+            UserDialogs.Init(() => CrossCurrentActivity.Current.Activity);
+            iConsole.Init(new ConsoleRealization());
+        }        
 
         public override void OnTerminate()
         {

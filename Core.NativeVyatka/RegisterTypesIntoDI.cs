@@ -7,7 +7,6 @@ using Abstractions.Interfaces.Plugins;
 using Abstractions.Interfaces.Settings;
 using Abstractions.Interfaces.Utilities.Validators;
 using Microsoft.Practices.Unity;
-using NativeVyatkaAndroid;
 using NativeVyatkaCore.Controllers;
 using NativeVyatkaCore.Database;
 using NativeVyatkaCore.Network;
@@ -26,7 +25,7 @@ namespace NativeVyatkaCore
                      .RegisterType<IMainController, MainController>()
                      .RegisterType<IBurialEditController, BurialEditController>();            
             //----------------------------------------------------------------------------------------
-            container.RegisterType<IDatabase, BurialDatabase>();
+            container.RegisterType<IDataStorage, BurialDatabase>();
             container.RegisterType<IProfileStorage, BurialDatabase>();
             container.RegisterType<IBurialStorage, BurialDatabase>();
             //----------------------------------------------------------------------------------------

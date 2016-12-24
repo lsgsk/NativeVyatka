@@ -2,7 +2,6 @@
 using Abstractions.Interfaces.Network.RestClients;
 using Abstractions.Models.Network.ServiceEntities;
 using Newtonsoft.Json;
-using Plugins;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -10,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Threading;
 using Abstractions.Interfaces.Settings;
+using NativeVyatkaCore.Utilities;
 
 namespace NativeVyatkaCore.Network.RestClients
 {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System;
 using Abstractions.Models.DatabaseModels;
 using Abstractions.Models.AppModels;
-using Plugins;
 using System.Linq;
+using NativeVyatkaCore.Utilities;
 
 namespace NativeVyatkaCore.Database
 {
@@ -24,7 +24,7 @@ namespace NativeVyatkaCore.Database
             {
                 using (var conn = GetConnection())
                 {
-                    return conn.Table<BurialEntity>().Select(x => new BurialModel(x)).ToList();
+                    return conn.Table<BurialEntity>().ToList().Select(x => new BurialModel(x)).ToList();
                 }
             }
             catch (Exception ex)

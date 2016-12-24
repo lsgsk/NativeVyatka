@@ -3,13 +3,11 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Gms.Maps;
-using System.Threading.Tasks;
 using Android.Locations;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
-using System.Collections.Generic;
-using Abstractions.Models.AppModels;
-using Plugin.Geolocator;
+using Abstractions.Interfaces.Controllers;
+using System.Linq;
 
 namespace NativeVyatkaAndroid
 {
@@ -19,16 +17,24 @@ namespace NativeVyatkaAndroid
         {
             return new MapFragment();
         }
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+
+        public override void OnAttach(Context context)
         {
-            mContentView = inflater.Inflate(Resource.Layout.Fragment_Map, container, false);
-            return base.OnCreateView(inflater, container, savedInstanceState);
+            base.OnAttach(context);
+            mController = (context as MainActivity).mController;
         }
 
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            HasOptionsMenu = true;
         }
+
+        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            mContentView = inflater.Inflate(Resource.Layout.Fragment_Map, container, false);
+            return base.OnCreateView(inflater, container, savedInstanceState);
+        }        
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
@@ -39,42 +45,41 @@ namespace NativeVyatkaAndroid
             Refresher.Enabled = false;
         }
 
-        public override async void OnActivityCreated(Bundle savedInstanceState)
+        public override void OnActivityCreated(Bundle savedInstanceState)
         {
             base.OnActivityCreated(savedInstanceState);
             SetContentView(mContentView);
             SetEmptyText(Resource.String.null_content);
-            await ObtainData(savedInstanceState == null);
-        }
-
-        protected async Task ObtainData(bool force = false)
-        {
-            try
-            {
-                SetContentShown(false);
-
-                //****
-
-                SetContentEmpty(false);
-                SetContentShown(true);
-            }
-            catch
-            {
-                ShowErrorAction();
-            }
-        }
-
-        private void ShowErrorAction()
-        {
-            SetContentEmpty(true);
+            SetContentEmpty(false);
             SetContentShown(true);
+            DisplayMarkers();
+        }
+
+        protected void DisplayMarkers()
+        {
+            if (carmaGoogleMap != null)
+            {
+                carmaGoogleMap.Clear();
+                var collection = mController.GetBurials();
+                foreach (var item in collection)
+                {
+                    var marker = new MarkerOptions();
+                    marker.SetPosition(new LatLng(item.Location.Latitude, item.Location.Longitude));
+                    marker.SetTitle(item.Name);
+                    var mrk = carmaGoogleMap.AddMarker(marker);
+                    mrk.Tag = item.CloudId;
+                }
+            }
         }
 
         public void OnMapReady(GoogleMap googleMap)
         {
             carmaGoogleMap = googleMap;
             carmaGoogleMap.MyLocationEnabled = true;
+            googleMap.UiSettings.MyLocationButtonEnabled = true;
+            carmaGoogleMap.MarkerClick += MapClick;
             moveMapToMyLocation();
+            DisplayMarkers();
         }
 
         private void moveMapToMyLocation()
@@ -90,109 +95,40 @@ namespace NativeVyatkaAndroid
                     CameraUpdate camUpdate = CameraUpdateFactory.NewCameraPosition(camPos);
                     carmaGoogleMap.MoveCamera(camUpdate);
                 }
-                SetMarkers();
             }
-        }
-
-        public async Task UpdatePoints()
-        {
-            await SetMarkers();
-        }
-
-        private async Task SetMarkers()
-        {
-            carmaGoogleMap.Clear();
-            var position = await CrossGeolocator.Current.GetPositionAsync(10000);
-            var collection = new List<BurialModel>()
-            {
-                new BurialModel()
-                {
-                    Name = "Игнатий",
-                    Location = new BurialModel.Position()
-                    {
-                        Latitude = position.Latitude,
-                        Longitude = position.Longitude
-                    }
-                }
-            };     
-            foreach (var item in collection)
-            {
-                var marker = new MarkerOptions();
-                marker.SetPosition(new LatLng(item.Location.Latitude, item.Location.Longitude));
-                marker.SetTitle(item.Name);
-                carmaGoogleMap.AddMarker(marker); 
-            }
-        }
-
-        private static Bitmap GetCircle()
-        {
-            var areaRect = new RectF(0, 0, 70, 70);
-            var circle = Bitmap.CreateBitmap((int)areaRect.Width(), (int)areaRect.Height(), Bitmap.Config.Argb4444);                
-            var canvas = new Canvas(circle);
-            var paint = new Paint();
-            paint.AntiAlias = true;
-            paint.Color = Color.LightBlue;
-            paint.SetStyle(Paint.Style.Fill);
-            canvas.DrawRoundRect(areaRect, 70, 70, paint);
-            paint.Color = Color.White;
-            canvas.DrawRoundRect(new RectF(10, 10, 60, 60), 50, 50, paint);
-            paint.Color = Color.LightBlue;
-            canvas.DrawRoundRect(new RectF(20, 20, 50, 50), 30, 30, paint);  
-            return circle;            
         }
 
         public override void OnResume()
         {
             base.OnResume();
-            carmaMap.OnResume();
-            if (carmaGoogleMap != null)
-            {
-                carmaGoogleMap.MyLocationEnabled = true;
-                carmaGoogleMap.MarkerClick += MapClick;    
-            }
+            carmaMap?.OnResume();
         }
 
-        void MapClick (object sender, GoogleMap.MarkerClickEventArgs e)
+        private void MapClick (object sender, GoogleMap.MarkerClickEventArgs e)
         {
-            var areaRect = new RectF(0, 0, 100, 100);
-            var circle = Bitmap.CreateBitmap((int)areaRect.Width(), (int)areaRect.Height(), Bitmap.Config.Argb4444);                
-            var canvas = new Canvas(circle);
-            var paint = new Paint();
-            paint.AntiAlias = true;
-            paint.Color = Color.Red;
-            paint.SetStyle(Paint.Style.Fill);
-            canvas.DrawRoundRect(areaRect, 100, 100, paint);
-            canvas.DrawBitmap(BitmapFactory.DecodeResource(Application.Context.Resources, Resource.Drawable.Icon), 0,0, null);
-
-
-            var marker = new MarkerOptions();
-            marker.SetPosition(new LatLng(e.Marker.Position.Latitude + 0.001, e.Marker.Position.Longitude + 0.001));
-            marker.SetIcon(BitmapDescriptorFactory.FromBitmap(circle));
-            carmaGoogleMap.AddMarker(marker); 
-
+            var item = mController.GetBurials().FirstOrDefault(x => x.CloudId == e.Marker.Tag.ToString());
+            if(item != null)
+            {
+                mController.DisplayBurial(item);
+            }
         }
 
         public override void OnPause()
         {
             base.OnPause();
-            carmaMap.OnPause();
-            if (carmaGoogleMap != null)
-            {
-                carmaGoogleMap.MyLocationEnabled = false;
-                carmaGoogleMap.MarkerClick-= MapClick;
-            }
+            carmaMap?.OnPause();
         }
 
         public override void OnDestroy()
         {
             base.OnDestroy();
-            carmaMap.OnDestroy();
+            carmaMap?.OnDestroy();
         }
 
         public override void OnLowMemory()
         {
             base.OnLowMemory();
-            carmaMap.OnLowMemory();
+            carmaMap?.OnLowMemory();
         }
 
         public override void OnPrepareOptionsMenu(IMenu menu)
@@ -200,6 +136,7 @@ namespace NativeVyatkaAndroid
             base.OnPrepareOptionsMenu(menu);
         }
 
+        private IMainMapController mController;
         private MapView carmaMap;
         private GoogleMap carmaGoogleMap;
         protected View mContentView;

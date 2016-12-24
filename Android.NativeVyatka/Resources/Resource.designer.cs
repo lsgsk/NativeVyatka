@@ -65,7 +65,6 @@ namespace NativeVyatkaAndroid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::NativeVyatkaAndroid.Resource.Styleable.ProgressWheel_ahTextSize;
 			global::PCLStorage.Resource.String.ApplicationName = global::NativeVyatkaAndroid.Resource.String.ApplicationName;
 			global::PCLStorage.Resource.String.Hello = global::NativeVyatkaAndroid.Resource.String.Hello;
-			global::Plugins.Resource.String.library_name = global::NativeVyatkaAndroid.Resource.String.library_name;
 			global::Splat.Resource.String.library_name = global::NativeVyatkaAndroid.Resource.String.library_name;
 		}
 		
@@ -3533,11 +3532,11 @@ namespace NativeVyatkaAndroid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f07003c
-			public const int ApplicationName = 2131165244;
-			
 			// aapt resource value: 0x7f07003b
-			public const int Hello = 2131165243;
+			public const int ApplicationName = 2131165243;
+			
+			// aapt resource value: 0x7f07003a
+			public const int Hello = 2131165242;
 			
 			// aapt resource value: 0x7f070016
 			public const int abc_action_bar_home_description = 2131165206;
@@ -3761,8 +3760,8 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f07003e
 			public const int key_user_name = 2131165246;
 			
-			// aapt resource value: 0x7f07003a
-			public const int library_name = 2131165242;
+			// aapt resource value: 0x7f07003c
+			public const int library_name = 2131165244;
 			
 			// aapt resource value: 0x7f07005f
 			public const int navigation_about = 2131165279;

@@ -1,12 +1,12 @@
 ﻿using SQLite;
 using Abstractions;
-using Plugins;
 using Abstractions.Models.DatabaseModels;
 using System.IO;
+using NativeVyatkaCore.Utilities;
 
 namespace NativeVyatkaCore.Database
 {
-    public sealed partial class BurialDatabase : IDatabase
+    public sealed partial class BurialDatabase : IDataStorage
     {
         public static void InitILobbyPhoneDatabase(string path)
         {

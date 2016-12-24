@@ -9,15 +9,18 @@ using Plugin.Geolocator;
 using Newtonsoft.Json;
 using Abstractions;
 using Abstractions.Exceptions;
+using Abstractions.Interfaces.Database.Tables;
+using NativeVyatkaCore.Utilities;
 
 namespace NativeVyatkaCore.Controllers
 {
     public class MainController : BaseController, IMainController
     {
-        public MainController(ICrossPageNavigator navigator, IDatabase storage)
+        public MainController(ICrossPageNavigator navigator, IProfileStorage pstorage, IBurialStorage bstorage)
         {
             this.mNavigator = navigator;
-            this.mStorage = storage;
+            this.mPstorage = pstorage;
+            this.mBstorage = bstorage;
         }
 
         public async Task CreateNewBurial()
@@ -41,6 +44,7 @@ namespace NativeVyatkaCore.Controllers
                     }
                     catch(Exception ex)
                     {
+                        iConsole.Error(ex);
                         await AlertAsync("В настоящее время gps не доступен. Сделать запись невозможно", "Внимание");
                     }                 
                 }
@@ -57,14 +61,14 @@ namespace NativeVyatkaCore.Controllers
         {
             get
             {
-                profile = profile ?? mStorage.GetProfile();
+                profile = profile ?? mPstorage.GetProfile();
                 return profile;
             }
         }
 
         public List<BurialModel> GetBurials()
         {
-            return mStorage.GetBurials();
+            return  mBstorage.GetBurials();
         }
 
         public void DisplayBurial(BurialModel burial)
@@ -88,9 +92,10 @@ namespace NativeVyatkaCore.Controllers
                 Progress = false;
                 await AlertAsync("Синхранизация не удалась");
             }
-        }      
+        }
 
-        private readonly IDatabase mStorage;
+        private readonly IProfileStorage mPstorage;
+        private readonly IBurialStorage mBstorage;
         private readonly ICrossPageNavigator mNavigator;
     }
 }

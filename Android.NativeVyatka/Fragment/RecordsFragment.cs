@@ -53,10 +53,10 @@ namespace NativeVyatkaAndroid
             base.OnActivityCreated(savedInstanceState);
             SetContentView(mContentView);
             SetEmptyText(Resource.String.null_content);
-            DisplayVisitors();
+            DisplayRecords();
         }
 
-        protected void DisplayVisitors()
+        protected void DisplayRecords()
         {
             SetContentShown(false);
             var items = mController.GetBurials();
@@ -68,7 +68,7 @@ namespace NativeVyatkaAndroid
         protected async Task ObtainData()
         {
             await mController.ForceSyncBurials();
-            DisplayVisitors();
+            DisplayRecords();
             Refresher.Refreshing = false;
         }
 

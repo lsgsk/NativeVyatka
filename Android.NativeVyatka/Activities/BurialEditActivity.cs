@@ -5,7 +5,6 @@ using Android.Widget;
 using Java.Interop;
 using Android.Views;
 using Microsoft.Practices.Unity;
-using Plugins;
 using Android.Content;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Android.Gms.Maps;
@@ -16,6 +15,7 @@ using Abstractions.Interfaces.Plugins;
 using Newtonsoft.Json;
 using Abstractions.Models.AppModels;
 using Square.Picasso;
+using NativeVyatkaCore.Utilities;
 
 namespace NativeVyatkaAndroid
 {

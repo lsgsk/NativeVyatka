@@ -1,5 +1,4 @@
-﻿using System;
-using Abstractions.Interfaces.Settings;
+﻿using Abstractions.Interfaces.Settings;
 using Plugin.Settings;
 using Abstractions.Constants;
 
@@ -11,9 +10,8 @@ namespace NativeVyatkaCore.Settings
         {
             get
             {
-                return CrossSettings.Current.GetValueOrDefault(ServiceUrlKey, Common.ServiceUrl);
+                return CrossSettings.Current.GetValueOrDefault(ServiceUrlKey, ApConstant.ServiceUrl);
             }
-
             set
             {
                 CrossSettings.Current.AddOrUpdateValue(ServiceUrlKey, value);

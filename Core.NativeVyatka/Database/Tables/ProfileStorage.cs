@@ -2,8 +2,8 @@
 using System;
 using Abstractions.Models.AppModels;
 using Abstractions.Models.DatabaseModels;
-using Plugins;
 using Abstractions.Exceptions;
+using NativeVyatkaCore.Utilities;
 
 namespace NativeVyatkaCore.Database
 {

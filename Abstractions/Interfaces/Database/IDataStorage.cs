@@ -1,8 +1,6 @@
-﻿using Abstractions.Interfaces.Database.Tables;
-
-namespace Abstractions
+﻿namespace Abstractions
 {
-    public interface IDatabase : IBurialStorage, IProfileStorage
+    public interface IDataStorage 
     {
         void ClearDataBase();        
     }

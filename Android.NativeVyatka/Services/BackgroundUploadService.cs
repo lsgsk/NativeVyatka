@@ -1,14 +1,8 @@
 ﻿using System;
 using Android.App;
 using Android.Content;
-using Microsoft.Practices.Unity;
 using System.Threading;
-using Abstractions;
-using Plugins;
-using NativeVyatkaCore;
-using System.Linq;
-using System.Collections.Generic;
-using Abstractions.Models.DatabaseModels;
+using NativeVyatkaCore.Utilities;
 
 namespace NativeVyatkaAndroid
 {

@@ -7,13 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeVyatka.Core", "Core.N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeVyatka.Android", "Android.NativeVyatka\NativeVyatka.Android.csproj", "{B4FE2CCC-87F2-4046-9022-26CFC4FB9F10}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{136F5CF1-3A8D-436A-B95F-33ACCC9F0AB8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins", "Plugins\Plugins\Plugins.csproj", "{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.Android", "Plugins\Plugin.Android\Plugins.Android.csproj", "{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abstractions", "Abstractions\Abstractions.csproj", "{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5ADE82DC-4BA8-491B-902C-057B16D27E09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,14 +26,6 @@ Global
 		{B4FE2CCC-87F2-4046-9022-26CFC4FB9F10}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{B4FE2CCC-87F2-4046-9022-26CFC4FB9F10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4FE2CCC-87F2-4046-9022-26CFC4FB9F10}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E139C75A-0258-4C7D-9CC9-69AFA368A2DA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1561DE6E-554B-4AA5-97E6-BE1AC5243E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,9 +33,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{3939327F-FDD6-4FF3-8FC1-80C5D7FDEC4F} = {136F5CF1-3A8D-436A-B95F-33ACCC9F0AB8}
-		{E139C75A-0258-4C7D-9CC9-69AFA368A2DA} = {136F5CF1-3A8D-436A-B95F-33ACCC9F0AB8}
 	EndGlobalSection
 EndGlobal

@@ -30,13 +30,16 @@ namespace Abstractions.Models.AppModels
             this.Surname = entity.Surname;
             this.Patronymic = entity.Patronymic;
             this.Desctiption = entity.Desctiption;
-            this.BirthDay = entity.BirthDay;
-            this.DeathDay = entity.DeathDay;            
-            this.RecordTime = entity.RecordTime;
-            this.Location.Latitude = entity.Latitude;
-            this.Location.Longitude = entity.Longitude;
-            this.Location.Altitude = entity.Altitude;
-            this.Location.Heading = entity.Heading;
+            this.BirthDay = (entity.BirthDay != null) ? DateTime.SpecifyKind(entity.BirthDay.Value, DateTimeKind.Utc) : (DateTime?)null;
+            this.DeathDay = (entity.DeathDay != null) ? DateTime.SpecifyKind(entity.DeathDay.Value, DateTimeKind.Utc) : (DateTime?)null;
+            this.RecordTime = DateTime.SpecifyKind(entity.RecordTime, DateTimeKind.Utc);
+            this.Location = new Position()
+            {
+                Latitude = entity.Latitude,
+                Longitude = entity.Longitude,
+                Altitude = entity.Altitude,
+                Heading = entity.Heading
+            };           
             this.PicturePath = entity.PicturePath;
             this.Updated = entity.Updated;
         }

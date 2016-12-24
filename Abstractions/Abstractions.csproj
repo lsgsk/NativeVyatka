@@ -38,8 +38,8 @@
     <Compile Include="Interfaces\Controllers\IBurialEditController.cs" />
     <Compile Include="Interfaces\Controllers\ILoginController.cs" />
     <Compile Include="Interfaces\Controllers\IMainController.cs" />
-    <Compile Include="Interfaces\Database\Tables\IBurialStorage.cs" />
-    <Compile Include="Interfaces\Database\Tables\IProfileStorage.cs" />
+    <Compile Include="Interfaces\Database\IBurialStorage.cs" />
+    <Compile Include="Interfaces\Database\IProfileStorage.cs" />
     <Compile Include="Interfaces\Utilities\SaveProviders\IoGuide\IFileGuide.cs" />
     <Compile Include="Interfaces\Network\IBurialsDataProvider.cs" />
     <Compile Include="Interfaces\Network\IDataProvider.cs" />
@@ -59,9 +59,7 @@
     <Compile Include="Interfaces\Plugins\IConsole.cs" />
     <Compile Include="Interfaces\Database\IDataStorage.cs" />
     <Compile Include="Models\DatabaseModels\BurialEntity.cs" />
-    <Compile Include="Interfaces\Plugins\IFetchAddress.cs" />
     <Compile Include="Models\ApiModels\ApiBurial.cs" />
-    <Compile Include="Interfaces\Plugins\IImageHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SQLite-net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
