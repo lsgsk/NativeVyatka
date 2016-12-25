@@ -1,5 +1,6 @@
 ﻿using Abstractions.Models.DatabaseModels;
 using System;
+using System.Threading.Tasks;
 
 namespace Abstractions.Models.AppModels
 {
@@ -62,6 +63,27 @@ namespace Abstractions.Models.AppModels
                 Heading = this.Location.Heading,
                 PicturePath = this.PicturePath,
                 Updated = this.Updated,
+            };
+        }
+
+        public async Task<ApiBurial> ToApiBurial(IBurialImageGuide guide)
+        {
+            var picture = await guide.LoadFromFileSystemAsync(this.PicturePath);
+            return new ApiBurial()
+            {
+                CloudId = this.CloudId,
+                Name = this.Name,
+                Surname = this.Surname,
+                Patronymic = this.Patronymic,
+                Desctiption = this.Desctiption,
+                BirthDay = this.BirthDay,
+                DeathDay = this.DeathDay,
+                RecordTime = this.RecordTime,
+                Latitude = this.Location.Latitude,
+                Longitude = this.Location.Longitude,
+                Altitude = this.Location.Altitude,
+                Heading = this.Location.Heading,
+                Picture = picture
             };
         }
 

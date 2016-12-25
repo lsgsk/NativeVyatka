@@ -8,6 +8,7 @@ namespace Abstractions.Models.DatabaseModels
     {     
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+
         public string CloudId { get; set;}
         public string Name { get; set; }
         public string Surname { get; set; }
