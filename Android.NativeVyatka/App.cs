@@ -6,7 +6,6 @@ using Microsoft.Practices.Unity;
 using NativeVyatkaCore;
 using Acr.UserDialogs;
 using NativeVyatkaCore.Database;
-using Plugin.Geolocator;
 using NativeVyatkaCore.Utilities;
 
 namespace NativeVyatkaAndroid

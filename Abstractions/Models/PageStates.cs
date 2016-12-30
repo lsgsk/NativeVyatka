@@ -6,4 +6,10 @@
         BulialListPage,
         BurialEditPage
     }
+
+    public enum NavigationMenuIds
+    {
+        RecordsList,
+        RecordsMap
+    }
 }

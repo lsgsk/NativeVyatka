@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-
 using Foundation;
+using System;
+using System.Collections.Generic;
 using UIKit;
 
-namespace NativeVyatkaIOS
+namespace NativeVyatkaIOS.Controllers
 {
-    public partial class MasterViewController : UITableViewController
+    public partial class BurialsListViewController : UITableViewController
     {
-        DataSource dataSource;
-
-        public MasterViewController(IntPtr handle) : base(handle)
+        public BurialsListViewController(IntPtr handle) : base(handle)
         {
-            Title = NSBundle.MainBundle.LocalizedString("Master", "Master");
+
         }
 
         public override void ViewDidLoad()
@@ -27,12 +24,6 @@ namespace NativeVyatkaIOS
             NavigationItem.RightBarButtonItem = addButton;
 
             TableView.Source = dataSource = new DataSource(this);
-        }
-
-        public override void DidReceiveMemoryWarning()
-        {
-            base.DidReceiveMemoryWarning();
-            // Release any cached data, images, etc that aren't in use.
         }
 
         void AddNewItem(object sender, EventArgs args)
@@ -54,13 +45,14 @@ namespace NativeVyatkaIOS
             }
         }
 
+        DataSource dataSource;
         class DataSource : UITableViewSource
         {
             static readonly NSString CellIdentifier = new NSString("Cell");
             readonly List<object> objects = new List<object>();
-            readonly MasterViewController controller;
+            readonly BurialsListViewController controller;
 
-            public DataSource(MasterViewController controller)
+            public DataSource(BurialsListViewController controller)
             {
                 this.controller = controller;
             }
@@ -113,4 +105,3 @@ namespace NativeVyatkaIOS
         }
     }
 }
-

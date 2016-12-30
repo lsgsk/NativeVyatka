@@ -44,11 +44,10 @@ namespace NativeVyatkaCore
                      .RegisterType<IPageTypeImplementation, NativeVyatkaAndroid.Utilities.ActivityTypeImplementation>();
 #elif UWP
 #elif __IOS__
-            
-#elif TEST
-          
+            container.RegisterType<ICrossPageNavigator, NativeVyatkaIOS.Utilities.PageNavigator>()
+                     .RegisterType<IPageTypeImplementation, NativeVyatkaIOS.Utilities.ControllersTypeImplementation>();
+#elif TEST          
 #endif
-
             return container;
         }
     }

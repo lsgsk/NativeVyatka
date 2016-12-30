@@ -11,11 +11,8 @@ using UIKit;
 
 namespace NativeVyatkaIOS
 {
-    [Register ("UILoginController")]
-    partial class UILoginController
+    [Register ("MainViewController")]
+    partial class MainViewController
     {
-        void ReleaseDesignerOutlets ()
-        {
-        }
     }
 }

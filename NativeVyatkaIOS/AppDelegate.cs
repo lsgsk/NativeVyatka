@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using Microsoft.Practices.Unity;
 using UIKit;
 
 namespace NativeVyatkaIOS
@@ -8,7 +9,7 @@ namespace NativeVyatkaIOS
     [Register("AppDelegate")]
     public class AppDelegate : UIApplicationDelegate
     {
-        // class-level declarations
+        public static readonly UIStoryboard MainStoryboard = UIStoryboard.FromName("Main", null);
 
         public override UIWindow Window
         {
@@ -18,14 +19,6 @@ namespace NativeVyatkaIOS
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            // Override point for customization after application launch.
-            // If not required for your application you can safely delete this method
-
-            // Code to start the Xamarin Test Cloud Agent
-#if ENABLE_TEST_CLOUD
-			Xamarin.Calabash.Start();
-#endif
-
             return true;
         }
 

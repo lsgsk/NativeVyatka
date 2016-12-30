@@ -1,15 +1,22 @@
-﻿using UIKit;
+﻿using Microsoft.Practices.Unity;
+using NativeVyatkaCore;
+using NativeVyatkaCore.Database;
+using NativeVyatkaCore.Utilities;
+using System;
+using UIKit;
+using NativeVyatkaIOS.Utilities;
 
 namespace NativeVyatkaIOS
 {
-    public class Application
+    public class App
     {
-        // This is the main entry point of the application.
         static void Main(string[] args)
         {
-            // if you want to use a different Application Delegate class from "AppDelegate"
-            // you can specify it here.
+            RegisterTypesIntoDI.InitContainer(Container);
+            BurialDatabase.InitILobbyPhoneDatabase(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+            iConsole.Init(new ConsoleRealization());
             UIApplication.Main(args, null, "AppDelegate");
         }
+        public static UnityContainer Container { get; } = new UnityContainer();
     }
 }
