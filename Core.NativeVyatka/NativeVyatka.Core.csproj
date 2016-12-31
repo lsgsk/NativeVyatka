@@ -36,8 +36,8 @@
     <Compile Include="Controllers\BurialEditController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MainController.cs" />
-    <Compile Include="Database\Tables\BurialStorage.cs" />
-    <Compile Include="Database\Tables\ProfileStorage.cs" />
+    <Compile Include="Database\Tables\BurialsDatabase.cs" />
+    <Compile Include="Database\Tables\ProfileDatabase.cs" />
     <Compile Include="Network\BurialsDataProvider.cs" />
     <Compile Include="Network\LoginDataProvider.cs" />
     <Compile Include="Network\RestClients\LoginRestClient.cs" />
