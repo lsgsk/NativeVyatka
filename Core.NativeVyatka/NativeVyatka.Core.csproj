@@ -38,19 +38,18 @@
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Database\Tables\BurialsDatabase.cs" />
     <Compile Include="Database\Tables\ProfileDatabase.cs" />
-    <Compile Include="Network\BurialsDataProvider.cs" />
-    <Compile Include="Network\LoginDataProvider.cs" />
+    <Compile Include="Network\BurialsNetworkProvider.cs" />
+    <Compile Include="Network\LoginNetworkProvider.cs" />
     <Compile Include="Network\RestClients\LoginRestClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Database\BurialDatabase.cs" />
-    <Compile Include="Settings\SettingsProvider.cs" />
+    <Compile Include="Settings\SessionSettings.cs" />
     <Compile Include="Utilities\iConsole.cs" />
     <Compile Include="Utilities\SaveProviders\IoGuide\BaseFileGuide.cs" />
     <Compile Include="Utilities\SaveProviders\IoGuide\BurialImageGuide.cs" />
     <Compile Include="Utilities\Validators\SignInValidator.cs" />
     <None Include="app.config" />
     <None Include="RegisterTypesIntoDI.cs" />
-    <Compile Include="Utilities\TaskExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup />

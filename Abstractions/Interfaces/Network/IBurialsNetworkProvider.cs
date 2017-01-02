@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Abstractions.Interfaces.Network
 {
-    public interface IBurialsDataProvider
+    public interface IBurialsNetworkProvider
     {
         Task DownloadBurialsAsync();
         Task UploadBurial(BurialModel burial);

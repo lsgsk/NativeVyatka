@@ -4,11 +4,20 @@ using Abstractions.Models;
 
 namespace NativeVyatkaIOS.Utilities
 {
-    public class ControllersTypeImplementation : IPageTypeImplementation
+    public class ControllersTypeImplementation : IPageNameImplementation
     {
-        public Type GetTypeFor(PageStates state)
-        {
-            throw new NotImplementedException();
+        public string GetNameFor(PageStates state)
+        {            
+            switch (state)
+            {
+                case PageStates.LoginPage:
+                    return "LoginViewController";
+                case PageStates.BulialListPage:
+                    return "MainViewController";
+                case PageStates.BurialEditPage:
+                    break;
+            }
+            throw new NotSupportedException();
         }
     }
 }

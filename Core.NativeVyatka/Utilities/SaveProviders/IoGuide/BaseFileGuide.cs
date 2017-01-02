@@ -1,4 +1,5 @@
 ﻿using Abstractions;
+using Abstractions.Exceptions;
 using PCLStorage;
 using System;
 using System.IO;
@@ -22,11 +23,19 @@ namespace NativeVyatkaCore.Utilities.SaveProviders.IoGuide
         {
             fileBytes = fileBytes ?? new byte[0];
             name = FileNameConverting(Path.GetFileName(name));
-            IFolder folder = await RootFolder.CreateFolderAsync(Subfolder, CreationCollisionOption.OpenIfExists);
-            IFile image = await folder.CreateFileAsync(name, CreationCollisionOption.ReplaceExisting);
-            using (var str = await image.OpenAsync(FileAccess.ReadAndWrite))
+            try
             {
-                await str.WriteAsync(fileBytes, 0, fileBytes.Length);
+                IFolder folder = await RootFolder.CreateFolderAsync(Subfolder, CreationCollisionOption.OpenIfExists);
+                IFile image = await folder.CreateFileAsync(name, CreationCollisionOption.ReplaceExisting);
+                using (var str = await image.OpenAsync(FileAccess.ReadAndWrite))
+                {
+                    await str.WriteAsync(fileBytes, 0, fileBytes.Length);
+                }
+            }
+            catch(Exception ex)
+            {
+                iConsole.Error(ex);
+                throw new FileGuideException();
             }
         }
 
@@ -49,7 +58,7 @@ namespace NativeVyatkaCore.Utilities.SaveProviders.IoGuide
             catch (Exception ex)
             {
                 iConsole.Error(ex);
-                return new byte[0];
+                throw new FileGuideException();
             }
         }
 
@@ -79,6 +88,7 @@ namespace NativeVyatkaCore.Utilities.SaveProviders.IoGuide
             catch (Exception ex)
             {
                 iConsole.Error(ex);
+                throw new FileGuideException();
             }
         }
 

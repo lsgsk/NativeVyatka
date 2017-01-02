@@ -14,12 +14,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue id="584" destination="322" kind="relationship" relationship="rootViewController"/>
+                        <segue id="733" destination="8" kind="relationship" relationship="rootViewController"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eq9-QA-ai8" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-558" y="-314"/>
+            <point key="canvasLocation" x="-907" y="-324"/>
         </scene>
         <!--Master-->
         <!--Detail-->
@@ -116,7 +116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="606" y="-271"/>
+            <point key="canvasLocation" x="-454" y="-316"/>
         </scene>
         <scene sceneID="321">
             <objects>
@@ -134,11 +134,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="324" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-188" y="-310"/>
+            <point key="canvasLocation" x="206" y="427"/>
         </scene>
         <scene sceneID="593">
             <objects>
-                <viewController id="594" sceneMemberID="viewController" customClass="MainMenuViewController">
+                <viewController id="594" sceneMemberID="viewController" customClass="MainMenuViewController" storyboardIdentifier="MainMenuViewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="591"/>
                         <viewControllerLayoutGuide type="bottom" id="592"/>
@@ -152,7 +152,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="158"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="599" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="599" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
                                 <rect key="frame" x="0.0" y="158" width="320" height="418"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -161,7 +161,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="600" id="601">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -214,5 +214,8 @@
         <image name="icon_signout_visitor.png" width="24" height="24"/>
         <image name="icon_visitor_signin.png" width="24" height="24"/>
         <image name="drawer_header.jpg" width="512" height="288"/>
+        <image name="nophoto.png" width="96" height="96"/>
+        <image name="menu_globe.png" width="48" height="48"/>
+        <image name="menu_list.png" width="48" height="48"/>
     </resources>
 </document>

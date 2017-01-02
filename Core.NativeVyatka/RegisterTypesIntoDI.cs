@@ -29,12 +29,12 @@ namespace NativeVyatkaCore
             container.RegisterType<IProfileStorage, BurialDatabase>();
             container.RegisterType<IBurialStorage, BurialDatabase>();
             //----------------------------------------------------------------------------------------
-            container.RegisterType<ILoginDataProvider, LoginDataProvider > ();
-            container.RegisterType<IBurialsDataProvider, BurialsDataProvider>();
+            container.RegisterType<ILoginNetworkProvider, LoginNetworkProvider > ();
+            container.RegisterType<IBurialsNetworkProvider, BurialsNetworkProvider>();
 
             container.RegisterType<ILoginRestClient, LoginRestClient>();
             //----------------------------------------------------------------------------------------
-            container.RegisterType<ISettingsProvider, SettingsProvider>();
+            container.RegisterType<ISessionSettings, SessionSettings>();
             container.RegisterType<ISignInValidator, SignInValidator>();
 
             container.RegisterType<IBurialImageGuide, BurialImageGuide>();
@@ -44,9 +44,11 @@ namespace NativeVyatkaCore
                      .RegisterType<IPageTypeImplementation, NativeVyatkaAndroid.Utilities.ActivityTypeImplementation>();
 #elif UWP
 #elif __IOS__
-            container.RegisterType<ICrossPageNavigator, NativeVyatkaIOS.Utilities.PageNavigator>()
-                     .RegisterType<IPageTypeImplementation, NativeVyatkaIOS.Utilities.ControllersTypeImplementation>();
-#elif TEST          
+            container.RegisterType<IPageNameImplementation, NativeVyatkaIOS.Utilities.ControllersTypeImplementation>()
+                     //.RegisterInstance<UIKit.UIStoryboard>(NativeVyatkaIOS.AppDelegate.MainStoryboard)
+                     //.RegisterInstance<UIKit.UINavigationController>(NativeVyatkaIOS.AppDelegate.NavigationController)
+                     .RegisterType<ICrossPageNavigator, NativeVyatkaIOS.Utilities.PageNavigator>();
+#elif TEST
 #endif
             return container;
         }

@@ -1,14 +1,16 @@
-using Abstractions.Interfaces.Plugins;
 using UIKit;
 using Abstractions.Models;
 using Abstractions.Models.AppModels;
 using NativeVyatkaIOS.Utilities.TableSources;
+using System;
+using FFImageLoading;
+using FFImageLoading.Work;
 
 namespace NativeVyatkaIOS.Controllers
 {
     public partial class MainMenuViewController : UIViewController
     {
-        public MainMenuViewController()
+        public MainMenuViewController(IntPtr handle) : base(handle)
         {
         }
 
@@ -17,19 +19,20 @@ namespace NativeVyatkaIOS.Controllers
             base.ViewDidLoad();
             var tableItems = new MenuItem[]
                                  {
-                                    new MenuItem(NavigationMenuIds.RecordsList,"Register Visitor","icon_visitor_signin"),
-                                    new MenuItem(NavigationMenuIds.RecordsMap,"Sign-Out Visitor","icon_signout_visitor")
+                                    new MenuItem(NavigationMenuIds.RecordsList, "Мои записи", "menu_list.png"),
+                                    new MenuItem(NavigationMenuIds.RecordsMap, "Карта захоронений","menu_globe.png")
                                  };
-            var ds = new TableSource(tableItems);
-            ds.ItemSelected += (item) =>
+            var ds = new MenuTableSource(tableItems);
+            ds.ItemSelected += (s, e) =>
             {
-                switch (item.Id)
+                switch (e.Id)
                 {
                     case NavigationMenuIds.RecordsList:
                     case NavigationMenuIds.RecordsMap:
                         break;
                 }
-                //SidebarController.CloseMenu();
+                CloceMenu?.Invoke(this, EventArgs.Empty);
+
             };
             tvMenuList.Source = ds;
         }
@@ -38,7 +41,20 @@ namespace NativeVyatkaIOS.Controllers
         {
             lbProfileName.Text = profile.Name;
             lbProfileEmail.Text = profile.Email;
-            //imgProfilePhoto.Image = UIImage.FromFile(profile.PictureUrl);
+            imgProfilePhoto.Layer.CornerRadius = imgProfilePhoto.Frame.Width / 2;
+            imgProfilePhoto.ClipsToBounds = true;
+            if (string.IsNullOrEmpty(profile.PictureUrl))
+            {
+                ImageService.Instance.LoadFile("nophoto.png").Into(imgProfilePhoto);
+            }
+            else
+            {
+                ImageService.Instance.LoadUrl(profile.PictureUrl)
+                    .LoadingPlaceholder("nophoto.png", ImageSource.ApplicationBundle)
+                    .ErrorPlaceholder("nophoto.png", ImageSource.ApplicationBundle)
+                    .Into(imgProfilePhoto);
+            }
         }
+        public event EventHandler CloceMenu;
     }
 }

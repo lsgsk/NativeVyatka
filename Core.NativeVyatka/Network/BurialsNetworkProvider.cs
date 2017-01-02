@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace NativeVyatkaCore.Network
 {
-    public class BurialsDataProvider : IBurialsDataProvider
+    public class BurialsNetworkProvider : IBurialsNetworkProvider
     {
-        public BurialsDataProvider(IBurialStorage storage, IBurialImageGuide guide)
+        public BurialsNetworkProvider(IBurialStorage storage, IBurialImageGuide guide)
         {
             this.mStorage = storage;
             this.mGuide = guide;

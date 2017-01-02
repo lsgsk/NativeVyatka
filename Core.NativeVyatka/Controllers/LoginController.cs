@@ -11,7 +11,7 @@ namespace NativeVyatkaCore.Controllers
 {
     public class LoginController : BaseController, ILoginController
     {
-        public LoginController(ILoginDataProvider loginDataProvider, IBurialsDataProvider burialsDataProvider, ISignInValidator signInValidator, ISettingsProvider settingsProvider, ICrossPageNavigator navigator)
+        public LoginController(ILoginNetworkProvider loginDataProvider, IBurialsNetworkProvider burialsDataProvider, ISignInValidator signInValidator, ISessionSettings settingsProvider, ICrossPageNavigator navigator)
         {
             this.mLoginDataProvider = loginDataProvider;
             this.mBurialsDataProvider = burialsDataProvider;
@@ -32,7 +32,7 @@ namespace NativeVyatkaCore.Controllers
                 try
                 {
                     Progress = true;
-                    await mLoginDataProvider.SiginProfileAsync();
+                    await mLoginDataProvider.SiginAsync();
                     await mBurialsDataProvider.DownloadBurialsAsync();
                     mNavigator.GoToPage(PageStates.BulialListPage);
                     Progress = false;
@@ -51,7 +51,7 @@ namespace NativeVyatkaCore.Controllers
             {
                 Progress = true;
                 mSignInValidator.VerifyEmailAndPassword(email, password);
-                await mLoginDataProvider.LoginProfileAsync(email, password);
+                await mLoginDataProvider.LoginAsync(email, password);
                 await mBurialsDataProvider.DownloadBurialsAsync();
                 mNavigator.GoToPage(PageStates.BulialListPage);
                 Progress = false;
@@ -68,9 +68,9 @@ namespace NativeVyatkaCore.Controllers
         }
 
         private readonly ISignInValidator mSignInValidator;
-        private readonly ILoginDataProvider mLoginDataProvider;
-        private readonly IBurialsDataProvider mBurialsDataProvider;
-        private readonly ISettingsProvider mSettingsProvider;
+        private readonly ILoginNetworkProvider mLoginDataProvider;
+        private readonly IBurialsNetworkProvider mBurialsDataProvider;
+        private readonly ISessionSettings mSettingsProvider;
         private readonly ICrossPageNavigator mNavigator;
     }
 }

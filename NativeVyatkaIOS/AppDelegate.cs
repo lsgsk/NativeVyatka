@@ -1,5 +1,6 @@
 ﻿using Foundation;
 using UIKit;
+using Microsoft.Practices.Unity;
 
 namespace NativeVyatkaIOS
 {
@@ -8,6 +9,8 @@ namespace NativeVyatkaIOS
     [Register("AppDelegate")]
     public class AppDelegate : UIApplicationDelegate
     {
+        public static readonly UIStoryboard MainStoryboard = UIStoryboard.FromName("Main", null);
+        public static UINavigationController NavigationController;
         public override UIWindow Window
         {
             get;
@@ -16,9 +19,7 @@ namespace NativeVyatkaIOS
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            Window = new UIWindow(UIScreen.MainScreen.Bounds);
-            Window.RootViewController = new MainViewController();
-            Window.MakeKeyAndVisible();
+            NavigationController = Window.RootViewController.NavigationController;
             return true;
         }
 

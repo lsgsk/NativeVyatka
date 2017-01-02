@@ -14,6 +14,11 @@ namespace Abstractions.Interfaces.Plugins
         Type GetTypeFor(PageStates state);
     }
 
+    public interface IPageNameImplementation
+    {
+        string GetNameFor(PageStates state);
+    }
+
     public static class FormBundleConstants
     { 
         public const string BurialModel = "BurialModel";

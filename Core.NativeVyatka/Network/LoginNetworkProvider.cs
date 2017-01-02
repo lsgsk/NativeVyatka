@@ -9,16 +9,16 @@ using Abstractions.Models.Network.ServiceEntities;
 
 namespace NativeVyatkaCore.Network
 {
-    public class LoginDataProvider : ILoginDataProvider
+    public class LoginNetworkProvider : ILoginNetworkProvider
     {
-        public LoginDataProvider(ILoginRestClient restClient, ISettingsProvider settingsProvider, IProfileStorage pstorage)
+        public LoginNetworkProvider(ILoginRestClient restClient, ISessionSettings settingsProvider, IProfileStorage pstorage)
         {
             this.mRestClient = restClient;
             this.mSettingsProvider = settingsProvider;
             this.mpStorage = pstorage;
         }
 
-        public async Task LoginProfileAsync(string login, string password)
+        public async Task LoginAsync(string login, string password)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace NativeVyatkaCore.Network
             }
         }
 
-        public async Task SiginProfileAsync()
+        public async Task SiginAsync()
         {
             try
             {
@@ -57,7 +57,7 @@ namespace NativeVyatkaCore.Network
         }        
 
         private readonly ILoginRestClient mRestClient;
-        private readonly ISettingsProvider mSettingsProvider;
+        private readonly ISessionSettings mSettingsProvider;
         private readonly IProfileStorage mpStorage;      
     }
 }

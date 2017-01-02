@@ -4,7 +4,7 @@ using Abstractions.Constants;
 
 namespace NativeVyatkaCore.Settings
 {
-    public class SettingsProvider : ISettingsProvider
+    public class SessionSettings : ISessionSettings
     {
         public string ServiceUrl
         {
@@ -35,7 +35,6 @@ namespace NativeVyatkaCore.Settings
             {
                 return CrossSettings.Current.GetValueOrDefault(PushTokenKey, string.Empty);
             }
-
             set
             {
                 CrossSettings.Current.AddOrUpdateValue(PushTokenKey, value);
@@ -47,7 +46,6 @@ namespace NativeVyatkaCore.Settings
             {
                 return CrossSettings.Current.GetValueOrDefault(SessionIdKey, string.Empty);
             }
-
             set
             {
                 CrossSettings.Current.AddOrUpdateValue(SessionIdKey, value);
@@ -65,6 +63,7 @@ namespace NativeVyatkaCore.Settings
                 CrossSettings.Current.AddOrUpdateValue(SessionNameKey, value);
             }
         }
+
         public const string ServiceUrlKey = "ServiceUrlKey";
         public const string PushTokenKey = "PushTokenKey";
         public const string CsrfTokenKey = "CsrfTokenKey";

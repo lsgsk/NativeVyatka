@@ -13,7 +13,7 @@ namespace NativeVyatkaCore.Controllers
 {
     public class BurialEditController : BaseController, IBurialEditController
     {
-        public BurialEditController(ICrossPageNavigator navigator, IBurialImageGuide burialImageGuide, IBurialStorage storage, IBurialsDataProvider burialsDataProvider)
+        public BurialEditController(ICrossPageNavigator navigator, IBurialImageGuide burialImageGuide, IBurialStorage storage, IBurialsNetworkProvider burialsDataProvider)
         {
             this.mNavigator = navigator;
             this.mBurialImageGuide = burialImageGuide;
@@ -54,10 +54,16 @@ namespace NativeVyatkaCore.Controllers
 
         public async Task<string> RetakePhotoAsync()
         {
-           var newPhotoPath = await CreatePhoto();
-            if(!string.IsNullOrEmpty(newPhotoPath))
+            var newPhotoPath = await CreatePhoto();
+            if (!string.IsNullOrEmpty(newPhotoPath))
             {
-                await mBurialImageGuide.DeleteFromFileSystemAsync(Burial.PicturePath);
+                try
+                {
+                    await mBurialImageGuide.DeleteFromFileSystemAsync(Burial.PicturePath);
+                }
+                catch (FileGuideException)
+                {
+                }
                 Burial.PicturePath = newPhotoPath;
                 Updated = true;
             }
@@ -122,8 +128,16 @@ namespace NativeVyatkaCore.Controllers
             var confirm = await ConfirmAsync("Вы действительно хотите удалить запись?", "Внимание");
             if(confirm)
             {
-                mStorage.DeleteBurial(Burial.CloudId);
-                await AlertAsync("Запись удалена");
+                try
+                {
+                    await mBurialImageGuide.DeleteFromFileSystemAsync(Burial.PicturePath);
+                    mStorage.DeleteBurial(Burial.CloudId);
+                    await AlertAsync("Запись удалена");
+                }
+                catch(FileGuideException)
+                {
+                    await AlertAsync("Не удалось удалить запись");
+                }                
             }
             mNavigator.GoToPage(PageStates.BulialListPage);
         }      
@@ -145,6 +159,6 @@ namespace NativeVyatkaCore.Controllers
         private readonly ICrossPageNavigator mNavigator;
         private readonly IBurialImageGuide mBurialImageGuide;
         private readonly IBurialStorage mStorage;
-        private readonly IBurialsDataProvider mBurialsDataProvider;
+        private readonly IBurialsNetworkProvider mBurialsDataProvider;
     }
 }

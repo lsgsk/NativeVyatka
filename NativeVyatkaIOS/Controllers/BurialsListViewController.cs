@@ -1,3 +1,4 @@
+using Abstractions.Interfaces.Controllers;
 using Foundation;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ namespace NativeVyatkaIOS.Controllers
 {
     public partial class BurialsListViewController : UITableViewController
     {
-        public BurialsListViewController()
+        public BurialsListViewController(IMainRecordsController controller)
         {
         }
 

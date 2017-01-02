@@ -2,7 +2,7 @@
 
 namespace Abstractions.Interfaces.Network
 {
-    public interface IDataProvider
+    public interface INetworkProvider
     {
         void Cancel();
     }

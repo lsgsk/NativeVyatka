@@ -15,7 +15,7 @@ namespace NativeVyatkaCore.Network.RestClients
 {
     public class LoginRestClient : ILoginRestClient
     {
-        public LoginRestClient(ISettingsProvider setings)
+        public LoginRestClient(ISessionSettings setings)
         {
             this.mSettings = setings;
         }
@@ -66,7 +66,7 @@ namespace NativeVyatkaCore.Network.RestClients
                 throw new SigninLoadException();
             }
         }
-        private readonly ISettingsProvider mSettings;
+        private readonly ISessionSettings mSettings;
         public CancellationTokenSource Cancel { get; set; } = new CancellationTokenSource();
     }
 }

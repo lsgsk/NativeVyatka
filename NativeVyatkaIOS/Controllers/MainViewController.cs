@@ -12,16 +12,30 @@ namespace NativeVyatkaIOS
         public MainViewController()
         {
             mController = App.Container.Resolve<IMainController>();
-            SidebarController = new SidebarController(this, new BurialsListViewController(), mMenuController = new MainMenuViewController());
+            mMenuController = AppDelegate.MainStoryboard.InstantiateViewController("MainMenuViewController") as MainMenuViewController;
+            mMenuController.CloceMenu += (s, e) => SidebarController.CloseMenu();
+            SidebarController = new SidebarController(this, new BurialsListViewController(mController), mMenuController);
             SidebarController.MenuLocation = MenuLocations.Left;
-            SidebarController.MenuWidth = 280;
-            SidebarController.HasShadowing = false;
+            SidebarController.MenuWidth = 250;
+            SidebarController.HasShadowing = true;
+            SidebarController.Title = "Главный экран";
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
+            // Perform any additional setup after loading the view, typically from a nib.
+            NavigationItem.LeftBarButtonItem = EditButtonItem;
+
+            var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, AddNewItem);
+            addButton.AccessibilityLabel = "addButton";
+            NavigationItem.RightBarButtonItem = addButton;
             mMenuController.SetProfile(mController.Profile);
+        }
+
+        private void AddNewItem(object sender, EventArgs e)
+        {
         }
 
         public SidebarController SidebarController { get; private set; }

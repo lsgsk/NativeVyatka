@@ -1,4 +1,5 @@
-﻿using Abstractions.Models.DatabaseModels;
+﻿using Abstractions.Exceptions;
+using Abstractions.Models.DatabaseModels;
 using System;
 using System.Threading.Tasks;
 
@@ -68,7 +69,8 @@ namespace Abstractions.Models.AppModels
 
         public async Task<ApiBurial> ToApiBurial(IBurialImageGuide guide)
         {
-            var picture = await guide.LoadFromFileSystemAsync(this.PicturePath);
+
+
             return new ApiBurial()
             {
                 CloudId = this.CloudId,
@@ -83,8 +85,20 @@ namespace Abstractions.Models.AppModels
                 Longitude = this.Location.Longitude,
                 Altitude = this.Location.Altitude,
                 Heading = this.Location.Heading,
-                Picture = picture
+                Picture = await ReadImage(guide, this.PicturePath)
             };
+        }
+
+        private async Task<byte[]> ReadImage(IBurialImageGuide guide, string path)
+        {
+            try
+            {
+                return await guide.LoadFromFileSystemAsync(this.PicturePath);
+            }
+            catch (FileGuideException)
+            {
+                return new byte[0];
+            }
         }
 
         public class Position

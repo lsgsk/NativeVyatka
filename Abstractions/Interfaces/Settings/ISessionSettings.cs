@@ -1,6 +1,6 @@
 ﻿namespace Abstractions.Interfaces.Settings
 {
-    public interface ISettingsProvider
+    public interface ISessionSettings
     {
         string ServiceUrl { get; set; }
         string PushToken { get; set; }

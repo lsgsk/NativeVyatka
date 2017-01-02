@@ -32,6 +32,7 @@
   <ItemGroup>
     <Compile Include="Constants\Common.cs" />
     <Compile Include="Exceptions\BurialsExceptions.cs" />
+    <Compile Include="Exceptions\FileGuideException.cs" />
     <Compile Include="Exceptions\LoginExceptions.cs" />
     <Compile Include="Exceptions\ProfileExceptions.cs" />
     <Compile Include="Interfaces\Controllers\IBaseController.cs" />
@@ -41,13 +42,13 @@
     <Compile Include="Interfaces\Database\IBurialStorage.cs" />
     <Compile Include="Interfaces\Database\IProfileStorage.cs" />
     <Compile Include="Interfaces\Utilities\SaveProviders\IoGuide\IFileGuide.cs" />
-    <Compile Include="Interfaces\Network\IBurialsDataProvider.cs" />
-    <Compile Include="Interfaces\Network\IDataProvider.cs" />
-    <Compile Include="Interfaces\Network\ILoginDataProvider.cs" />
+    <Compile Include="Interfaces\Network\IBurialsNetworkProvider.cs" />
+    <Compile Include="Interfaces\Network\INetworkProvider.cs" />
+    <Compile Include="Interfaces\Network\ILoginNetworkProvider.cs" />
     <Compile Include="Interfaces\Network\RestClients\ILoginRestClient.cs" />
     <Compile Include="Interfaces\Network\RestClients\IRestClient.cs" />
     <Compile Include="Interfaces\Plugins\ICrossPageNavigator.cs" />
-    <Compile Include="Interfaces\Settings\ISettingsProvider.cs" />
+    <Compile Include="Interfaces\Settings\ISessionSettings.cs" />
     <Compile Include="Interfaces\Utilities\Validators\ISignInValidator.cs" />
     <Compile Include="Models\AppModels\BurialModel.cs" />
     <Compile Include="Models\AppModels\ProfileModel.cs" />
