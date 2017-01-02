@@ -7,9 +7,8 @@ namespace NativeVyatkaIOS.Controllers
 {
     public partial class BurialsListViewController : UITableViewController
     {
-        public BurialsListViewController(IntPtr handle) : base(handle)
+        public BurialsListViewController()
         {
-
         }
 
         public override void ViewDidLoad()
@@ -18,38 +17,30 @@ namespace NativeVyatkaIOS.Controllers
 
             // Perform any additional setup after loading the view, typically from a nib.
             NavigationItem.LeftBarButtonItem = EditButtonItem;
-
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, AddNewItem);
             addButton.AccessibilityLabel = "addButton";
             NavigationItem.RightBarButtonItem = addButton;
-
             TableView.Source = dataSource = new DataSource(this);
         }
 
         void AddNewItem(object sender, EventArgs args)
         {
             dataSource.Objects.Insert(0, DateTime.Now);
-
             using (var indexPath = NSIndexPath.FromRowSection(0, 0))
                 TableView.InsertRows(new[] { indexPath }, UITableViewRowAnimation.Automatic);
         }
-
-        public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
-        {
-            if (segue.Identifier == "showDetail")
-            {
-                var indexPath = TableView.IndexPathForSelectedRow;
-                var item = dataSource.Objects[indexPath.Row];
-
-                ((DetailViewController)segue.DestinationViewController).SetDetailItem(item);
-            }
-        }
-
+        
         DataSource dataSource;
         class DataSource : UITableViewSource
         {
             static readonly NSString CellIdentifier = new NSString("Cell");
-            readonly List<object> objects = new List<object>();
+            readonly List<object> objects = new List<object>()
+            {
+                "qwe",
+                "asd",
+                "zxc",
+                "wer"
+            };
             readonly BurialsListViewController controller;
 
             public DataSource(BurialsListViewController controller)
@@ -76,10 +67,8 @@ namespace NativeVyatkaIOS.Controllers
             // Customize the appearance of table view cells.
             public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
             {
-                var cell = tableView.DequeueReusableCell(CellIdentifier, indexPath);
-
+                var cell = tableView.DequeueReusableCell(CellIdentifier) ?? new UITableViewCell(UITableViewCellStyle.Default, CellIdentifier);
                 cell.TextLabel.Text = objects[indexPath.Row].ToString();
-
                 return cell;
             }
 

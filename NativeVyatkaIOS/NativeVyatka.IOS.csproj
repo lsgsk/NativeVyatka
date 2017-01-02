@@ -113,13 +113,10 @@
     <Compile Include="Controllers\LoginViewController.designer.cs">
       <DependentUpon>LoginViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainViewController.cs" />
-    <Compile Include="MainViewController.designer.cs">
-      <DependentUpon>MainViewController.cs</DependentUpon>
-    </Compile>
     <Compile Include="Utilities\ConsoleRealization.cs" />
     <Compile Include="Utilities\ControllersTypeImplementation.cs" />
     <Compile Include="Utilities\PageNavigator.cs" />
+    <Compile Include="Utilities\TableSources\MenuTableSource.cs" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -245,6 +242,7 @@
     <Content Include="Entitlements.plist" />
     <BundleResource Include="Resources\icon_signout_visitor.png" />
     <BundleResource Include="Resources\icon_visitor_signin.png" />
+    <BundleResource Include="Resources\drawer_header.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Abstractions\Abstractions.csproj">
@@ -256,5 +254,6 @@
       <Name>NativeVyatka.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
