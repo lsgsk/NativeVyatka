@@ -36,7 +36,7 @@ namespace NativeVyatkaCore.Network
             try
             {
                 await mRestClient.SiginAsync(mSettingsProvider.PushToken);
-            }
+            }            
             catch (SigninLoadException)
             {
                 throw new AuthorizationSyncException();
@@ -48,7 +48,7 @@ namespace NativeVyatkaCore.Network
             mSettingsProvider.CsrfToken = value.Token;
             mSettingsProvider.SessionName = value.Session_name;
             mSettingsProvider.SessionId = value.Sessid;
-            mpStorage.SavaProfile(new ProfileModel(value.User));
+            mpStorage.SaveProfile(new ProfileModel(value.User));
         }
 
         public void Cancel()

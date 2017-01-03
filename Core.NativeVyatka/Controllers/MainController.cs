@@ -84,6 +84,7 @@ namespace NativeVyatkaCore.Controllers
             try
             {
                 Progress = true;
+                //тут отправить, всех, кто не синхранизирован
                 await Task.Delay(1500);
                 Progress = false;
             }

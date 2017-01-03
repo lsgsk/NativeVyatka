@@ -62,20 +62,7 @@ namespace UnitTestProject.Utilities.Validators
                 ex.EmailMessage.Should().Be(SignInValidator.EmptyEmail);
                 ex.PasswordMessage.Should().Be(SignInValidator.EmptyPassword);
             }
-        }
-        [TestMethod]
-        public void IncorrectLogin()
-        {
-            try
-            {
-                var validator = TestInitialization.Container.Resolve<ISignInValidator>();
-                validator.VerifyEmailAndPassword("qew@!qe", "qweqw");
-                Assert.Fail();
-            }
-            catch (NotValidLoginOrPasswordException ex)
-            {
-                ex.EmailMessage.Should().Be(SignInValidator.IncorrentEmail);
-            }
-        }
+        }       
+
     }
 }

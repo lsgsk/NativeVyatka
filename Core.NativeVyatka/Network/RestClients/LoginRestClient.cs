@@ -55,7 +55,7 @@ namespace NativeVyatkaCore.Network.RestClients
                     using (var client = new HttpClient(clientHandler) { BaseAddress = baseAddress })
                     {
                         client.DefaultRequestHeaders.Add("X-CSRF-Token", mSettings.CsrfToken);
-                        var response = await client.PostAsync("/rv_burial/syst/connect.json", null);
+                        var response = await client.PostAsync("/rv_burial/syst/connect.json", null, Cancel.Token);
                         response.EnsureSuccessStatusCode();
                     }
                 }

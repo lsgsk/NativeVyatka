@@ -20,6 +20,12 @@ namespace NativeVyatkaCore.Controllers
             this.mNavigator = navigator;
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+            mLoginDataProvider.Cancel();
+        }
+
         public async void TryAutoLogin()
         {
             await AutoLoginIfPossible();
@@ -33,7 +39,7 @@ namespace NativeVyatkaCore.Controllers
                 {
                     Progress = true;
                     await mLoginDataProvider.SiginAsync();
-                    await mBurialsDataProvider.DownloadBurialsAsync();
+                    //тут отправить, всех, кто не синхранизирован
                     mNavigator.GoToPage(PageStates.BulialListPage);
                     Progress = false;
                 }
@@ -49,10 +55,9 @@ namespace NativeVyatkaCore.Controllers
         {
             try
             {
-                Progress = true;
                 mSignInValidator.VerifyEmailAndPassword(email, password);
+                Progress = true;                
                 await mLoginDataProvider.LoginAsync(email, password);
-                await mBurialsDataProvider.DownloadBurialsAsync();
                 mNavigator.GoToPage(PageStates.BulialListPage);
                 Progress = false;
             }

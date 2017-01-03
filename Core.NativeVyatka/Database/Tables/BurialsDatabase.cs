@@ -12,9 +12,17 @@ namespace NativeVyatkaCore.Database
     {
         public int Count()
         {
-            using (var conn = GetConnection())
+            try
             {
-                return conn.Table<BurialEntity>().Count();
+                using (var conn = GetConnection())
+                {
+                    return conn.Table<BurialEntity>().Count();
+                }
+            }
+            catch(Exception ex)
+            {
+                iConsole.Error(ex);
+                return 0;
             }
         }
 
@@ -75,7 +83,6 @@ namespace NativeVyatkaCore.Database
                 iConsole.Error(ex);
             }
         }
-
 
         public void DeleteBurial(string cloudId)
         {

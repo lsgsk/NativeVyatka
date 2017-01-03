@@ -4,16 +4,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NativeVyatkaCore.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnitTestProject.Utilities
 {
     [TestClass]
     public class Test_iConsole
     {
+        [TestCleanup]
+        public void Clear()
+        {
+            iConsole.Init(null);
+        }
+
         [TestMethod]
         public void TryWriteWithoutInitialization()
         {

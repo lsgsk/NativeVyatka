@@ -7,7 +7,7 @@ namespace Abstractions.Models.AppModels
 {
     public class BurialModel
     {
-        public string CloudId { get; set; }
+        public string CloudId { get; private set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Patronymic { get; set; }

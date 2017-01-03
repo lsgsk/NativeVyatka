@@ -7,5 +7,6 @@
         string CsrfToken { get; set; }
         string SessionName { get; set; }
         string SessionId { get; set; }
+        void ClearPrefs();
     }
 }

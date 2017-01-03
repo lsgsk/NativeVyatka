@@ -1,47 +1,42 @@
-﻿using Abstractions;
-using Abstractions.Exceptions;
+﻿using Abstractions.Exceptions;
 using Abstractions.Interfaces.Database.Tables;
 using Abstractions.Interfaces.Network;
+using Abstractions.Interfaces.Network.RestClients;
 using Abstractions.Models.AppModels;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NativeVyatkaCore.Network
 {
     public class BurialsNetworkProvider : IBurialsNetworkProvider
     {
-        public BurialsNetworkProvider(IBurialStorage storage, IBurialImageGuide guide)
+        public BurialsNetworkProvider(IBurialRestClient restClient, IBurialStorage storage)
         {
+            this.mRestClient = restClient;
             this.mStorage = storage;
-            this.mGuide = guide;
         }
 
-        public Task DownloadBurialsAsync()
+        public async Task UploadBurialsAsync(IEnumerable<BurialModel> burials)
         {
-            return Task.Delay(500);
-        }
-
-        public async Task UploadBurial(BurialModel burial)
-        {
-            var rd = new Random();
-            if (rd.Next() % 3 == 0)
+            try
+            {
+                if (burials?.Any() ?? false)
+                {
+                    await mRestClient.UploadBurialsAsync(burials);
+                    foreach (var burial in burials)
+                    {
+                        burial.Updated = true;
+                        mStorage.InsertOrUpdateBurial(burial);
+                    }
+                }                               
+            }            
+            catch(BurialUploadException)
             {
                 throw new BurialSyncException();
-            }
-            else
-            {
-                await Task.Delay(1000);
-                var request = new BurialCollection()
-                {
-                    Colllection = new List<ApiBurial>() { await burial.ToApiBurial(mGuide) }
-                };
-                burial.Updated = true;
-                mStorage.InsertOrUpdateBurial(burial);
-            }
+            }           
         }
-
+        private readonly IBurialRestClient mRestClient;
         private readonly IBurialStorage mStorage;
-        private readonly IBurialImageGuide mGuide;
     }
 }

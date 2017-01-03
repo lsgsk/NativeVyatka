@@ -12,7 +12,6 @@ namespace NativeVyatkaCore.Utilities.Validators
         {
             RuleFor(x => x.Email).NotNull().WithMessage(EmptyEmail);
             RuleFor(x => x.Email).NotEmpty().WithMessage(EmptyEmail);
-            When(x => !string.IsNullOrEmpty(x.Email), () => RuleFor(x => x.Email).EmailAddress().WithMessage(IncorrentEmail));
             RuleFor(x => x.Password).NotNull().WithMessage(EmptyPassword);
             RuleFor(x => x.Password).NotEmpty().WithMessage(EmptyPassword);
         }
@@ -37,7 +36,6 @@ namespace NativeVyatkaCore.Utilities.Validators
         }
 
         public const string EmptyEmail = "Логин не может быть пусты";
-        public const string IncorrentEmail = "Логин некорректный";
         public const string EmptyPassword = "Пароль не может быть пусты";
     }
 }

@@ -1,73 +1,86 @@
 ﻿using Abstractions.Interfaces.Settings;
 using Plugin.Settings;
 using Abstractions.Constants;
+using System;
+using Plugin.Settings.Abstractions;
 
 namespace NativeVyatkaCore.Settings
 {
     public class SessionSettings : ISessionSettings
     {
+        private ISettings Settings => CrossSettings.Current;
+
         public string ServiceUrl
         {
             get
             {
-                return CrossSettings.Current.GetValueOrDefault(ServiceUrlKey, ApConstant.ServiceUrl);
+                return Settings.GetValueOrDefault(ServiceUrlKey, ApConstant.ServiceUrl);
             }
             set
             {
-                CrossSettings.Current.AddOrUpdateValue(ServiceUrlKey, value);
+                Settings.AddOrUpdateValue(ServiceUrlKey, value);
             }
         }
         public string CsrfToken
         {
             get
             {
-               return CrossSettings.Current.GetValueOrDefault(CsrfTokenKey, string.Empty);
+               return Settings.GetValueOrDefault(CsrfTokenKey, string.Empty);
             }
 
             set
             {
-                CrossSettings.Current.AddOrUpdateValue(CsrfTokenKey, value);
+                Settings.AddOrUpdateValue(CsrfTokenKey, value);
             }
         }
         public string PushToken
         {
             get
             {
-                return CrossSettings.Current.GetValueOrDefault(PushTokenKey, string.Empty);
+                return Settings.GetValueOrDefault(PushTokenKey, string.Empty);
             }
             set
             {
-                CrossSettings.Current.AddOrUpdateValue(PushTokenKey, value);
+                Settings.AddOrUpdateValue(PushTokenKey, value);
             }
         }
         public string SessionId
         {
             get
             {
-                return CrossSettings.Current.GetValueOrDefault(SessionIdKey, string.Empty);
+                return Settings.GetValueOrDefault(SessionIdKey, string.Empty);
             }
             set
             {
-                CrossSettings.Current.AddOrUpdateValue(SessionIdKey, value);
+                Settings.AddOrUpdateValue(SessionIdKey, value);
             }
         }
         public string SessionName
         {
             get
             {
-                return CrossSettings.Current.GetValueOrDefault(SessionNameKey, string.Empty);
+                return Settings.GetValueOrDefault(SessionNameKey, string.Empty);
             }
 
             set
             {
-                CrossSettings.Current.AddOrUpdateValue(SessionNameKey, value);
+                Settings.AddOrUpdateValue(SessionNameKey, value);
             }
+        }
+
+        public void ClearPrefs()
+        {
+            var array = new []{ ServiceUrlKey, PushTokenKey, CsrfTokenKey, SessionNameKey, SessionIdKey };
+            foreach(var item in array)
+            {
+                Settings.Remove(item);
+            }           
         }
 
         public const string ServiceUrlKey = "ServiceUrlKey";
         public const string PushTokenKey = "PushTokenKey";
         public const string CsrfTokenKey = "CsrfTokenKey";
         public const string SessionNameKey = "SessionNameKey";
-        public const string SessionIdKey = "SessionIdKey";
+        public const string SessionIdKey = "SessionIdKey";       
     }
 }

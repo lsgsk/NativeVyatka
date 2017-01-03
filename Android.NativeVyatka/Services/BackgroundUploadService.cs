@@ -23,9 +23,10 @@ namespace NativeVyatkaAndroid
         {
         }
 
-        protected override async void OnHandleIntent(Intent intent)
+        protected override void OnHandleIntent(Intent intent)
         {
-            bool result = false;
+            iConsole.WriteLine("Fuck");
+            /*bool result = false;
             string message = "Отправка записей начата";
             iConsole.WriteLine("UploadService start");         
             if (!Uploading && intent != null)
@@ -36,12 +37,12 @@ namespace NativeVyatkaAndroid
                     //mUploaderNotifier.UploadingStarted(message);
                     var tokensource = new CancellationTokenSource();
                     var id = intent.GetIntExtra(ID, -1);
-                    /*var items = id == -1 ? await mBurialManager.GetUnsendedBurials(tokensource.Token) : new List<BurialEntity>(1) { await mBurialManager.GetBurial(id, tokensource.Token) };
+                    var items = id == -1 ? await mBurialManager.GetUnsendedBurials(tokensource.Token) : new List<BurialEntity>(1) { await mBurialManager.GetBurial(id, tokensource.Token) };
                     if (await mRestManager.UploadNewBurials(items))
                     {
                         //---items.All(x => x.IsSended = true);
                         await mBurialManager.UpdateSendedBurial(items, tokensource.Token);
-                    }*/
+                    }
                     message = "Отправка записей успешна закончена";
                     result = true;
                 }
@@ -55,7 +56,7 @@ namespace NativeVyatkaAndroid
                     //mUploaderNotifier.UploadingFinished(result, message);
                     Uploading = false; 
                 }
-            }           
+            } */          
         }
 
         private static bool Uploading = false;

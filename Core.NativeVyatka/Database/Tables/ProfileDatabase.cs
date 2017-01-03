@@ -2,7 +2,6 @@
 using System;
 using Abstractions.Models.AppModels;
 using Abstractions.Models.DatabaseModels;
-using Abstractions.Exceptions;
 using NativeVyatkaCore.Utilities;
 
 namespace NativeVyatkaCore.Database
@@ -30,7 +29,7 @@ namespace NativeVyatkaCore.Database
             return profile ?? ProfileModel.Null;
         }
 
-        public void SavaProfile(ProfileModel profile)
+        public void SaveProfile(ProfileModel profile)
         {
             using (var conn = GetConnection())
             {
@@ -51,7 +50,6 @@ namespace NativeVyatkaCore.Database
                 catch (Exception ex)
                 {
                     iConsole.Error(ex);
-                    throw new ProfileSaveException();
                 }
             }
         }

@@ -34,13 +34,13 @@
     <Compile Include="Exceptions\BurialsExceptions.cs" />
     <Compile Include="Exceptions\FileGuideException.cs" />
     <Compile Include="Exceptions\LoginExceptions.cs" />
-    <Compile Include="Exceptions\ProfileExceptions.cs" />
     <Compile Include="Interfaces\Controllers\IBaseController.cs" />
     <Compile Include="Interfaces\Controllers\IBurialEditController.cs" />
     <Compile Include="Interfaces\Controllers\ILoginController.cs" />
     <Compile Include="Interfaces\Controllers\IMainController.cs" />
     <Compile Include="Interfaces\Database\IBurialStorage.cs" />
     <Compile Include="Interfaces\Database\IProfileStorage.cs" />
+    <Compile Include="Interfaces\Network\RestClients\IBurialRestClient.cs" />
     <Compile Include="Interfaces\Utilities\SaveProviders\IoGuide\IFileGuide.cs" />
     <Compile Include="Interfaces\Network\IBurialsNetworkProvider.cs" />
     <Compile Include="Interfaces\Network\INetworkProvider.cs" />

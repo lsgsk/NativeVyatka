@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Abstractions.Interfaces.Network
+namespace Abstractions.Interfaces.Network.RestClients
 {
-    public interface IBurialsNetworkProvider
+    public interface IBurialRestClient : IRestClient
     {
         Task UploadBurialsAsync(IEnumerable<BurialModel> burials);
     }
