@@ -72,39 +72,99 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="12" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
                                 <rect key="frame" x="20" y="305" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Авторизация">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="OnSignInClick:" destination="8" id="141" eventType="touchUpInside"/>
                                 </connections>
+                                <constraints>
+                                    <constraint id="767" firstItem="12" firstAttribute="height" constant="30"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="767"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="767"/>
+                                    </mask>
+                                </variation>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="15" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
                                 <rect key="frame" x="20" y="193" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <constraints>
+                                    <constraint id="755" firstItem="15" firstAttribute="height" constant="30"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="755"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="755"/>
+                                    </mask>
+                                </variation>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="16" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
                                 <rect key="frame" x="20" y="260" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <constraints>
+                                    <constraint id="763" firstItem="16" firstAttribute="height" constant="30"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="763"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="763"/>
+                                    </mask>
+                                </variation>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Логин" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="741" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
                                 <rect key="frame" x="20" y="164" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <constraints>
+                                    <constraint id="746" firstItem="741" firstAttribute="height" constant="21"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="746"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="746"/>
+                                    </mask>
+                                </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="742" translatesAutoresizingMaskIntoConstraints="NO" text="Пароль">
                                 <rect key="frame" x="20" y="231" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <constraints>
+                                    <constraint id="759" firstItem="742" firstAttribute="height" constant="21"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="759"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="759"/>
+                                    </mask>
+                                </variation>
                             </label>
                         </subviews>
                         <variation key="default">
@@ -114,6 +174,23 @@
                                 <exclude reference="16"/>
                                 <exclude reference="742"/>
                             </mask>
+                            <mask key="constraints">
+                                <exclude reference="743"/>
+                                <exclude reference="744"/>
+                                <exclude reference="745"/>
+                                <exclude reference="752"/>
+                                <exclude reference="753"/>
+                                <exclude reference="754"/>
+                                <exclude reference="756"/>
+                                <exclude reference="757"/>
+                                <exclude reference="758"/>
+                                <exclude reference="760"/>
+                                <exclude reference="761"/>
+                                <exclude reference="762"/>
+                                <exclude reference="764"/>
+                                <exclude reference="765"/>
+                                <exclude reference="766"/>
+                            </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
@@ -122,7 +199,41 @@
                                 <include reference="16"/>
                                 <include reference="742"/>
                             </mask>
+                            <mask key="constraints">
+                                <include reference="743"/>
+                                <include reference="744"/>
+                                <include reference="745"/>
+                                <include reference="752"/>
+                                <include reference="753"/>
+                                <include reference="754"/>
+                                <include reference="756"/>
+                                <include reference="757"/>
+                                <include reference="758"/>
+                                <include reference="760"/>
+                                <include reference="761"/>
+                                <include reference="762"/>
+                                <include reference="764"/>
+                                <include reference="765"/>
+                                <include reference="766"/>
+                            </mask>
                         </variation>
+                        <constraints>
+                            <constraint id="743" firstItem="741" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="100"/>
+                            <constraint id="744" firstItem="741" firstAttribute="leading" secondItem="9" secondAttribute="leading" constant="20"/>
+                            <constraint id="745" firstItem="9" firstAttribute="trailing" secondItem="741" secondAttribute="trailing" constant="20"/>
+                            <constraint id="752" firstItem="15" firstAttribute="leading" secondItem="9" secondAttribute="leading" constant="20"/>
+                            <constraint id="753" firstItem="15" firstAttribute="top" secondItem="741" secondAttribute="bottom" constant="8"/>
+                            <constraint id="754" firstItem="9" firstAttribute="trailing" secondItem="15" secondAttribute="trailing" constant="20"/>
+                            <constraint id="756" firstItem="742" firstAttribute="leading" secondItem="9" secondAttribute="leading" constant="20"/>
+                            <constraint id="757" firstItem="9" firstAttribute="trailing" secondItem="742" secondAttribute="trailing" constant="20"/>
+                            <constraint id="758" firstItem="742" firstAttribute="top" secondItem="15" secondAttribute="bottom" constant="8"/>
+                            <constraint id="760" firstItem="16" firstAttribute="top" secondItem="742" secondAttribute="bottom" constant="8"/>
+                            <constraint id="761" firstItem="16" firstAttribute="leading" secondItem="9" secondAttribute="leading" constant="20"/>
+                            <constraint id="762" firstItem="9" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" constant="20"/>
+                            <constraint id="764" firstItem="12" firstAttribute="top" secondItem="16" secondAttribute="bottom" constant="15"/>
+                            <constraint id="765" firstItem="12" firstAttribute="leading" secondItem="9" secondAttribute="leading" constant="20"/>
+                            <constraint id="766" firstItem="9" firstAttribute="trailing" secondItem="12" secondAttribute="trailing" constant="20"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="tfEmailView" destination="15" id="name-outlet-15"/>
