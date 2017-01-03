@@ -48,10 +48,10 @@ namespace UnitTestProject.Network
         public static ILoginNetworkProvider CreateProvider(bool networkSuccess = true, CancellationToken token = new CancellationToken())
         {
             var mock = new Mock<ILoginRestClient>();
-            mock.Setup(x => x.LoginAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(async () =>
+            mock.Setup(x => x.LoginAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(async (string login, string password, string pushToken) =>
             {
                 await Task.Delay(0);
-                if (networkSuccess && !token.IsCancellationRequested)
+                if (networkSuccess && !token.IsCancellationRequested && (login == "RVbot" && password == "test"))
                 {
                     return ProfileFromServer();
                 }
@@ -84,7 +84,7 @@ namespace UnitTestProject.Network
         public async Task SuccessLogin()
         {
             var provider = CreateProvider();
-            await provider.LoginAsync("login", "password");
+            await provider.LoginAsync("RVbot", "test");
 
             var apiProfile = ProfileFromServer();
             var settings = TestInitialization.Container.Resolve<ISessionSettings>();
@@ -96,6 +96,20 @@ namespace UnitTestProject.Network
             profile.Name.Should().Be(apiProfile.User.name);
             profile.Email.Should().Be(apiProfile.User.mail);
             profile.PictureUrl.Should().Be(apiProfile.User.Picture.url);
+        }
+
+        [TestMethod]
+        public async Task FailWithIncorrectLogin()
+        {
+            try
+            {
+                var provider = CreateProvider(false);
+                await provider.LoginAsync("login", "password");
+                Assert.Fail();
+            }
+            catch (AuthorizationSyncException)
+            {
+            }
         }
 
         [TestMethod]

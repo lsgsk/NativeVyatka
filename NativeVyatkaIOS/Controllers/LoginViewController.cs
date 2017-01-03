@@ -10,13 +10,13 @@ namespace NativeVyatkaIOS
     {
         public LoginViewController (IntPtr handle) : base (handle)
         {
-            mController = App.Container.Resolve<ILoginController>();
-            mController.TryAutoLogin();
+            mController = App.Container.Resolve<ILoginController>();            
         }
 
-        public override void ViewDidLoad()
+        public async override void ViewDidLoad()
         {
             base.ViewDidLoad();
+            await mController.TryAutoLogin();
 #if DEBUG
             tfEmailView.Text = "RVbot";
             tfPasswordView.Text = "test";

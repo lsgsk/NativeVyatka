@@ -29,10 +29,11 @@ namespace NativeVyatkaCore
             container.RegisterType<IProfileStorage, BurialDatabase>();
             container.RegisterType<IBurialStorage, BurialDatabase>();
             //----------------------------------------------------------------------------------------
-            container.RegisterType<ILoginNetworkProvider, LoginNetworkProvider > ();
+            container.RegisterType<ILoginNetworkProvider, LoginNetworkProvider> ();
             container.RegisterType<IBurialsNetworkProvider, BurialsNetworkProvider>();
 
-            container.RegisterType<ILoginRestClient, LoginRestClient>();
+            container.RegisterType<ILoginRestClient, LoginRestClient>()
+                     .RegisterType<IBurialRestClient, BurialRestClient>();
             //----------------------------------------------------------------------------------------
             container.RegisterType<ISessionSettings, SessionSettings>();
             container.RegisterType<ISignInValidator, SignInValidator>();
@@ -41,7 +42,8 @@ namespace NativeVyatkaCore
 
 #if ANDROID
             container.RegisterType<ICrossPageNavigator, NativeVyatkaAndroid.Utilities.PageNavigator>()
-                     .RegisterType<IPageTypeImplementation, NativeVyatkaAndroid.Utilities.ActivityTypeImplementation>();
+                     .RegisterType<IPageTypeImplementation, NativeVyatkaAndroid.Utilities.ActivityTypeImplementation>()
+                     .RegisterType<IUserDialog, NativeVyatkaAndroid.Utilities.UserDialogRealization>();
 #elif UWP
 #elif __IOS__
             container.RegisterType<IPageNameImplementation, NativeVyatkaIOS.Utilities.ControllersTypeImplementation>()

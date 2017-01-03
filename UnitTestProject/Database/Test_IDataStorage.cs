@@ -1,10 +1,5 @@
 ﻿using Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using Abstractions.Interfaces.Database.Tables;
 using UnitTestProject.Database.Table;

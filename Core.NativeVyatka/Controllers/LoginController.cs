@@ -6,15 +6,15 @@ using Abstractions.Interfaces.Network;
 using Abstractions.Interfaces.Plugins;
 using Abstractions.Models;
 using Abstractions.Exceptions;
+using NativeVyatkaCore.Properties;
 
 namespace NativeVyatkaCore.Controllers
 {
     public class LoginController : BaseController, ILoginController
     {
-        public LoginController(ILoginNetworkProvider loginDataProvider, IBurialsNetworkProvider burialsDataProvider, ISignInValidator signInValidator, ISessionSettings settingsProvider, ICrossPageNavigator navigator)
+        public LoginController(ILoginNetworkProvider loginDataProvider, ISignInValidator signInValidator, ISessionSettings settingsProvider, ICrossPageNavigator navigator, IUserDialog dialogs): base(dialogs)
         {
             this.mLoginDataProvider = loginDataProvider;
-            this.mBurialsDataProvider = burialsDataProvider;
             this.mSignInValidator = signInValidator;
             this.mSettingsProvider = settingsProvider;
             this.mNavigator = navigator;
@@ -26,12 +26,7 @@ namespace NativeVyatkaCore.Controllers
             mLoginDataProvider.Cancel();
         }
 
-        public async void TryAutoLogin()
-        {
-            await AutoLoginIfPossible();
-        }
-
-        private async Task AutoLoginIfPossible()
+        public async Task TryAutoLogin()
         {
             if (!string.IsNullOrEmpty(mSettingsProvider.SessionId))
             {
@@ -39,14 +34,14 @@ namespace NativeVyatkaCore.Controllers
                 {
                     Progress = true;
                     await mLoginDataProvider.SiginAsync();
-                    //тут отправить, всех, кто не синхранизирован
+                    //TODO тут отправить, всех, кто не синхранизирован
                     mNavigator.GoToPage(PageStates.BulialListPage);
                     Progress = false;
                 }
                 catch (AuthorizationSyncException)
                 {
                     Progress = false;
-                    await AlertAsync("Не удалось выполнить вход");
+                    await AlertAsync(Resources.Authorization_SigninFailed, Resources.Dialog_Attention);
                 }
             }
         }
@@ -68,13 +63,12 @@ namespace NativeVyatkaCore.Controllers
             catch(AuthorizationSyncException)
             {
                 Progress = false;
-                await AlertAsync("Что-то пошло не так");
+                await AlertAsync(Resources.Authorization_LoginFailed, Resources.Dialog_Attention);
             }           
         }
 
         private readonly ISignInValidator mSignInValidator;
         private readonly ILoginNetworkProvider mLoginDataProvider;
-        private readonly IBurialsNetworkProvider mBurialsDataProvider;
         private readonly ISessionSettings mSettingsProvider;
         private readonly ICrossPageNavigator mNavigator;
     }

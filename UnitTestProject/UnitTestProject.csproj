@@ -129,6 +129,7 @@
     <Compile Include="..\Core.NativeVyatka\RegisterTypesIntoDI.cs">
       <Link>RegisterTypesIntoDI.cs</Link>
     </Compile>
+    <Compile Include="Controllers\Test_ILoginController.cs" />
     <Compile Include="Database\Table\Test_IBurialStorage.cs" />
     <Compile Include="Database\Table\Test_IProfileStorage.cs" />
     <Compile Include="Database\Test_IDataStorage.cs" />

@@ -1,6 +1,5 @@
 ﻿using Abstractions.Models.AppModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using Microsoft.Practices.Unity;
 using Abstractions;
 using Abstractions.Interfaces.Database.Tables;

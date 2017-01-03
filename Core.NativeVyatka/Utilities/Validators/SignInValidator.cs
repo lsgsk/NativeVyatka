@@ -10,10 +10,10 @@ namespace NativeVyatkaCore.Utilities.Validators
     {
         public SignInValidator()
         {
-            RuleFor(x => x.Email).NotNull().WithMessage(EmptyEmail);
-            RuleFor(x => x.Email).NotEmpty().WithMessage(EmptyEmail);
-            RuleFor(x => x.Password).NotNull().WithMessage(EmptyPassword);
-            RuleFor(x => x.Password).NotEmpty().WithMessage(EmptyPassword);
+            RuleFor(x => x.Email).NotNull().WithMessage(Properties.Resources.Validator_EmptyEmail);
+            RuleFor(x => x.Email).NotEmpty().WithMessage(Properties.Resources.Validator_EmptyEmail);
+            RuleFor(x => x.Password).NotNull().WithMessage(Properties.Resources.Validator_EmptyPassword);
+            RuleFor(x => x.Password).NotEmpty().WithMessage(Properties.Resources.Validator_EmptyPassword);
         }
 
         public void VerifyEmailAndPassword(string email, string password)
@@ -34,8 +34,5 @@ namespace NativeVyatkaCore.Utilities.Validators
             public string Email { get; set; }
             public string Password { get; set; }
         }
-
-        public const string EmptyEmail = "Логин не может быть пусты";
-        public const string EmptyPassword = "Пароль не может быть пусты";
     }
 }

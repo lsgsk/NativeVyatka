@@ -13,7 +13,7 @@ namespace NativeVyatkaCore.Controllers
 {
     public class BurialEditController : BaseController, IBurialEditController
     {
-        public BurialEditController(ICrossPageNavigator navigator, IBurialImageGuide burialImageGuide, IBurialStorage storage, IBurialsNetworkProvider burialsDataProvider)
+        public BurialEditController(ICrossPageNavigator navigator, IBurialImageGuide burialImageGuide, IBurialStorage storage, IBurialsNetworkProvider burialsDataProvider, IUserDialog dialogs) : base(dialogs)
         {
             this.mNavigator = navigator;
             this.mBurialImageGuide = burialImageGuide;

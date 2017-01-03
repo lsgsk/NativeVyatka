@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NativeVyatkaCore.Utilities.Validators;
 using Microsoft.Practices.Unity;
 using Abstractions.Exceptions;
 using FluentAssertions;
@@ -28,8 +27,8 @@ namespace UnitTestProject.Utilities.Validators
             }
             catch (NotValidLoginOrPasswordException ex)
             {
-                ex.EmailMessage.Should().Be(SignInValidator.EmptyEmail);
-                ex.PasswordMessage.Should().Be(SignInValidator.EmptyPassword);
+                ex.EmailMessage.Should().Be(NativeVyatkaCore.Properties.Resources.Validator_EmptyEmail);
+                ex.PasswordMessage.Should().Be(NativeVyatkaCore.Properties.Resources.Validator_EmptyPassword);
             }
         }
 
@@ -44,7 +43,7 @@ namespace UnitTestProject.Utilities.Validators
             }
             catch (NotValidLoginOrPasswordException ex)
             {
-                ex.PasswordMessage.Should().Be(SignInValidator.EmptyPassword);
+                ex.PasswordMessage.Should().Be(NativeVyatkaCore.Properties.Resources.Validator_EmptyPassword);
             }
         }
 
@@ -59,8 +58,8 @@ namespace UnitTestProject.Utilities.Validators
             }
             catch (NotValidLoginOrPasswordException ex)
             {
-                ex.EmailMessage.Should().Be(SignInValidator.EmptyEmail);
-                ex.PasswordMessage.Should().Be(SignInValidator.EmptyPassword);
+                ex.EmailMessage.Should().Be(NativeVyatkaCore.Properties.Resources.Validator_EmptyEmail);
+                ex.PasswordMessage.Should().Be(NativeVyatkaCore.Properties.Resources.Validator_EmptyPassword);
             }
         }       
 

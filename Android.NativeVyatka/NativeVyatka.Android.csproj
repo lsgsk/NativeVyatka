@@ -271,6 +271,7 @@
     <Compile Include="Utilities\Adapters\SimpleDividerItemDecoration.cs" />
     <Compile Include="Activities\BurialEditActivity.cs" />
     <Compile Include="Activities\BaseActivities\BaseAppCompatActivity.cs" />
+    <Compile Include="Utilities\UserDialogRealization.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

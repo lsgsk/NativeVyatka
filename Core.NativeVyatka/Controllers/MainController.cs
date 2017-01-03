@@ -16,7 +16,7 @@ namespace NativeVyatkaCore.Controllers
 {
     public class MainController : BaseController, IMainController
     {
-        public MainController(ICrossPageNavigator navigator, IProfileStorage pstorage, IBurialStorage bstorage)
+        public MainController(ICrossPageNavigator navigator, IProfileStorage pstorage, IBurialStorage bstorage, IUserDialog dialogs) : base(dialogs)
         {
             this.mNavigator = navigator;
             this.mPstorage = pstorage;
