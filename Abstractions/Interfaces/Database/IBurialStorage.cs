@@ -7,6 +7,7 @@ namespace Abstractions.Interfaces.Database.Tables
     {
         int Count();
         List<BurialModel> GetBurials();
+        List<BurialModel> GetNotSyncBurials();
         BurialModel GetBurial(string cloudId);
         void InsertOrUpdateBurial(BurialModel item);
         void DeleteBurial(string cloudId);

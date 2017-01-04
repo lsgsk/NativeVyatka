@@ -7,6 +7,7 @@ using Microsoft.Practices.Unity;
 using System.Threading;
 using Abstractions.Interfaces.Database.Tables;
 using FluentAssertions;
+using System.Linq;
 
 namespace UnitTestProject.Database.Table
 {
@@ -25,7 +26,7 @@ namespace UnitTestProject.Database.Table
                 BirthDay = DateTime.UtcNow,
                 DeathDay = DateTime.UtcNow,
                 PicturePath = "folder/image.png",
-                Updated = false,
+                Updated = (rd.Next(100) %2 == 0),
                 Location = new BurialModel.Position()
                 {
                     Altitude = rd.NextDouble(),
@@ -39,7 +40,7 @@ namespace UnitTestProject.Database.Table
         public static List<BurialModel> CreateBurialsCollection()
         {
             var list = new List<BurialModel>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 20; i++)
             {
                 Thread.Sleep(50);
                 list.Add(CreateBurial());
@@ -74,6 +75,17 @@ namespace UnitTestProject.Database.Table
         }
 
         [TestMethod]
+        public void GetNotSyncBurials()
+        {
+            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var collection = CreateBurialsCollection();
+            foreach (var burial in collection)
+                storage.InsertOrUpdateBurial(burial);
+            var dbCollection = storage.GetNotSyncBurials();
+            dbCollection.ShouldAllBeEquivalentTo(collection.Where(x => !x.Updated).ToList());
+        }
+
+        [TestMethod]
         public void SaveAndRestoreBurial()
         {
             var storage = TestInitialization.Container.Resolve<IBurialStorage>();
@@ -81,7 +93,7 @@ namespace UnitTestProject.Database.Table
             storage.InsertOrUpdateBurial(burial);
             var dbBurial = storage.GetBurial(burial.CloudId);
             dbBurial.ShouldBeEquivalentTo(burial);
-        }
+        }       
 
         [TestMethod]
         public void CheckFindIncorrextBurial()

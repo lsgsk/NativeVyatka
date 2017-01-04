@@ -70,7 +70,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="12" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="12" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="20" y="305" width="280" height="30"/>
                                 <state key="normal" title="Авторизация">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -86,13 +86,13 @@
                                         <exclude reference="767"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <mask key="constraints">
                                         <include reference="767"/>
                                     </mask>
                                 </variation>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="15" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="15" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="20" y="193" width="280" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -104,13 +104,13 @@
                                         <exclude reference="755"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <mask key="constraints">
                                         <include reference="755"/>
                                     </mask>
                                 </variation>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="16" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="16" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="20" y="260" width="280" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -122,13 +122,13 @@
                                         <exclude reference="763"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <mask key="constraints">
                                         <include reference="763"/>
                                     </mask>
                                 </variation>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Логин" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="741" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Логин" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="741" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="20" y="164" width="280" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -160,7 +160,7 @@
                                         <exclude reference="759"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <mask key="constraints">
                                         <include reference="759"/>
                                     </mask>
@@ -190,6 +190,10 @@
                                 <exclude reference="764"/>
                                 <exclude reference="765"/>
                                 <exclude reference="766"/>
+                                <exclude reference="770"/>
+                                <exclude reference="771"/>
+                                <exclude reference="772"/>
+                                <exclude reference="773"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -215,6 +219,10 @@
                                 <include reference="764"/>
                                 <include reference="765"/>
                                 <include reference="766"/>
+                                <include reference="770"/>
+                                <include reference="771"/>
+                                <include reference="772"/>
+                                <include reference="773"/>
                             </mask>
                         </variation>
                         <constraints>
@@ -233,6 +241,10 @@
                             <constraint id="764" firstItem="12" firstAttribute="top" secondItem="16" secondAttribute="bottom" constant="15"/>
                             <constraint id="765" firstItem="12" firstAttribute="leading" secondItem="9" secondAttribute="leading" constant="20"/>
                             <constraint id="766" firstItem="9" firstAttribute="trailing" secondItem="12" secondAttribute="trailing" constant="20"/>
+                            <constraint id="770" firstItem="16" firstAttribute="top" secondItem="12" secondAttribute="top"/>
+                            <constraint id="771" firstItem="742" firstAttribute="top" secondItem="12" secondAttribute="top"/>
+                            <constraint id="772" firstItem="15" firstAttribute="top" secondItem="12" secondAttribute="top"/>
+                            <constraint id="773" firstItem="741" firstAttribute="top" secondItem="12" secondAttribute="top"/>
                         </constraints>
                     </view>
                     <connections>

@@ -42,6 +42,22 @@ namespace NativeVyatkaCore.Database
             return new List<BurialModel>();
         }
 
+        public List<BurialModel> GetNotSyncBurials()
+        {
+            try
+            {
+                using (var conn = GetConnection())
+                {
+                    return conn.Table<BurialEntity>().Where(x => x.Updated == false).ToList().Select(x => new BurialModel(x)).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                iConsole.Error(ex);
+            }
+            return new List<BurialModel>();
+        }
+
         public BurialModel GetBurial(string cloudId)
         {
             try

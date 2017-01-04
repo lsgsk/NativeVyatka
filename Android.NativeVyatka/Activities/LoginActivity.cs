@@ -15,12 +15,12 @@ namespace NativeVyatkaAndroid
     [Activity(MainLauncher = true, Theme = "@style/AppTheme", WindowSoftInputMode = SoftInput.StateAlwaysHidden, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
     public class LoginActivity : AccountAuthenticatorActivity
     {
-        protected async override void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);            
             FindAndBindViews();
             mController = App.Container.Resolve<ILoginController>();
-            await mController.TryAutoLogin();
+            mController.TryAutoLogin();
         }
 
         protected override void OnDestroy()

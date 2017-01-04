@@ -7,12 +7,14 @@ using Abstractions.Interfaces.Plugins;
 using Abstractions.Models;
 using Abstractions.Exceptions;
 using NativeVyatkaCore.Properties;
+using Acr.UserDialogs;
+using Plugin.Media.Abstractions;
 
 namespace NativeVyatkaCore.Controllers
 {
     public class LoginController : BaseController, ILoginController
     {
-        public LoginController(ILoginNetworkProvider loginDataProvider, ISignInValidator signInValidator, ISessionSettings settingsProvider, ICrossPageNavigator navigator, IUserDialog dialogs): base(dialogs)
+        public LoginController(ILoginNetworkProvider loginDataProvider, ISignInValidator signInValidator, ISessionSettings settingsProvider, ICrossPageNavigator navigator, IUserDialogs dialogs, IMedia media) : base(dialogs, media)
         {
             this.mLoginDataProvider = loginDataProvider;
             this.mSignInValidator = signInValidator;
@@ -26,7 +28,7 @@ namespace NativeVyatkaCore.Controllers
             mLoginDataProvider.Cancel();
         }
 
-        public async Task TryAutoLogin()
+        public async void TryAutoLogin()
         {
             if (!string.IsNullOrEmpty(mSettingsProvider.SessionId))
             {

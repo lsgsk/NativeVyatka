@@ -6,6 +6,7 @@ using Abstractions.Interfaces.Network.RestClients;
 using Abstractions.Interfaces.Plugins;
 using Abstractions.Interfaces.Settings;
 using Abstractions.Interfaces.Utilities.Validators;
+using Acr.UserDialogs;
 using Microsoft.Practices.Unity;
 using NativeVyatkaCore.Controllers;
 using NativeVyatkaCore.Database;
@@ -14,6 +15,10 @@ using NativeVyatkaCore.Network.RestClients;
 using NativeVyatkaCore.Settings;
 using NativeVyatkaCore.Utilities.SaveProviders.IoGuide;
 using NativeVyatkaCore.Utilities.Validators;
+using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 
 namespace NativeVyatkaCore
 {
@@ -39,17 +44,20 @@ namespace NativeVyatkaCore
             container.RegisterType<ISignInValidator, SignInValidator>();
 
             container.RegisterType<IBurialImageGuide, BurialImageGuide>();
-
+            container.RegisterInstance<IGeolocator>(CrossGeolocator.Current);            
+            container.RegisterInstance<IMedia>(CrossMedia.Current);            
 #if ANDROID
             container.RegisterType<ICrossPageNavigator, NativeVyatkaAndroid.Utilities.PageNavigator>()
-                     .RegisterType<IPageTypeImplementation, NativeVyatkaAndroid.Utilities.ActivityTypeImplementation>()
-                     .RegisterType<IUserDialog, NativeVyatkaAndroid.Utilities.UserDialogRealization>();
+                     .RegisterType<IPageTypeImplementation, NativeVyatkaAndroid.Utilities.ActivityTypeImplementation>();
+            container.RegisterInstance<IUserDialogs>(UserDialogs.Instance);
+
 #elif UWP
 #elif __IOS__
             container.RegisterType<IPageNameImplementation, NativeVyatkaIOS.Utilities.ControllersTypeImplementation>()
                      //.RegisterInstance<UIKit.UIStoryboard>(NativeVyatkaIOS.AppDelegate.MainStoryboard)
                      //.RegisterInstance<UIKit.UINavigationController>(NativeVyatkaIOS.AppDelegate.NavigationController)
                      .RegisterType<ICrossPageNavigator, NativeVyatkaIOS.Utilities.PageNavigator>();
+            container.RegisterInstance<IUserDialogs>(UserDialogs.Instance);
 #elif TEST
 #endif
             return container;

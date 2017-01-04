@@ -34,15 +34,13 @@ namespace NativeVyatkaAndroid
             {
                 SelectItem(Resource.Id.navigation_my_records);
                 mNavigationView.Menu.GetItem(0).SetChecked(true);
-            }
-            CrossGeolocator.Current.StartListeningAsync(10000, 5, true);
+            }            
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
             mController.Dispose();
-            CrossGeolocator.Current.StopListeningAsync();
         }
 
         private void FindAndBindViews()

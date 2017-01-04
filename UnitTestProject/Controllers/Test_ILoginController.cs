@@ -11,6 +11,9 @@ using Abstractions.Exceptions;
 using FluentAssertions;
 using NativeVyatkaCore.Properties;
 using Abstractions.Models;
+using Acr.UserDialogs;
+using System.Collections.Generic;
+using System;
 
 namespace UnitTestProject.Controllers
 {
@@ -24,20 +27,22 @@ namespace UnitTestProject.Controllers
             TestInitialization.Container.Resolve<IDataStorage>().ClearDataBase();
         }
 
-        public static ILoginController CreateController(bool networkSuccess = true, string awaitingMessage = null, string awaitingTitle = null, PageStates? awaitingPage = null)
+        public static ILoginController CreateController(bool networkSuccess = true, string awaitingMessage = null, string awaitingTitle = null, TaskCompletionSource<Tuple<PageStates, Dictionary<string, string>>> navigationCallback = null)
         {
             var container = TestInitialization.CreateChildContainer();
             container.RegisterInstance<ILoginNetworkProvider>(Test_LoginNetworkProvider.CreateProvider(networkSuccess));
-            container.RegisterInstance<IUserDialog>(TestInitialization.CreateMockUserDialog(awaitingMessage, awaitingTitle));
-            container.RegisterInstance<ICrossPageNavigator>(TestInitialization.CreateMockNavigation(awaitingPage));
+            container.RegisterInstance<IUserDialogs>(TestInitialization.CreateMockUserDialog(awaitingMessage, awaitingTitle));
+            container.RegisterInstance<ICrossPageNavigator>(TestInitialization.CreateMockNavigation(navigationCallback));
             return container.Resolve<ILoginController>();
         }
 
         [TestMethod]
         public async Task SuccessLogin()
         {
-            var controller = CreateController(awaitingPage: PageStates.BulialListPage);
+            var callback = new TaskCompletionSource<Tuple<PageStates, Dictionary<string, string>>>();
+            var controller = CreateController(navigationCallback: callback);
             await controller.Login("RVbot", "test");
+            (await callback.Task).Item1.Should().Be(PageStates.BulialListPage);
         }
 
         [TestMethod]
@@ -65,17 +70,19 @@ namespace UnitTestProject.Controllers
         [TestMethod]
         public async Task SuccessAutoLogin()
         {
+            var callback = new TaskCompletionSource<Tuple<PageStates, Dictionary<string, string>>>();
             var settings = TestInitialization.Container.Resolve<ISessionSettings>();
             settings.SessionId = "correct_session";
-            var controller = CreateController(awaitingPage: PageStates.BulialListPage);
-            await controller.TryAutoLogin();
+            var controller = CreateController(navigationCallback: callback);
+            controller.TryAutoLogin();
+            (await callback.Task).Item1.Should().Be(PageStates.BulialListPage);
         }
 
         [TestMethod]
-        public async Task AutoLoginNotStart()
+        public void AutoLoginNotStart()
         {
             var controller = CreateController();
-            await controller.TryAutoLogin();
+            controller.TryAutoLogin();
         }
     }
 }

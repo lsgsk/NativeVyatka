@@ -5,28 +5,41 @@ using System.Threading.Tasks;
 using Abstractions.Models.AppModels;
 using Abstractions.Interfaces.Plugins;
 using Abstractions.Models;
-using Plugin.Geolocator;
 using Newtonsoft.Json;
-using Abstractions;
 using Abstractions.Exceptions;
 using Abstractions.Interfaces.Database.Tables;
 using NativeVyatkaCore.Utilities;
+using Plugin.Geolocator.Abstractions;
+using NativeVyatkaCore.Properties;
+using Acr.UserDialogs;
+using Plugin.Media.Abstractions;
+using Abstractions.Interfaces.Network;
+using System.Linq;
 
 namespace NativeVyatkaCore.Controllers
 {
     public class MainController : BaseController, IMainController
     {
-        public MainController(ICrossPageNavigator navigator, IProfileStorage pstorage, IBurialStorage bstorage, IUserDialog dialogs) : base(dialogs)
+        public MainController(IBurialsNetworkProvider burialsNetworkProvider, ICrossPageNavigator navigator, IProfileStorage pstorage, IBurialStorage bstorage, IGeolocator geolocator, IUserDialogs dialogs, IMedia media) : base(dialogs, media)
         {
             this.mNavigator = navigator;
             this.mPstorage = pstorage;
             this.mBstorage = bstorage;
+            this.mGeolocator = geolocator;
+            this.mBurialsNetworkProvider = burialsNetworkProvider;
+            this.mGeolocator.StartListeningAsync(10000, 5, true);
+        }
+
+        public async override void Dispose()
+        {
+            base.Dispose();
+            await mGeolocator.StopListeningAsync();
         }
 
         public async Task CreateNewBurial()
         {
             var burial = new BurialModel();
-            if (CrossGeolocator.Current.IsGeolocationAvailable)
+            if (mGeolocator.IsGeolocationAvailable)
             {
                 Progress = true;
                 var path = await CreatePhoto();
@@ -35,7 +48,7 @@ namespace NativeVyatkaCore.Controllers
                     burial.PicturePath = path;
                     try
                     {
-                        var position = await CrossGeolocator.Current.GetPositionAsync(10000);
+                        var position = await mGeolocator.GetPositionAsync(5000);
                         burial.Location.Latitude = position.Latitude;
                         burial.Location.Longitude = position.Longitude;
                         burial.Location.Altitude = position.Altitude;
@@ -45,14 +58,14 @@ namespace NativeVyatkaCore.Controllers
                     catch(Exception ex)
                     {
                         iConsole.Error(ex);
-                        await AlertAsync("В настоящее время gps не доступен. Сделать запись невозможно", "Внимание");
+                        await AlertAsync(Resources.MainScreeen_GpsNotAvailable, Resources.Dialog_Attention);
                     }                 
                 }
                 Progress = false;
             }
             else
             {
-                await AlertAsync("В настоящее время gps не доступен. Сделать запись невозможно", "Внимание");
+                await AlertAsync(Resources.MainScreeen_GpsNotAvailable, Resources.Dialog_Attention);
             }            
         }
 
@@ -84,17 +97,22 @@ namespace NativeVyatkaCore.Controllers
             try
             {
                 Progress = true;
-                //тут отправить, всех, кто не синхранизирован
-                await Task.Delay(1500);
+                var burials = mBstorage.GetNotSyncBurials();
+                if (burials.Any())
+                {
+                    await mBurialsNetworkProvider.UploadBurialsAsync(burials);
+                }
                 Progress = false;
             }
             catch (BurialSyncException)
             {
                 Progress = false;
-                await AlertAsync("Синхранизация не удалась");
+                await AlertAsync(Resources.MainScreeen_SyncFailed, Resources.Dialog_Attention);
             }
         }
 
+        private IBurialsNetworkProvider mBurialsNetworkProvider;
+        private readonly IGeolocator mGeolocator;
         private readonly IProfileStorage mPstorage;
         private readonly IBurialStorage mBstorage;
         private readonly ICrossPageNavigator mNavigator;

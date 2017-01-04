@@ -126,6 +126,33 @@
   <data name="Dialog_Attention" xml:space="preserve">
     <value>Внимание</value>
   </data>
+  <data name="EditScreeen_DeleteFailed" xml:space="preserve">
+    <value>Не удалось удалить запись</value>
+  </data>
+  <data name="EditScreeen_DeleteFinised" xml:space="preserve">
+    <value>Запись удалена</value>
+  </data>
+  <data name="EditScreeen_DeleteQuestion" xml:space="preserve">
+    <value>Вы действительно хотите удалить запись?</value>
+  </data>
+  <data name="EditScreeen_SaveAndSync" xml:space="preserve">
+    <value>Сохранить измения и сихранизировать запись?</value>
+  </data>
+  <data name="EditScreeen_SyncFailed" xml:space="preserve">
+    <value>Синхранизация не удалась</value>
+  </data>
+  <data name="EditScreen_OpeningFailed" xml:space="preserve">
+    <value>Ошибка открытия захоронения</value>
+  </data>
+  <data name="EditScreen_SyncSuccess" xml:space="preserve">
+    <value>Запись обновлена и синхранизирована</value>
+  </data>
+  <data name="MainScreeen_GpsNotAvailable" xml:space="preserve">
+    <value>В настоящее время gps не доступен. Сделать запись невозможно</value>
+  </data>
+  <data name="MainScreeen_SyncFailed" xml:space="preserve">
+    <value>Синхранизация записей с сервером не удалась</value>
+  </data>
   <data name="Validator_EmptyEmail" xml:space="preserve">
     <value>Логин не может быть пусты</value>
   </data>

@@ -4,7 +4,7 @@ namespace Abstractions.Interfaces.Controllers
 {
     public interface ILoginController : IBaseController
     {
-        Task TryAutoLogin();
+        void TryAutoLogin();
         Task Login(string email, string password);
     }
 }

@@ -41,7 +41,6 @@
     <Compile Include="Interfaces\Database\IBurialStorage.cs" />
     <Compile Include="Interfaces\Database\IProfileStorage.cs" />
     <Compile Include="Interfaces\Network\RestClients\IBurialRestClient.cs" />
-    <Compile Include="Interfaces\Plugins\IUserDialog.cs" />
     <Compile Include="Interfaces\Utilities\SaveProviders\IoGuide\IFileGuide.cs" />
     <Compile Include="Interfaces\Network\IBurialsNetworkProvider.cs" />
     <Compile Include="Interfaces\Network\INetworkProvider.cs" />

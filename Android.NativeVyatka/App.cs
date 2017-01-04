@@ -20,11 +20,11 @@ namespace NativeVyatkaAndroid
         public override void OnCreate()
         {
             base.OnCreate();
-            RegisterActivityLifecycleCallbacks(this);
-            RegisterTypesIntoDI.InitContainer(Container);
+            RegisterActivityLifecycleCallbacks(this);            
             BurialDatabase.InitILobbyPhoneDatabase(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
             UserDialogs.Init(() => CrossCurrentActivity.Current.Activity);
             iConsole.Init(new ConsoleRealization());
+            RegisterTypesIntoDI.InitContainer(Container);
         }        
 
         public override void OnTerminate()

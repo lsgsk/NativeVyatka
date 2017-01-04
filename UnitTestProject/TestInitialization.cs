@@ -7,6 +7,12 @@ using Abstractions.Models;
 using System.Collections.Generic;
 using FluentAssertions;
 using System.Threading.Tasks;
+using Plugin.Geolocator.Abstractions;
+using System.Threading;
+using System;
+using Acr.UserDialogs;
+using Plugin.Media.Abstractions;
+using System.IO;
 
 namespace UnitTestProject
 {
@@ -34,26 +40,79 @@ namespace UnitTestProject
             return container.CreateChildContainer();
         }
 
-        public static ICrossPageNavigator CreateMockNavigation(PageStates? awaitingPage = null)
+        public static ICrossPageNavigator CreateMockNavigation(TaskCompletionSource<Tuple<PageStates, Dictionary<string, string>>> navigationCallback)
         {
-            var mockNavigation = new Mock<ICrossPageNavigator>();
-            mockNavigation.Setup(x => x.GoToPage(It.IsAny<PageStates>(), It.IsAny<Dictionary<string, string>>())).Callback((PageStates state, Dictionary<string, string> extras) =>
+            var mock = new Mock<ICrossPageNavigator>();
+            mock.Setup(x => x.GoToPage(It.IsAny<PageStates>(), It.IsAny<Dictionary<string, string>>())).Callback((PageStates state, Dictionary<string, string> extras) =>
             {
-                state.Should().Be(awaitingPage);
+                navigationCallback.SetResult(new Tuple<PageStates, Dictionary<string, string>>(state, extras));
             });
-            return mockNavigation.Object;
+            return mock.Object;
         }
 
-        public static IUserDialog CreateMockUserDialog(string awaitingMessage = null, string awaitingTitle = null)
+        public static IUserDialogs CreateMockUserDialog(string awaitingMessage = null, string awaitingTitle = null)
         {
-            var mockDialog = new Mock<IUserDialog>();
-            mockDialog.Setup(x => x.AlertAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(async (string message, string title) =>
+            var mock = new Mock<IUserDialogs>();
+            mock.Setup(x => x.AlertAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(async (string message, string title) =>
             {
                 await Task.Delay(0);
                 awaitingMessage.Should().Be(message);
                 awaitingTitle.Should().Be(title);
             });
-            return mockDialog.Object;
+            return mock.Object;
+        }
+
+        public static IGeolocator CreateMockGeolocator(bool gpsAvailable, bool gpsTaken)
+        {
+            var mock = new Mock<IGeolocator>();
+            mock.Setup(x => x.StartListeningAsync(It.IsAny<int>(), It.IsAny<double>(), It.IsAny<bool>())).Returns(Task.FromResult(true));
+            mock.Setup(x => x.StopListeningAsync()).Returns(Task.FromResult(true));
+            mock.Setup(x => x.GetPositionAsync(It.IsAny<int>(), It.IsAny<CancellationToken?>(), It.IsAny<bool>()))
+                .Returns(async (int timeoutMilliseconds, CancellationToken? token, bool includeHeading) =>
+                {
+                    await Task.Delay(0);
+                    if (gpsTaken)
+                    {
+                        var rd = new Random();
+                        return CreateGpsPosition();
+                    }
+                    else
+                    {
+                        throw new Exception("No gps");
+                    }
+                });             
+            mock.Setup(x => x.IsGeolocationAvailable).Returns(gpsAvailable);
+            return mock.Object;
+        }
+
+        public static IMedia CreateMockMedia(bool available, bool taken)
+        {
+            var mock = new Mock<IMedia>();
+            mock.Setup(x => x.TakePhotoAsync(It.IsAny<StoreCameraMediaOptions>())).Returns(async () =>
+            {
+                await Task.Delay(0);
+                return (taken) ? CreatePhoto() : null;
+            });            
+            mock.Setup(x => x.IsCameraAvailable).Returns(available);
+            mock.Setup(x => x.IsTakePhotoSupported).Returns(available);
+            return mock.Object;
+        }
+
+        public static Position CreateGpsPosition()
+        {
+            var rd = new Random();
+            return new Position()
+            {
+                Latitude = rd.NextDouble(),
+                Longitude = rd.NextDouble(),
+                Altitude = rd.NextDouble(),
+                Heading = rd.NextDouble(),
+            };
+        }
+    
+        public static MediaFile CreatePhoto()
+        {
+            return new MediaFile("folder/image.png", () => new MemoryStream());
         }
     }
 }

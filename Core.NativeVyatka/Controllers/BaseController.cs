@@ -1,16 +1,19 @@
 ﻿using Abstractions.Interfaces.Controllers;
-using Abstractions.Interfaces.Plugins;
 using Acr.UserDialogs;
+using NativeVyatkaCore.Properties;
+using Plugin.Media.Abstractions;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace NativeVyatkaCore.Controllers
 {
     public abstract class BaseController : IBaseController
     {
-        public BaseController(IUserDialog dialogs)
+        public BaseController(IUserDialogs dialogs, IMedia media)
         {
             this.mDialogs = dialogs;
+            this.mMedia = media;
         }
 
         public virtual void Dispose()
@@ -21,7 +24,14 @@ namespace NativeVyatkaCore.Controllers
         {
             set
             {
-                mDialogs.Progress = value;                
+                if (value)
+                {
+                    mDialogs.ShowLoading();
+                }
+                else
+                {
+                    mDialogs.HideLoading();
+                }
             }
         }
 
@@ -37,14 +47,38 @@ namespace NativeVyatkaCore.Controllers
 
         public virtual Task<DatePromptResult> DatePromptAsync(DateTime? time = null, DateTime? maxTime = null, DateTime? minTime = null)
         {
-            return mDialogs.DatePromptAsync(time, maxTime, minTime);
+            return mDialogs.DatePromptAsync(new DatePromptConfig()
+            {
+                SelectedDate = time ?? DateTime.UtcNow,
+                UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc,
+                MaximumDate = maxTime,
+                MinimumDate = minTime
+            });
         }
 
-        protected Task<string> CreatePhoto()
+        protected async Task<string> CreatePhoto()
         {
-            return mDialogs.CreatePhoto();            
+            if (mMedia.IsCameraAvailable && mMedia.IsTakePhotoSupported)
+            {
+                var file = await mMedia.TakePhotoAsync(new StoreCameraMediaOptions
+                {
+                    CustomPhotoSize = 50,
+                    Directory = "BurialFolder",
+                    Name = Path.GetRandomFileName() + ".jpg"
+                });
+                if (file != null)
+                {
+                    return file.Path;
+                }
+            }
+            else
+            {
+                await AlertAsync(Resources.MainScreeen_CameraNotAvailable, Resources.Dialog_Attention);
+            }
+            return string.Empty;
         }
 
-        private readonly IUserDialog mDialogs;
+        private readonly IUserDialogs mDialogs;
+        private readonly IMedia mMedia;
     }
 }

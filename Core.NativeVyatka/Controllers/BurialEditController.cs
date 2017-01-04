@@ -6,6 +6,9 @@ using Abstractions.Interfaces.Network;
 using Abstractions.Interfaces.Plugins;
 using Abstractions.Models;
 using Abstractions.Models.AppModels;
+using Acr.UserDialogs;
+using NativeVyatkaCore.Properties;
+using Plugin.Media.Abstractions;
 using System;
 using System.Threading.Tasks;
 
@@ -13,7 +16,7 @@ namespace NativeVyatkaCore.Controllers
 {
     public class BurialEditController : BaseController, IBurialEditController
     {
-        public BurialEditController(ICrossPageNavigator navigator, IBurialImageGuide burialImageGuide, IBurialStorage storage, IBurialsNetworkProvider burialsDataProvider, IUserDialog dialogs) : base(dialogs)
+        public BurialEditController(ICrossPageNavigator navigator, IBurialImageGuide burialImageGuide, IBurialStorage storage, IBurialsNetworkProvider burialsDataProvider, IUserDialogs dialogs, IMedia media) : base(dialogs, media)
         {
             this.mNavigator = navigator;
             this.mBurialImageGuide = burialImageGuide;
@@ -48,7 +51,7 @@ namespace NativeVyatkaCore.Controllers
 
         public async void ForceGoBack()
         {
-            await AlertAsync("Ошибка открытия захоронения", "Внимание");
+            await AlertAsync(Resources.EditScreen_OpeningFailed, Resources.Dialog_Attention);
             mNavigator.GoToPage(PageStates.BulialListPage);        
         }
 
@@ -101,12 +104,12 @@ namespace NativeVyatkaCore.Controllers
             {
                 await mBurialsDataProvider.UploadBurialsAsync(new[] { Burial });
                 Updated = Progress = false;
-                await AlertAsync("Запись обновлена и синхранизирована");
+                await AlertAsync(Resources.EditScreen_SyncSuccess);
             }
             catch (BurialSyncException)
             {
                 Progress = false;
-                await AlertAsync("Синхранизация не удалась");
+                await AlertAsync(Resources.EditScreeen_SyncFailed, Resources.Dialog_Attention);
             }
         }
 
@@ -114,7 +117,7 @@ namespace NativeVyatkaCore.Controllers
         {
             if (Updated)
             {
-                var confirm = await ConfirmAsync("Сохранить измения и сихранизировать запись?");
+                var confirm = await ConfirmAsync(Resources.EditScreeen_SaveAndSync);
                 if (confirm)
                 {
                     await SaveAndUploadBurialAsync();                    
@@ -125,18 +128,18 @@ namespace NativeVyatkaCore.Controllers
 
         public async Task DeleteRecordAsync()
         {
-            var confirm = await ConfirmAsync("Вы действительно хотите удалить запись?", "Внимание");
+            var confirm = await ConfirmAsync(Resources.EditScreeen_DeleteQuestion, Resources.Dialog_Attention);
             if(confirm)
             {
                 try
                 {
                     await mBurialImageGuide.DeleteFromFileSystemAsync(Burial.PicturePath);
                     mStorage.DeleteBurial(Burial.CloudId);
-                    await AlertAsync("Запись удалена");
+                    await AlertAsync(Resources.EditScreeen_DeleteFinised);
                 }
                 catch(FileGuideException)
                 {
-                    await AlertAsync("Не удалось удалить запись");
+                    await AlertAsync(Resources.EditScreeen_DeleteFailed, Resources.Dialog_Attention);
                 }                
             }
             mNavigator.GoToPage(PageStates.BulialListPage);

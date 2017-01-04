@@ -78,13 +78,94 @@ namespace NativeVyatkaCore.Properties {
                 return ResourceManager.GetString("Authorization_SigninFailed", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Внимание.
         /// </summary>
         public static string Dialog_Attention {
             get {
                 return ResourceManager.GetString("Dialog_Attention", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Не удалось удалить запись.
+        /// </summary>
+        public static string EditScreeen_DeleteFailed {
+            get {
+                return ResourceManager.GetString("EditScreeen_DeleteFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Запись удалена.
+        /// </summary>
+        public static string EditScreeen_DeleteFinised {
+            get {
+                return ResourceManager.GetString("EditScreeen_DeleteFinised", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Вы действительно хотите удалить запись?.
+        /// </summary>
+        public static string EditScreeen_DeleteQuestion {
+            get {
+                return ResourceManager.GetString("EditScreeen_DeleteQuestion", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Сохранить измения и сихранизировать запись?.
+        /// </summary>
+        public static string EditScreeen_SaveAndSync {
+            get {
+                return ResourceManager.GetString("EditScreeen_SaveAndSync", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Синхранизация не удалась.
+        /// </summary>
+        public static string EditScreeen_SyncFailed {
+            get {
+                return ResourceManager.GetString("EditScreeen_SyncFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Ошибка открытия захоронения.
+        /// </summary>
+        public static string EditScreen_OpeningFailed {
+            get {
+                return ResourceManager.GetString("EditScreen_OpeningFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Запись обновлена и синхранизирована.
+        /// </summary>
+        public static string EditScreen_SyncSuccess {
+            get {
+                return ResourceManager.GetString("EditScreen_SyncSuccess", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to В настоящее время gps не доступен. Сделать запись невозможно.
+        /// </summary>
+        public static string MainScreeen_GpsNotAvailable {
+            get {
+                return ResourceManager.GetString("MainScreeen_GpsNotAvailable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Синхранизация записей с сервером не удалась.
+        /// </summary>
+        public static string MainScreeen_SyncFailed {
+            get {
+                return ResourceManager.GetString("MainScreeen_SyncFailed", resourceCulture);
             }
         }
 
@@ -103,6 +184,14 @@ namespace NativeVyatkaCore.Properties {
         public static string Validator_EmptyPassword {
             get {
                 return ResourceManager.GetString("Validator_EmptyPassword", resourceCulture);
+            }
+        }
+
+        public static string MainScreeen_CameraNotAvailable
+        {
+            get
+            {
+                return ResourceManager.GetString("Camera not available", resourceCulture);
             }
         }
     }

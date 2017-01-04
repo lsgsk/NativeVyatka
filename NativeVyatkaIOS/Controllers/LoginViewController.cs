@@ -13,10 +13,13 @@ namespace NativeVyatkaIOS
             mController = App.Container.Resolve<ILoginController>();            
         }
 
-        public async override void ViewDidLoad()
+        public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            await mController.TryAutoLogin();
+            mController.TryAutoLogin();
+
+            var a = Plugin.Media.CrossMedia.Current;
+
 #if DEBUG
             tfEmailView.Text = "RVbot";
             tfPasswordView.Text = "test";
