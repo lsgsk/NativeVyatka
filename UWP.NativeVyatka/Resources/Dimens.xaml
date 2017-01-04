@@ -1,0 +1,10 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NativeVyatka.UWP.Resources">
+    
+    <Thickness x:Key="base_margin">16,16,16,16</Thickness>
+    <Thickness x:Key="base_margin_vertical">0,16,0,16</Thickness>
+    <Thickness x:Key="base_margin_horizontal">16,0,16,0</Thickness>
+    
+</ResourceDictionary>

@@ -27,7 +27,7 @@ namespace NativeVyatkaCore.Network.RestClients
             }
             else
             {
-                await Task.Delay(1000);
+                await Task.Delay(5000);
                 var request = new BurialCollection()
                 {
                     Colllection = new List<ApiBurial>() //{ await burial.ToApiBurial(mGuide) }

@@ -1,11 +1,9 @@
-﻿using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Gms.Maps;
 using Android.Locations;
 using Android.Gms.Maps.Model;
-using Android.Graphics;
 using Abstractions.Interfaces.Controllers;
 using System.Linq;
 
@@ -132,8 +130,9 @@ namespace NativeVyatkaAndroid
         }
 
         public override void OnPrepareOptionsMenu(IMenu menu)
-        {          
+        {
             base.OnPrepareOptionsMenu(menu);
+            var sync = menu.FindItem(Resource.Id.action_sync).SetVisible(false);
         }
 
         private IMainMapController mController;

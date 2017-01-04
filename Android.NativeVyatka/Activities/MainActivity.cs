@@ -130,9 +130,6 @@ namespace NativeVyatkaAndroid
                 case Android.Resource.Id.Home:
                     mDrawerLayout.OpenDrawer(GravityCompat.Start); 
                     return true;
-                case Resource.Id.action_sync:
-                    BackgroundUploadService.UploadBurials();
-                    break;
             }
             return base.OnOptionsItemSelected(item);
         }

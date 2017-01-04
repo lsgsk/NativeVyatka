@@ -75,13 +75,18 @@ namespace NativeVyatkaAndroid
         private void BurialRecordItemClick (object sender, BaseEventArgs<BurialModel> e)
         {
             mController.DisplayBurial(e.Item);
-        }
+        }      
 
-        public override void OnPrepareOptionsMenu(IMenu menu)
-        {      
-            base.OnPrepareOptionsMenu(menu);
-            var sync = menu.FindItem(Resource.Id.action_sync).SetVisible(false);             
-        }     
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.action_sync:
+                    Task.Run(ObtainData);
+                    break;
+            }
+            return base.OnOptionsItemSelected(item);
+        }
 
         private RecyclerView mRecyclerView;
         private BaseRecyclerViewAdapter<BurialModel, BurialRecordViewHolder> mAdapter;

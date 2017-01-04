@@ -1,22 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Click Me!</string>
-    <string name="app_name">NativeVyatkaAndroid</string>
+    <string name="app_name">Родная вятка</string>
 
     <!--  авторизация -->
-    <string name="prompt_email">Логин</string>
-    <string name="prompt_password">Пароль</string>
-    <string name="action_sign_in">Авторизоваться</string>
+    <string name="autorization_email">Логин</string>
+    <string name="autorization_password">Пароль</string>
+    <string name="autorization_signin">Авторизоваться</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">Некорректный email</string>
-    <string name="error_incorrect_password">Неверный логин или пароль</string>
-    <string name="error_field_required">Логин обязателен</string>
-    <string name="permission_rationale">Необходимо разрешение на доступ к контактам</string>
-
 
     <!-- списки -->
     <string name="null_content">Нет данных или ошибка загрузки.</string>
-
 
     <!-- главный экран -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
