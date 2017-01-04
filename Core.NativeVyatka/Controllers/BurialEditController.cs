@@ -60,13 +60,7 @@ namespace NativeVyatkaCore.Controllers
             var newPhotoPath = await CreatePhoto();
             if (!string.IsNullOrEmpty(newPhotoPath))
             {
-                try
-                {
-                    await mBurialImageGuide.DeleteFromFileSystemAsync(Burial.PicturePath);
-                }
-                catch (FileGuideException)
-                {
-                }
+                await TryDeletePicture(Burial.PicturePath);
                 Burial.PicturePath = newPhotoPath;
                 Updated = true;
             }
@@ -129,21 +123,28 @@ namespace NativeVyatkaCore.Controllers
         public async Task DeleteRecordAsync()
         {
             var confirm = await ConfirmAsync(Resources.EditScreeen_DeleteQuestion, Resources.Dialog_Attention);
-            if(confirm)
+            if (confirm)
             {
-                try
-                {
-                    await mBurialImageGuide.DeleteFromFileSystemAsync(Burial.PicturePath);
-                    mStorage.DeleteBurial(Burial.CloudId);
-                    await AlertAsync(Resources.EditScreeen_DeleteFinised);
-                }
-                catch(FileGuideException)
-                {
-                    await AlertAsync(Resources.EditScreeen_DeleteFailed, Resources.Dialog_Attention);
-                }                
+                await TryDeletePicture(Burial.PicturePath);
+                mStorage.DeleteBurial(Burial.CloudId);
+                await AlertAsync(Resources.EditScreeen_DeleteFinised);
             }
             mNavigator.GoToPage(PageStates.BulialListPage);
-        }      
+        }  
+        
+        private async Task TryDeletePicture(string picturePath)
+        {
+            try
+            {
+                await mBurialImageGuide.DeleteFromFileSystemAsync(picturePath);
+            }
+            catch(FileGuideException)
+            {
+
+            }
+        }
+        
+            
         public event EventHandler<bool> BurialUpdated;
         private bool updated = false;
         public bool Updated

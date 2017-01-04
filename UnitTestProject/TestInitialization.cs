@@ -50,7 +50,7 @@ namespace UnitTestProject
             return mock.Object;
         }
 
-        public static IUserDialogs CreateMockUserDialog(string awaitingMessage = null, string awaitingTitle = null)
+        public static IUserDialogs CreateMockUserDialog(string awaitingMessage = null, string awaitingTitle = null, bool select = true)
         {
             var mock = new Mock<IUserDialogs>();
             mock.Setup(x => x.AlertAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(async (string message, string title) =>
@@ -59,6 +59,8 @@ namespace UnitTestProject
                 awaitingMessage.Should().Be(message);
                 awaitingTitle.Should().Be(title);
             });
+            mock.Setup(x => x.DatePromptAsync(It.IsAny<DatePromptConfig>(), It.IsAny<CancellationToken?>())).Returns(Task.FromResult(new DatePromptResult(true, DateTime.UtcNow)));
+            mock.Setup(x => x.ConfirmAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken?>())).Returns(Task.FromResult(select));
             return mock.Object;
         }
 
@@ -112,7 +114,7 @@ namespace UnitTestProject
     
         public static MediaFile CreatePhoto()
         {
-            return new MediaFile("folder/image.png", () => new MemoryStream());
+            return new MediaFile("folder/newimage.png", () => new MemoryStream());
         }
     }
 }
