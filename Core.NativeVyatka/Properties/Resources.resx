@@ -153,6 +153,9 @@
   <data name="MainScreeen_SyncFailed" xml:space="preserve">
     <value>Синхранизация записей с сервером не удалась</value>
   </data>
+  <data name="MainScreeen_CameraNotAvailable" xml:space="preserve">
+    <value>Камера не доступна</value>
+  </data>
   <data name="Validator_EmptyEmail" xml:space="preserve">
     <value>Логин не может быть пусты</value>
   </data>

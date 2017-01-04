@@ -10,10 +10,16 @@
         <Grid Margin="0,50,0,0">
         <StackPanel Orientation="Vertical" Margin="{StaticResource base_margin}">
             <TextBlock x:Uid="autorization_email" Text="Login" />
-                <TextBox Name="tbEmail" Margin="{StaticResource base_margin_vertical}"/>
+                <StackPanel>
+                    <TextBox Name="tbEmail" />
+                    <TextBlock Name="tbEmailError" Style="{StaticResource CaptionTextBlockStyle}" Foreground="Red"/>
+                </StackPanel>
             <TextBlock x:Uid="autorization_password" Text="Password" />
-                <TextBox Name="tvPassword" Margin="{StaticResource base_margin_vertical}"/>
-                <Button Click="Button_Click" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Vertical">
+                    <TextBox Name="tbPassword" />
+                    <TextBlock Name="tbPasswordError" Style="{StaticResource CaptionTextBlockStyle}" Foreground="Red"/>
+                </StackPanel>                
+                <Button Click="OnSignInClick" HorizontalAlignment="Stretch">
                 <Button.Content>
                     <TextBlock x:Uid="autorization_signin" Text="Signin" />
                 </Button.Content>

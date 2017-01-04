@@ -1,6 +1,14 @@
 ﻿{
   "dependencies": {
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0"
+    "Acr.UserDialogs": "6.3.3",
+    "FluentValidation": "6.2.1",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
+    "PCLStorage": "1.0.2",
+    "sqlite-net-pcl": "1.2.1",
+    "Unity": "4.0.1",
+    "Xam.Plugin.Geolocator": "3.0.4",
+    "Xam.Plugin.Media": "2.6.1",
+    "Xam.Plugins.Settings": "2.5.1"
   },
   "frameworks": {
     "uap10.0": {}

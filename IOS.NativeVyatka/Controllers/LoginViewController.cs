@@ -17,9 +17,6 @@ namespace NativeVyatkaIOS
         {
             base.ViewDidLoad();
             mController.TryAutoLogin();
-
-            var a = Plugin.Media.CrossMedia.Current;
-
 #if DEBUG
             tfEmailView.Text = "RVbot";
             tfPasswordView.Text = "test";

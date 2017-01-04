@@ -45,7 +45,7 @@ namespace NativeVyatkaCore
 
             container.RegisterType<IBurialImageGuide, BurialImageGuide>();
             container.RegisterInstance<IGeolocator>(CrossGeolocator.Current);            
-            container.RegisterInstance<IMedia>(CrossMedia.Current);            
+            container.RegisterInstance<IMedia>(CrossMedia.Current);
 #if ANDROID
             container.RegisterType<ICrossPageNavigator, NativeVyatkaAndroid.Utilities.PageNavigator>()
                      .RegisterType<IPageTypeImplementation, NativeVyatkaAndroid.Utilities.ActivityTypeImplementation>();
@@ -58,7 +58,10 @@ namespace NativeVyatkaCore
                      //.RegisterInstance<UIKit.UINavigationController>(NativeVyatkaIOS.AppDelegate.NavigationController)
                      .RegisterType<ICrossPageNavigator, NativeVyatkaIOS.Utilities.PageNavigator>();
             container.RegisterInstance<IUserDialogs>(UserDialogs.Instance);
-#elif TEST
+#elif WINDOWS_UWP
+            container.RegisterType<ICrossPageNavigator, NativeVyatka.UWP.Utilities.PageNavigator>()
+                     .RegisterType<IPageTypeImplementation, NativeVyatka.UWP.Utilities.PageTypeImplementation>();
+            container.RegisterInstance<IUserDialogs>(UserDialogs.Instance);
 #endif
             return container;
         }

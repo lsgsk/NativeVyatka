@@ -6,5 +6,8 @@
     <Thickness x:Key="base_margin">16,16,16,16</Thickness>
     <Thickness x:Key="base_margin_vertical">0,16,0,16</Thickness>
     <Thickness x:Key="base_margin_horizontal">16,0,16,0</Thickness>
-    
+    <Color x:Key="ColorPrimary">#2196F3</Color>
+    <Color x:Key="ColorPrimaryDark">#1a78c2</Color>
+    <Color x:Key="ColorAccent">#1a78c2</Color>
+
 </ResourceDictionary>

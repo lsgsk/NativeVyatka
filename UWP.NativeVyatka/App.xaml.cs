@@ -1,19 +1,17 @@
-﻿using NativeVyatka.UWP.Pages;
+﻿using Microsoft.Practices.Unity;
+using NativeVyatka.UWP.Pages;
+using NativeVyatka.UWP.Utilities;
+using NativeVyatkaCore;
+using NativeVyatkaCore.Database;
+using NativeVyatkaCore.Utilities;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace NativeVyatka.UWP
@@ -27,32 +25,32 @@ namespace NativeVyatka.UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            BurialDatabase.InitILobbyPhoneDatabase(ApplicationData.Current.LocalFolder.Path);
+            iConsole.Init(new ConsoleRealization());
+            RegisterTypesIntoDI.InitContainer(Container);
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                this.DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
             {
-                // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
-
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
                 }
-                // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
 
+            var statusBar = StatusBar.GetForCurrentView();
+            if (statusBar != null)
+            {
+                statusBar.BackgroundOpacity = 1;
+                statusBar.BackgroundColor = (Color)Resources["ColorPrimaryDark"];
+                statusBar.ForegroundColor = Colors.White;
+            }
             if (e.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
@@ -72,5 +70,7 @@ namespace NativeVyatka.UWP
             var deferral = e.SuspendingOperation.GetDeferral();
             deferral.Complete();
         }
+
+        public static UnityContainer Container { get; } = new UnityContainer();
     }
 }

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppName.Text" xml:space="preserve">
+    <value>Родная вятка</value>
+  </data>
   <data name="autorization_email.Text" xml:space="preserve">
     <value>Логин</value>
   </data>
@@ -125,5 +128,11 @@
   </data>
   <data name="autorization_signin.Text" xml:space="preserve">
     <value>Авторизоваться</value>
+  </data>
+  <data name="MainScreen_RecordsList.Text" xml:space="preserve">
+    <value>Мои записи</value>
+  </data>
+  <data name="MainScreen_RecordsMap.Text" xml:space="preserve">
+    <value>Карта записей</value>
   </data>
 </root>

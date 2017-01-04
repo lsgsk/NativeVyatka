@@ -23,7 +23,7 @@ namespace NativeVyatkaCore.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -60,138 +60,139 @@ namespace NativeVyatkaCore.Properties {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Авторизация не удалась. Проверьте логин или пароль.
         /// </summary>
-        public static string Authorization_LoginFailed {
+        internal static string Authorization_LoginFailed {
             get {
                 return ResourceManager.GetString("Authorization_LoginFailed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Не удалось выполнить вход.
         /// </summary>
-        public static string Authorization_SigninFailed {
+        internal static string Authorization_SigninFailed {
             get {
                 return ResourceManager.GetString("Authorization_SigninFailed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Внимание.
         /// </summary>
-        public static string Dialog_Attention {
+        internal static string Dialog_Attention {
             get {
                 return ResourceManager.GetString("Dialog_Attention", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Не удалось удалить запись.
         /// </summary>
-        public static string EditScreeen_DeleteFailed {
+        internal static string EditScreeen_DeleteFailed {
             get {
                 return ResourceManager.GetString("EditScreeen_DeleteFailed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Запись удалена.
         /// </summary>
-        public static string EditScreeen_DeleteFinised {
+        internal static string EditScreeen_DeleteFinised {
             get {
                 return ResourceManager.GetString("EditScreeen_DeleteFinised", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Вы действительно хотите удалить запись?.
         /// </summary>
-        public static string EditScreeen_DeleteQuestion {
+        internal static string EditScreeen_DeleteQuestion {
             get {
                 return ResourceManager.GetString("EditScreeen_DeleteQuestion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Сохранить измения и сихранизировать запись?.
         /// </summary>
-        public static string EditScreeen_SaveAndSync {
+        internal static string EditScreeen_SaveAndSync {
             get {
                 return ResourceManager.GetString("EditScreeen_SaveAndSync", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Синхранизация не удалась.
         /// </summary>
-        public static string EditScreeen_SyncFailed {
+        internal static string EditScreeen_SyncFailed {
             get {
                 return ResourceManager.GetString("EditScreeen_SyncFailed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ошибка открытия захоронения.
         /// </summary>
-        public static string EditScreen_OpeningFailed {
+        internal static string EditScreen_OpeningFailed {
             get {
                 return ResourceManager.GetString("EditScreen_OpeningFailed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Запись обновлена и синхранизирована.
         /// </summary>
-        public static string EditScreen_SyncSuccess {
+        internal static string EditScreen_SyncSuccess {
             get {
                 return ResourceManager.GetString("EditScreen_SyncSuccess", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Камера не доступна.
+        /// </summary>
+        internal static string MainScreeen_CameraNotAvailable {
+            get {
+                return ResourceManager.GetString("MainScreeen_CameraNotAvailable", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to В настоящее время gps не доступен. Сделать запись невозможно.
         /// </summary>
-        public static string MainScreeen_GpsNotAvailable {
+        internal static string MainScreeen_GpsNotAvailable {
             get {
                 return ResourceManager.GetString("MainScreeen_GpsNotAvailable", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Синхранизация записей с сервером не удалась.
         /// </summary>
-        public static string MainScreeen_SyncFailed {
+        internal static string MainScreeen_SyncFailed {
             get {
                 return ResourceManager.GetString("MainScreeen_SyncFailed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Логин не может быть пусты.
         /// </summary>
-        public static string Validator_EmptyEmail {
+        internal static string Validator_EmptyEmail {
             get {
                 return ResourceManager.GetString("Validator_EmptyEmail", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Пароль не может быть пусты.
         /// </summary>
-        public static string Validator_EmptyPassword {
+        internal static string Validator_EmptyPassword {
             get {
                 return ResourceManager.GetString("Validator_EmptyPassword", resourceCulture);
-            }
-        }
-
-        public static string MainScreeen_CameraNotAvailable
-        {
-            get
-            {
-                return ResourceManager.GetString("Camera not available", resourceCulture);
             }
         }
     }
