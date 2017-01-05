@@ -11,7 +11,7 @@ namespace Abstractions.Models.AppModels
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Patronymic { get; set; }
-        public string Desctiption { get; set; }
+        public string Description { get; set; }
         public DateTime? BirthDay { get; set; }
         public DateTime? DeathDay { get; set; }
         public DateTime RecordTime { get; set; }
@@ -21,17 +21,18 @@ namespace Abstractions.Models.AppModels
 
         public BurialModel()
         {
+            Name = Surname = Patronymic = Description = string.Empty;
             this.CloudId = Guid.NewGuid().ToString();
             this.Location = new Position();
         }
-
+    
         public BurialModel(BurialEntity entity)
         {
             this.CloudId = entity.CloudId;
             this.Name = entity.Name;
             this.Surname = entity.Surname;
             this.Patronymic = entity.Patronymic;
-            this.Desctiption = entity.Desctiption;
+            this.Description = entity.Desctiption;
             this.BirthDay = (entity.BirthDay != null) ? DateTime.SpecifyKind(entity.BirthDay.Value, DateTimeKind.Utc) : (DateTime?)null;
             this.DeathDay = (entity.DeathDay != null) ? DateTime.SpecifyKind(entity.DeathDay.Value, DateTimeKind.Utc) : (DateTime?)null;
             this.RecordTime = DateTime.SpecifyKind(entity.RecordTime, DateTimeKind.Utc);
@@ -54,7 +55,7 @@ namespace Abstractions.Models.AppModels
                 Name = this.Name,
                 Surname = this.Surname,
                 Patronymic = this.Patronymic,
-                Desctiption = this.Desctiption,
+                Desctiption = this.Description,
                 BirthDay = this.BirthDay,
                 DeathDay = this.DeathDay,
                 RecordTime = this.RecordTime,
@@ -77,7 +78,7 @@ namespace Abstractions.Models.AppModels
                 Name = this.Name,
                 Surname = this.Surname,
                 Patronymic = this.Patronymic,
-                Desctiption = this.Desctiption,
+                Desctiption = this.Description,
                 BirthDay = this.BirthDay,
                 DeathDay = this.DeathDay,
                 RecordTime = this.RecordTime,

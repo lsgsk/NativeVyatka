@@ -57,7 +57,7 @@ namespace NativeVyatka.UWP
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(BurialEditPage), e.Arguments);
+                    rootFrame.Navigate(typeof(LoginPage), e.Arguments);
                 }
                 Window.Current.Activate();
             }

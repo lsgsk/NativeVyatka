@@ -18,9 +18,9 @@ namespace NativeVyatka.UWP.Utilities
                 case PageStates.BulialListPage:
                     type = typeof(MainPage);
                     break;
-                /*case PageStates.BurialEditPage:
-                    type = typeof(BurialEditActivity);
-                    break;*/
+                case PageStates.BurialEditPage:
+                    type = typeof(BurialEditPage);
+                    break;
             }
             return type;
         }

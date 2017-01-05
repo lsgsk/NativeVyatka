@@ -18,7 +18,7 @@ namespace NativeVyatka.UWP.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            mController.TryAutoLogin();
+            //mController.TryAutoLogin();
 #if DEBUG
             tbEmail.Text = "RVbot";
             tbPassword.Text = "test";

@@ -13,11 +13,12 @@
             </CommandBar.Background>
             <CommandBar.Content>
                 <RelativePanel HorizontalAlignment="Left" Margin="0,5,0,0"> 
-                    <Button x:Name="HamburgerButton" RelativePanel.AlignLeftWithPanel="True" FontFamily="Segoe MDL2 Assets" FontSize="26" Content="&#xE700;" Click="HamburgerButton_Click" Background="Transparent" Foreground="White"/>
+                    <Button x:Name="HamburgerButton" RelativePanel.AlignLeftWithPanel="True" FontFamily="Segoe MDL2 Assets" FontSize="26" Content="&#xE700;" Click="OnHamburgerButtonClick" Background="Transparent" Foreground="White"/>
                     <TextBlock Name="tbActionBarHeader" RelativePanel.RightOf="HamburgerButton" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="22" Margin="15 0 0 0" x:Uid="AppName" Text="Native" Foreground="White"/>
                 </RelativePanel>
             </CommandBar.Content>
-            <AppBarButton Icon="Add" Foreground="White" />
+            <AppBarButton Name="mSyncIcon" Icon="Sync" Foreground="White" Width="40" Click="OnSyncClick"/>
+            <AppBarButton Icon="Add" Foreground="White" Width="40" Click="OnTakeNewPhoto" />
         </CommandBar>
     </Page.TopAppBar>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">   
@@ -34,7 +35,7 @@
                         <TextBlock Name="tbProfileName" Text="Lysov Alex" RelativePanel.Below="elProfilePhoto" Margin="{StaticResource base_margin_horizontal}" Foreground="White" Style="{StaticResource BaseTextBlockStyle}"/>
                         <TextBlock Name="tbProfileEmail" Text="lsgsk@rambler.ru" RelativePanel.Below="tbProfileName" Margin="{StaticResource base_margin_horizontal}" Foreground="White" Style="{StaticResource BaseTextBlockStyle}"/>                        
                     </RelativePanel>                  
-                    <ListBox SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
+                    <ListBox SelectionMode="Single" SelectionChanged="OnMenuSelectionChanged">
                     <ListBoxItem Name="menuRecords">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="ms-appx:///Assets/Images/menu_list.png" Width="20" Height="20" Margin="10,5,10,5" />

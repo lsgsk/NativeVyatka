@@ -1,22 +1,12 @@
-﻿using NativeVyatka.UWP.Pages.Frames;
+﻿using Abstractions.Interfaces.Controllers;
+using NativeVyatka.UWP.Pages.Frames;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using Microsoft.Practices.Unity;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace NativeVyatka.UWP
 {
@@ -25,10 +15,36 @@ namespace NativeVyatka.UWP
         public MainPage()
         {
             this.InitializeComponent();
+            Controller = mController = App.Container.Resolve<IMainController>();
+        }
 
-                }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            SetProfile();
+            SetFrame();
+        }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            mController.Dispose();
+        }
+
+        private void SetFrame()
+        {
+            menuRecords.IsSelected = true;
+            OnMenuSelectionChanged(null, null);
+        }
+
+        private void SetProfile()
+        {
+            tbProfileName.Text = mController.Profile.Name;
+            tbProfileEmail.Text = mController.Profile.Email;
+            elProfilePhoto.Fill = new ImageBrush() { ImageSource = new BitmapImage(new Uri(mController.Profile.PictureUrl)) };
+        }
+
+        private void OnMenuSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if  (menuRecords.IsSelected)
             {
@@ -38,12 +54,25 @@ namespace NativeVyatka.UWP
             {
                 fContentFrame.Navigate(typeof(MapFrame));
             }
+            mSyncIcon.Visibility = (menuRecords.IsSelected) ? Visibility.Visible : Visibility.Collapsed;
             svNavigationMenu.IsPaneOpen = false;
         }
 
-        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        private void OnHamburgerButtonClick(object sender, RoutedEventArgs e)
         {
             svNavigationMenu.IsPaneOpen = !svNavigationMenu.IsPaneOpen;
+        }       
+
+        private async void OnTakeNewPhoto(object sender, RoutedEventArgs e)
+        {
+            await mController.CreateNewBurial();
         }
+
+        private async void OnSyncClick(object sender, RoutedEventArgs e)
+        {
+            await (fContentFrame.Content as RecordsFrame)?.ObtainData();
+        }
+        public readonly IMainController mController; 
+        public static IMainController Controller { get; private set; }
     }
 }

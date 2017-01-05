@@ -1,4 +1,6 @@
-﻿using NativeVyatka.UWP.Controls;
+﻿using Abstractions.Interfaces.Controllers;
+using Abstractions.Models.AppModels;
+using NativeVyatka.UWP.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,13 +9,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -30,23 +27,12 @@ namespace NativeVyatka.UWP.Pages.Frames
             this.InitializeComponent();
         }
 
-        private Random _rand = new Random();
-
-        public ObservableCollection<ListItemData> Items { get; set; } = new ObservableCollection<ListItemData>();
-
-        public DependencyProperty UseAutoRefreshProperty = DependencyProperty.Register("UseAutoRefresh", typeof(bool), typeof(RecordsFrame), new PropertyMetadata(false));
-        public bool UseAutoRefresh
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            get { return (bool)GetValue(UseAutoRefreshProperty); }
-            set { SetValue(UseAutoRefreshProperty, value); }
+            DisplayRecords();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            await FetchAndInsertItemsAsync(_rand.Next(1, 21));
-        }
-
-        private async Task FetchAndInsertItemsAsync(int updateCount)
+        private void DisplayRecords()
         {
             // Show the status bar progress indicator, if available.
             Windows.UI.ViewManagement.StatusBar statusBar = null;
@@ -54,48 +40,49 @@ namespace NativeVyatka.UWP.Pages.Frames
             {
                 statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
             }
-
             if (statusBar != null)
             {
                 var task = statusBar.ProgressIndicator.ShowAsync();
             }
-
-            // Simulate delay while we go fetch new items.
-            await Task.Delay(500);
-
-            for (int i = 0; i < updateCount; ++i)
+            Items.Clear();
+            mBurialCollection = mController.GetBurials();
+            for (int i = 0; i < mBurialCollection.Count; ++i)
             {
-                Items.Insert(0, GetNextItem());
+                var burial = mBurialCollection[i];
+                var name = $"{burial.Surname} {burial.Name} {burial.Patronymic}";
+                Items.Insert(0, new BurialListItem()
+                {
+                    CloudId = burial.CloudId,
+                    PicturePath = burial.PicturePath,
+                    Name = string.IsNullOrWhiteSpace(name) ? "Неизвестное захоронение" : name,
+                    Description = string.IsNullOrEmpty(burial.Description) ? "Без описания" : burial.Description,
+                    Updated = burial.Updated ? Visibility.Collapsed : Visibility.Visible
+                });
             }
-
             if (statusBar != null)
             {
                 var task = statusBar.ProgressIndicator.HideAsync();
             }
         }
 
-        private ListItemData GetNextItem()
+        public async Task ObtainData()
         {
-            return new ListItemData()
-            {
-                Image = "ms-appx:///Assets/Images/nophoto.png",
-                Header = RandomSentence(),
-                Attribution = RandomSentence(),
-                Body = RandomSentence()
-            };
+            await mController.ForceSyncBurials();
+            DisplayRecords();
         }
 
-        private string RandomSentence()
+        private void BurialRecordItemClick(object sender, ItemClickEventArgs e)
         {
-            return _rand.Next(int.MaxValue).ToString();
+            var burial = mBurialCollection.FirstOrDefault(x => x.CloudId == (e.ClickedItem as BurialListItem).CloudId);
+            if(burial != null)
+                mController.DisplayBurial(burial);
         }
 
-        private async void listView_RefreshRequested(object sender, RefreshRequestedEventArgs e)
+        private async void ListViewRefreshRequested(object sender, RefreshRequestedEventArgs e)
         {
             using (Deferral deferral = listView.AutoRefresh ? e.GetDeferral() : null)
             {
-                await FetchAndInsertItemsAsync(_rand.Next(1, 5));
-
+                await ObtainData();
                 if (SpinnerStoryboard.GetCurrentState() != Windows.UI.Xaml.Media.Animation.ClockState.Stopped)
                 {
                     SpinnerStoryboard.Stop();
@@ -103,7 +90,7 @@ namespace NativeVyatka.UWP.Pages.Frames
             }
         }
 
-        private void listView_PullProgressChanged(object sender, RefreshProgressEventArgs e)
+        private void ListViewPullProgressChanged(object sender, RefreshProgressEventArgs e)
         {
             if (e.IsRefreshable)
             {
@@ -126,5 +113,34 @@ namespace NativeVyatka.UWP.Pages.Frames
                 }
             }
         }
+
+        public DependencyProperty UseAutoRefreshProperty = DependencyProperty.Register("UseAutoRefresh", typeof(bool), typeof(RecordsFrame), new PropertyMetadata(false));
+        public bool UseAutoRefresh
+        {
+            get { return (bool)GetValue(UseAutoRefreshProperty); }
+            set { SetValue(UseAutoRefreshProperty, value); }
+        }
+
+        public ObservableCollection<BurialListItem> Items { get; set; } = new ObservableCollection<BurialListItem>();
+
+        private List<BurialModel> mBurialCollection = new List<BurialModel>();
+        private IMainRecordsController mController
+        {
+            get
+            {
+                return MainPage.Controller;
+            }
+        }
+    }
+
+    public class BurialListItem
+    {
+        public string CloudId { get; set; }
+        public string PicturePath { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public Visibility Updated { get; set; }
+
     }
 }
+

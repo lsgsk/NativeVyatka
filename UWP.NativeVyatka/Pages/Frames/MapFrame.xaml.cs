@@ -1,4 +1,6 @@
-﻿using NativeVyatkaCore.Utilities;
+﻿using Abstractions.Interfaces.Controllers;
+using Abstractions.Models.AppModels;
+using NativeVyatkaCore.Utilities;
 using Plugin.Geolocator;
 using System;
 using System.Collections.Generic;
@@ -42,47 +44,33 @@ namespace NativeVyatka.UWP.Pages.Frames
             var posotion = await CrossGeolocator.Current.GetPositionAsync();
             myMap.Center = new Geopoint(new BasicGeoposition() { Latitude = posotion.Latitude, Longitude = posotion.Longitude });
 
-            // Create a MapIcon.
-            MapIcon mapIcon1 = new MapIcon();
-            mapIcon1.Location = myMap.Center;
-            mapIcon1.NormalizedAnchorPoint = new Point(0.5, 1.0);
-            mapIcon1.Title = "Space Needle";
-            mapIcon1.ZIndex = 0;
-
-            myMap.MapElements.Add(mapIcon1);
-
-            /*MapItems.ItemsSource = new List<PointOfInterest>()
+            mBurialCollection = mController.GetBurials();
+            foreach (var item in mBurialCollection)
             {
-                new PointOfInterest()
-                {
-                    DisplayName = "Place One",
-                    ImageSourceUri = new Uri("ms-appx:///Assets/Images/nophoto.png"),
-                    NormalizedAnchorPoint = new Point(0.5, 1),
-                    Location = new Geopoint(new BasicGeoposition()
-                    {
-                        Latitude = posotion.Latitude + 0.001,
-                        Longitude = posotion.Longitude - 0.001
-                    })
-                }
-            };*/
-        }
-
-        private void MyMap_MapTapped(MapControl sender, MapInputEventArgs args)
-        {
-            var tappedGeoPosition = args.Location.Position;
-            iConsole.WriteLine(tappedGeoPosition.ToString());
-        }
-
-        private void mapItemButton_Click(object sender, RoutedEventArgs e)
-        {
-            var buttonSender = sender as Button;
-            PointOfInterest poi = buttonSender.DataContext as PointOfInterest;
-            iConsole.WriteLine(poi.ToString());
+                var burialIcon = new MapIcon();
+                burialIcon.Location = new Geopoint(new BasicGeoposition() { Latitude = item.Location.Latitude, Longitude = item.Location.Longitude });
+                burialIcon.NormalizedAnchorPoint = new Point(0.5, 1.0);
+                burialIcon.Title = item.Name;
+                myMap.MapElements.Add(burialIcon);
+            }           
         }
 
         private void myMap_MapElementClick(MapControl sender, MapElementClickEventArgs args)
         {
+            MapIcon myClickedIcon = args.MapElements.FirstOrDefault(x => x is MapIcon) as MapIcon;
+            //херня какая-то
+            var burial = mBurialCollection.FirstOrDefault(x => x.Name == myClickedIcon.Title);
+            if (burial != null)
+                mController.DisplayBurial(burial);
+        }
 
+        private List<BurialModel> mBurialCollection = new List<BurialModel>();
+        private IMainRecordsController mController
+        {
+            get
+            {
+                return MainPage.Controller;
+            }            
         }
     }
 

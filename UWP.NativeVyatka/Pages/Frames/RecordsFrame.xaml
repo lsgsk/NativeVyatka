@@ -3,6 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:NativeVyatka.UWP.Pages.Frames"
+    xmlns:model="using:Abstractions.Models.AppModels"
+    xmlns:adpt="using:NativeVyatka.UWP.Utilities.Adapters"
     xmlns:c="using:NativeVyatka.UWP.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -106,7 +108,7 @@
                     To="360" />
             </Storyboard>
         </Grid.Resources>
-        <c:RefreshableListView x:Name="listView" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoRefresh="{x:Bind Path=UseAutoRefresh, Mode=OneWay}" ItemsSource="{x:Bind Items}" PullProgressChanged="listView_PullProgressChanged" RefreshRequested="listView_RefreshRequested">
+        <c:RefreshableListView x:Name="listView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoRefresh="{x:Bind Path=UseAutoRefresh, Mode=OneWay}" ItemsSource="{x:Bind Items}" PullProgressChanged="ListViewPullProgressChanged" RefreshRequested="ListViewRefreshRequested" ItemClick="BurialRecordItemClick"  SelectionMode="None" IsItemClickEnabled="True">
             <c:RefreshableListView.RefreshIndicatorContent>
                 <Grid Height="100" Background="Transparent">
                     <FontIcon Margin="0,0,0,30" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontSize="20" Glyph="&#xE72C;" RenderTransformOrigin="0.5,0.5">
@@ -117,25 +119,37 @@
                 </Grid>
             </c:RefreshableListView.RefreshIndicatorContent>
             <c:RefreshableListView.ItemTemplate>
-                <DataTemplate x:DataType="c:ListItemData">
-                    <Grid Height="120">
+                <DataTemplate x:DataType="local:BurialListItem">                    
+                    <Grid Height="100" HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="0,0,0,1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="16" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="25" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Image     Grid.Row="0" Grid.RowSpan="3"                            Grid.Column="0"                            Width="120"                            Height="120"                            HorizontalAlignment="Left"                            VerticalAlignment="Top"                            Source="{x:Bind Path=Image}"                            Stretch="UniformToFill" />
-                        <TextBlock Grid.Row="0" Grid.Column="2"                            HorizontalAlignment="Left"                            VerticalAlignment="Top"                            Style="{StaticResource TitleTextBlockStyle}"                            MaxLines="1"                            Text="{x:Bind Path=Header, Mode=OneTime}"                            TextTrimming="Clip"/>
-                        <TextBlock Grid.Row="1" Grid.Column="2"                            HorizontalAlignment="Left"                            VerticalAlignment="Top"                            Style="{StaticResource CaptionTextBlockStyle}"                            MaxLines="1"                            Text="{x:Bind Path=Attribution, Mode=OneTime}"                            TextTrimming="Clip" />
-                        <TextBlock Grid.Row="2" Grid.Column="2"                            Margin="0,4,0,0"                            HorizontalAlignment="Left"                            VerticalAlignment="Top"                            Style="{StaticResource BodyTextBlockStyle}"                            Text="{x:Bind Path=Body, Mode=OneTime}"                            TextTrimming="Clip" />
+
+                        <Ellipse Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"  Width="70" Height="70" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{x:Bind Path=PicturePath}" Stretch="UniformToFill"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse   Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Fill="Red" Width="8" Height="8" VerticalAlignment="Center" Visibility="{x:Bind Path=Updated, Mode=OneWay}" />
+                        <TextBlock Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Left"  VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" MaxLines="1" Text="{x:Bind Path=Name, Mode=OneTime}" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource CaptionTextBlockStyle}" MaxLines="2" Text="{x:Bind Path=Description, Mode=OneTime}" TextTrimming="Clip" />
                     </Grid>
-                </DataTemplate>
+                </DataTemplate>                
             </c:RefreshableListView.ItemTemplate>
+            <c:RefreshableListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </c:RefreshableListView.ItemContainerStyle>
         </c:RefreshableListView>
     </Grid>
 </Page>

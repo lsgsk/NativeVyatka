@@ -29,7 +29,7 @@ namespace NativeVyatka.UWP.Pages
             base.OnNavigatedTo(e);
             try
             {
-                var burial = (e.Content as Dictionary<string, string>)[FormBundleConstants.BurialModel];
+                var burial = (e.Parameter as Dictionary<string, string>)[FormBundleConstants.BurialModel];
                 mController.Burial = JsonConvert.DeserializeObject<BurialModel>(burial);
                 OnDisplayBurial(mController.Burial);
             }
@@ -60,7 +60,7 @@ namespace NativeVyatka.UWP.Pages
 
         private void DescriptionTextChanged(object sender, TextChangedEventArgs e)
         {
-            mController.Burial.Desctiption = tbSurname.Text;
+            mController.Burial.Description = tbSurname.Text;
             BurialNeedToBeUpdated(tbDescription);
         }
 
@@ -82,7 +82,7 @@ namespace NativeVyatka.UWP.Pages
             tbName.Text = burial.Name;
             tbSurname.Text = burial.Surname;
             tbPatronymic.Text = burial.Patronymic;
-            tbDescription.Text = burial.Desctiption;
+            tbDescription.Text = burial.Description;
             cdpPhotoTime.Date = burial.RecordTime;
             cdpBirthTime.Date = burial.BirthDay;
             cdpDeathTime.Date = burial.DeathDay;

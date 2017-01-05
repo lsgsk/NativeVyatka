@@ -22,7 +22,7 @@ namespace UnitTestProject.Database.Table
                 Name = rd.Next(int.MaxValue).ToString(),
                 Surname = rd.Next(int.MaxValue).ToString(),
                 Patronymic = rd.Next(int.MaxValue).ToString(),
-                Desctiption = rd.Next(int.MaxValue).ToString(),
+                Description = rd.Next(int.MaxValue).ToString(),
                 BirthDay = DateTime.UtcNow,
                 DeathDay = DateTime.UtcNow,
                 PicturePath = "folder/image.png",
