@@ -135,4 +135,25 @@
   <data name="MainScreen_RecordsMap.Text" xml:space="preserve">
     <value>Карта записей</value>
   </data>
+  <data name="EditScreen_BirthDay" xml:space="preserve">
+    <value>Дата рождения</value>
+  </data>
+  <data name="EditScreen_DeathDay" xml:space="preserve">
+    <value>Дата смерти</value>
+  </data>
+  <data name="EditScreen_Description" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="EditScreen_Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="EditScreen_Patronymic" xml:space="preserve">
+    <value>Отчество</value>
+  </data>
+  <data name="EditScreen_PhotoDate" xml:space="preserve">
+    <value>Дата сьемки</value>
+  </data>
+  <data name="EditScreen_Surname" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
 </root>

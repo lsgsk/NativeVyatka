@@ -19,7 +19,6 @@ using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
-
 namespace NativeVyatkaCore
 {
     public static class RegisterTypesIntoDI
@@ -45,7 +44,7 @@ namespace NativeVyatkaCore
 
             container.RegisterType<IBurialImageGuide, BurialImageGuide>();
             container.RegisterInstance<IGeolocator>(CrossGeolocator.Current);            
-            container.RegisterInstance<IMedia>(CrossMedia.Current);
+            container.RegisterInstance<IMedia>(CrossMedia.Current);            
 #if ANDROID
             container.RegisterType<ICrossPageNavigator, NativeVyatkaAndroid.Utilities.PageNavigator>()
                      .RegisterType<IPageTypeImplementation, NativeVyatkaAndroid.Utilities.ActivityTypeImplementation>();

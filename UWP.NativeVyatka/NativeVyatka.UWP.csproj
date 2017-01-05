@@ -96,14 +96,18 @@
     <Compile Include="..\Core.NativeVyatka\RegisterTypesIntoDI.cs">
       <Link>RegisterTypesIntoDI.cs</Link>
     </Compile>
+    <Compile Include="Controls\RefreshableListView.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Frames\BlankPage1.xaml.cs">
-      <DependentUpon>BlankPage1.xaml</DependentUpon>
+    <Compile Include="Pages\BurialEditPage.xaml.cs">
+      <DependentUpon>BurialEditPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Frames\BlankPage2.xaml.cs">
-      <DependentUpon>BlankPage2.xaml</DependentUpon>
+    <Compile Include="Pages\Frames\MapFrame.xaml.cs">
+      <DependentUpon>MapFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Frames\RecordsFrame.xaml.cs">
+      <DependentUpon>RecordsFrame.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -112,9 +116,9 @@
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\ConsoleRealization.cs" />
-    <Compile Include="Utilities\PageNavigator.cs" />
-    <Compile Include="Utilities\PageTypeImplementation.cs" />
+    <Compile Include="Utilities\Plugins\ConsoleRealization.cs" />
+    <Compile Include="Utilities\Plugins\PageNavigator.cs" />
+    <Compile Include="Utilities\Plugins\PageTypeImplementation.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -123,8 +127,10 @@
     <None Include="NativeVyatka.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\drawer_header.jpg" />
     <Content Include="Assets\Images\menu_globe.png" />
     <Content Include="Assets\Images\menu_list.png" />
+    <Content Include="Assets\Images\nophoto.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -139,11 +145,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Pages\Frames\BlankPage1.xaml">
+    <Page Include="Pages\BurialEditPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Frames\BlankPage2.xaml">
+    <Page Include="Pages\Frames\MapFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Frames\RecordsFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,7 +177,7 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
+    <Folder Include="Utilities\Adapters\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Abstractions\Abstractions.csproj">

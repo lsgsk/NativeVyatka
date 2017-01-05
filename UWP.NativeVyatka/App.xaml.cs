@@ -4,6 +4,7 @@ using NativeVyatka.UWP.Utilities;
 using NativeVyatkaCore;
 using NativeVyatkaCore.Database;
 using NativeVyatkaCore.Utilities;
+using Plugin.Media;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -27,6 +28,7 @@ namespace NativeVyatka.UWP
             this.Suspending += OnSuspending;
             BurialDatabase.InitILobbyPhoneDatabase(ApplicationData.Current.LocalFolder.Path);
             iConsole.Init(new ConsoleRealization());
+            CrossMedia.Current.Initialize();
             RegisterTypesIntoDI.InitContainer(Container);
         }
 
@@ -55,7 +57,7 @@ namespace NativeVyatka.UWP
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(LoginPage), e.Arguments);
+                    rootFrame.Navigate(typeof(BurialEditPage), e.Arguments);
                 }
                 Window.Current.Activate();
             }

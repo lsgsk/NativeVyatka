@@ -20,32 +20,30 @@ using Windows.UI.Xaml.Navigation;
 
 namespace NativeVyatka.UWP
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         public MainPage()
         {
             this.InitializeComponent();
-        }
+
+                }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if  (menuRecords.IsSelected)
             {
-                myFrame.Navigate(typeof(BlankPage1));
+                fContentFrame.Navigate(typeof(RecordsFrame));
             }
             else if (menuMap.IsSelected)
             {
-                myFrame.Navigate(typeof(BlankPage2));
+                fContentFrame.Navigate(typeof(MapFrame));
             }
-            mySplitView.IsPaneOpen = false;
+            svNavigationMenu.IsPaneOpen = false;
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
-            mySplitView.IsPaneOpen = !mySplitView.IsPaneOpen;
+            svNavigationMenu.IsPaneOpen = !svNavigationMenu.IsPaneOpen;
         }
     }
 }

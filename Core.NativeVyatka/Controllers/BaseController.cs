@@ -1,6 +1,7 @@
 ﻿using Abstractions.Interfaces.Controllers;
 using Acr.UserDialogs;
 using NativeVyatkaCore.Properties;
+using NativeVyatkaCore.Utilities;
 using Plugin.Media.Abstractions;
 using System;
 using System.IO;
@@ -58,23 +59,31 @@ namespace NativeVyatkaCore.Controllers
 
         protected async Task<string> CreatePhoto()
         {
-            if (mMedia.IsCameraAvailable && mMedia.IsTakePhotoSupported)
+            try
             {
-                var file = await mMedia.TakePhotoAsync(new StoreCameraMediaOptions
+                if (mMedia.IsCameraAvailable && mMedia.IsTakePhotoSupported)
                 {
-                    CustomPhotoSize = 50,
-                    Directory = "BurialFolder",
-                    Name = Path.GetRandomFileName() + ".jpg"
-                });
-                if (file != null)
+                    var file = await mMedia.TakePhotoAsync(new StoreCameraMediaOptions
+                    {
+                        CustomPhotoSize = 50,
+                        Directory = "BurialFolder",
+                        Name = Path.GetRandomFileName() + ".jpg"
+                    });
+                    if (file != null)
+                    {
+                        return file.Path;
+                    }
+                }
+                else
                 {
-                    return file.Path;
+                    await AlertAsync(Resources.MainScreeen_CameraNotAvailable, Resources.Dialog_Attention);
                 }
             }
-            else
+            catch(Exception ex)
             {
+                iConsole.Error(ex);
                 await AlertAsync(Resources.MainScreeen_CameraNotAvailable, Resources.Dialog_Attention);
-            }
+            }           
             return string.Empty;
         }
 

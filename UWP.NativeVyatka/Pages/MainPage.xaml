@@ -6,38 +6,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <RelativePanel>
-            <RelativePanel.Background>
+    <Page.TopAppBar>
+        <CommandBar x:Name="commandBar" ClosedDisplayMode="Compact">
+            <CommandBar.Background>
                 <SolidColorBrush Color="{StaticResource ColorPrimary}"/>
-            </RelativePanel.Background>
-            <Button x:Name="HamburgerButton" RelativePanel.AlignLeftWithPanel="True" FontFamily="Segoe MDL2 Assets" FontSize="26" Content="&#xE700;" Click="HamburgerButton_Click" Background="Transparent" Foreground="White"/>
-            <TextBlock Name="TitleTextBlock" RelativePanel.RightOf="HamburgerButton" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="22" Margin="15 0 0 0" x:Uid="AppName" Text="Native" Foreground="White"/>
-        </RelativePanel>
-        <SplitView Name="mySplitView" Grid.Row="1" OpenPaneLength="200">
+            </CommandBar.Background>
+            <CommandBar.Content>
+                <RelativePanel HorizontalAlignment="Left" Margin="0,5,0,0"> 
+                    <Button x:Name="HamburgerButton" RelativePanel.AlignLeftWithPanel="True" FontFamily="Segoe MDL2 Assets" FontSize="26" Content="&#xE700;" Click="HamburgerButton_Click" Background="Transparent" Foreground="White"/>
+                    <TextBlock Name="tbActionBarHeader" RelativePanel.RightOf="HamburgerButton" RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="22" Margin="15 0 0 0" x:Uid="AppName" Text="Native" Foreground="White"/>
+                </RelativePanel>
+            </CommandBar.Content>
+            <AppBarButton Icon="Add" Foreground="White" />
+        </CommandBar>
+    </Page.TopAppBar>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">   
+        <SplitView Name="svNavigationMenu" Grid.Row="1" OpenPaneLength="200">
             <SplitView.Pane>
-                <ListBox SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
+                <StackPanel Orientation="Vertical">
+                    <RelativePanel>
+                        <Image Source="ms-appx:///Assets/Images/drawer_header.jpg" Width="200" Height="140" Stretch="Fill"/>
+                        <Ellipse Name="elProfilePhoto" Width="70" Height="70" Margin="{StaticResource base_margin}" >
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="ms-appx:///Assets/Images/nophoto.png" Stretch="UniformToFill"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock Name="tbProfileName" Text="Lysov Alex" RelativePanel.Below="elProfilePhoto" Margin="{StaticResource base_margin_horizontal}" Foreground="White" Style="{StaticResource BaseTextBlockStyle}"/>
+                        <TextBlock Name="tbProfileEmail" Text="lsgsk@rambler.ru" RelativePanel.Below="tbProfileName" Margin="{StaticResource base_margin_horizontal}" Foreground="White" Style="{StaticResource BaseTextBlockStyle}"/>                        
+                    </RelativePanel>                  
+                    <ListBox SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
                     <ListBoxItem Name="menuRecords">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="ms-appx:///Assets/Images/menu_list.png" Width="20" Height="20" Margin="5" />
-                            <TextBlock FontSize="20" x:Uid="MainScreen_RecordsList" Text="List" />
+                            <Image Source="ms-appx:///Assets/Images/menu_list.png" Width="20" Height="20" Margin="10,5,10,5" />
+                            <TextBlock FontSize="20" x:Uid="MainScreen_RecordsList" Text="List" VerticalAlignment="Center" />
                         </StackPanel>                      
                     </ListBoxItem>
                     <ListBoxItem Name="menuMap">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="ms-appx:///Assets/Images/menu_globe.png" Width="20" Height="20" Margin="5" />
-                            <TextBlock FontSize="20" x:Uid="MainScreen_RecordsMap" Text="Map" />
+                                <Image Source="ms-appx:///Assets/Images/menu_globe.png" Width="20" Height="20" Margin="10,5,10,5" />
+                            <TextBlock FontSize="20" x:Uid="MainScreen_RecordsMap" Text="Map" VerticalAlignment="Center" />
                         </StackPanel>
                     </ListBoxItem>
                 </ListBox>
+                </StackPanel>
             </SplitView.Pane>
             <SplitView.Content>
-                <Frame Name="myFrame" />
+                <Frame Name="fContentFrame" />
             </SplitView.Content>
         </SplitView>
     </Grid>
