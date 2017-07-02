@@ -7,6 +7,7 @@ namespace Abstractions.Interfaces.Plugins
     public interface ICrossPageNavigator
     {
         void GoToPage(PageStates state, Dictionary<string, string> extras = null);
+        void Goback();
     }
 
     public interface IPageTypeImplementation

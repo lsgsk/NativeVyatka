@@ -11,22 +11,23 @@ namespace NativeVyatkaCore.Network
 {
     public class LoginNetworkProvider : ILoginNetworkProvider
     {
-        public LoginNetworkProvider(ILoginRestClient restClient, ISessionSettings settingsProvider, IProfileStorage pstorage)
+        public LoginNetworkProvider(ILoginRestClient restClient, ISettingsProvider settingsProvider, IProfileStorage pstorage)
         {
             this.mRestClient = restClient;
             this.mSettingsProvider = settingsProvider;
-            this.mpStorage = pstorage;
+            this.pStorage = pstorage;
         }
 
         public async Task LoginAsync(string login, string password)
         {
             try
             {
-                var result = await mRestClient.LoginAsync(login, password, mSettingsProvider.PushToken);
-                UpdateSessionAndProfile(result);
+                var user = await mRestClient.LoginAsync(login, password);
+                UpdateSessionAndProfile(user);
             }
             catch(LoginLoadException)
             {
+                pStorage.ClearProfile();
                 throw new AuthorizationSyncException();
             }
         }
@@ -35,20 +36,22 @@ namespace NativeVyatkaCore.Network
         {
             try
             {
-                await mRestClient.SiginAsync(mSettingsProvider.PushToken);
+                var user = await mRestClient.SiginAsync();
+                UpdateSessionAndProfile(user);
             }            
             catch (SigninLoadException)
             {
+                pStorage.ClearProfile();
                 throw new AuthorizationSyncException();
             }
         }
 
         private void UpdateSessionAndProfile(ApiProfile value)
         {
-            mSettingsProvider.CsrfToken = value.Token;
-            mSettingsProvider.SessionName = value.Session_name;
-            mSettingsProvider.SessionId = value.Sessid;
-            mpStorage.SaveProfile(new ProfileModel(value.User));
+            mSettingsProvider.CsrfToken = value.token;
+            mSettingsProvider.SessionName = value.session_name;
+            mSettingsProvider.SessionId = value.sessid;
+            pStorage.SaveProfile(new ProfileModel(value.user));
         }
 
         public void Cancel()
@@ -57,7 +60,7 @@ namespace NativeVyatkaCore.Network
         }        
 
         private readonly ILoginRestClient mRestClient;
-        private readonly ISessionSettings mSettingsProvider;
-        private readonly IProfileStorage mpStorage;      
+        private readonly ISettingsProvider mSettingsProvider;
+        private readonly IProfileStorage pStorage;      
     }
 }

@@ -14,15 +14,14 @@ using Abstractions.Interfaces.Controllers;
 using Abstractions.Interfaces.Plugins;
 using Newtonsoft.Json;
 using Abstractions.Models.AppModels;
-using Square.Picasso;
 using NativeVyatkaCore.Utilities;
+using Square.Picasso;
 
 namespace NativeVyatkaAndroid
 {
-    [Activity(Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
+    [Activity(Theme = "@style/AppTheme", Label = "@string/burial_edit_title", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
     public class BurialEditActivity : BaseAppCompatActivity, IOnMapReadyCallback
     {
-        //http://www.icons4android.com/ - иконки
         public BurialEditActivity()
         {
             mController = App.Container.Resolve<IBurialEditController>();
@@ -41,7 +40,8 @@ namespace NativeVyatkaAndroid
             catch (Exception ex)
             {
                 iConsole.Error(ex);
-                mController.ForceGoBack();
+                Toast.MakeText(this, NativeVyatkaCore.Properties.Resources.EditScreen_OpeningFailed, ToastLength.Short).Show();
+                Finish();
             }
         }
 
@@ -72,12 +72,12 @@ namespace NativeVyatkaAndroid
 
         private void OnDisplayBurial(BurialModel burial)
         {
-            Picasso.With(BaseContext).Load(new Java.IO.File(burial.PicturePath)).Into(imgPhoto);
+            Picasso.With(BaseContext).Load(new Java.IO.File(burial.PicturePath)).ResizeDimen(Resource.Dimension.photo_size, Resource.Dimension.photo_size).CenterInside().OnlyScaleDown().Into(imgPhoto);
             SupportActionBar.Title = $"{burial.Name} {burial.Surname} {burial.Patronymic}";
             etName.Text = burial.Name;
             etSurname.Text = burial.Surname;
             etPatronymic.Text = burial.Patronymic;
-            etDescription.Text = burial.Desctiption;
+            etDescription.Text = burial.Description;
             DisplayDate(etPhotoTime, burial.RecordTime);
             DisplayDate(etBirthTime, burial.BirthDay);
             DisplayDate(etDeathTime, burial.DeathDay);
@@ -86,7 +86,7 @@ namespace NativeVyatkaAndroid
 
         private void DisplayDate(EditText et, DateTime? time)
         {
-            et.Text = time.HasValue ? time.Value.ToShortDateString() : "Неизвестно";
+            et.Text = time.HasValue ? time.Value.ToShortDateString() : GetString(Resource.String.desciption_unknown);
         }
 
         private void FindAndBindViews(Bundle savedInstanceState)
@@ -117,7 +117,7 @@ namespace NativeVyatkaAndroid
             etDescription = FindViewById<EditText>(Resource.Id.etDescription);
             etDescription.TextChanged += (s, e) =>
             {
-                mController.Burial.Desctiption = e.Text.ToString();
+                mController.Burial.Description = e.Text.ToString();
                 BurialNeedToBeUpdated(etDescription);
             };
             etPhotoTime = FindViewById<EditText>(Resource.Id.etPhotoTime);
@@ -139,8 +139,7 @@ namespace NativeVyatkaAndroid
             }
         }
 
-        [Export("OnRetakePhoto")]
-        public async void OnRetakePhoto(View view)
+        public async void OnRetakePhoto()
         {
             var path = await mController.RetakePhotoAsync();
             Picasso.With(BaseContext).Load(new Java.IO.File(path)).Into(imgPhoto);
@@ -184,6 +183,9 @@ namespace NativeVyatkaAndroid
                     break;
                 case Resource.Id.action_delete:
                     mController.DeleteRecordAsync();
+                    break;
+                case Resource.Id.action_rephoto:
+                    OnRetakePhoto();
                     break;
             }
             return base.OnOptionsItemSelected(item);

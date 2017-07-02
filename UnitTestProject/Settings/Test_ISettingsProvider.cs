@@ -10,18 +10,19 @@ using Abstractions.Constants;
 namespace UnitTestProject.Settings
 {
     [TestClass]
-    public class Test_ISessionSettings
+    public class Test_ISettingsProvider
     {
+        private ISettingsProvider settings;
         [TestInitialize]
         public void PrepareDatabase()
         {
-            TestInitialization.Container.Resolve<ISessionSettings>().ClearPrefs();
+            settings = Test.Container.Resolve<ISettingsProvider>();
+            settings.ClearPrefs();
         }
 
         [TestMethod]
         public void TestServiceUrlKey()
         {
-            var settings = TestInitialization.Container.Resolve<ISessionSettings>();
             const string url = "http://google.ru"; 
             settings.ServiceUrl.Should().Be(ApConstant.ServiceUrl);
             settings.ServiceUrl = url;
@@ -31,7 +32,6 @@ namespace UnitTestProject.Settings
         [TestMethod]
         public void TestPushToken()
         {
-            var settings = TestInitialization.Container.Resolve<ISessionSettings>();
             var token = new Random().Next(int.MaxValue).ToString();
             settings.PushToken.Should().Be(string.Empty);
             settings.PushToken = token;
@@ -42,7 +42,6 @@ namespace UnitTestProject.Settings
         [TestMethod]
         public void TestCsrfToken()
         {
-            var settings = TestInitialization.Container.Resolve<ISessionSettings>();
             const string token = "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
             settings.CsrfToken.Should().Be(string.Empty);
             settings.CsrfToken = token;
@@ -52,7 +51,6 @@ namespace UnitTestProject.Settings
         [TestMethod]
         public void TestSessionName()
         {
-            var settings = TestInitialization.Container.Resolve<ISessionSettings>();
             var name = DateTime.Now.ToLongTimeString(); ;
             settings.SessionName.Should().Be(string.Empty);
             settings.SessionName = name;
@@ -62,7 +60,6 @@ namespace UnitTestProject.Settings
         [TestMethod]
         public void TestSessionId()
         {
-            var settings = TestInitialization.Container.Resolve<ISessionSettings>();
             var id = new Guid().ToString();
             settings.SessionId.Should().Be(string.Empty);
             settings.SessionId = id;
@@ -72,7 +69,6 @@ namespace UnitTestProject.Settings
         [TestMethod]
         public void TestClearPrefs()
         {
-            var settings = TestInitialization.Container.Resolve<ISessionSettings>();
             settings.ServiceUrl = "qwe";
             settings.PushToken = "zxc";
             settings.CsrfToken = "asd";

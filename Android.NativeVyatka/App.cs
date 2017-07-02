@@ -25,7 +25,7 @@ namespace NativeVyatkaAndroid
             UserDialogs.Init(() => CrossCurrentActivity.Current.Activity);
             iConsole.Init(new ConsoleRealization());
             RegisterTypesIntoDI.InitContainer(Container);
-        }        
+        }
 
         public override void OnTerminate()
         {

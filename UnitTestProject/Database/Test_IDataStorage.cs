@@ -14,9 +14,9 @@ namespace UnitTestProject.Database
         [TestMethod]
         public void ValidateCleaningTable()
         {
-            var storage = TestInitialization.Container.Resolve<IDataStorage>();
-            var bstorage = TestInitialization.Container.Resolve<IBurialStorage>();
-            var pstorage = TestInitialization.Container.Resolve<IProfileStorage>();
+            var storage = Test.Container.Resolve<IDataStorage>();
+            var bstorage = Test.Container.Resolve<IBurialStorage>();
+            var pstorage = Test.Container.Resolve<IProfileStorage>();
             foreach(var item in Test_IBurialStorage.CreateBurialsCollection())
             {
                 bstorage.InsertOrUpdateBurial(item);

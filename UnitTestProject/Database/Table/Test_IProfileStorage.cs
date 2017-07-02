@@ -24,13 +24,13 @@ namespace UnitTestProject.Database.Table
         [TestInitialize]
         public void PrepareDatabase()
         {
-            TestInitialization.Container.Resolve<IDataStorage>().ClearDataBase();
+            Test.Container.Resolve<IDataStorage>().ClearDataBase();
         }
 
         [TestMethod]
         public void CheckEmptyTable()
         {
-            var container = TestInitialization.Container;
+            var container = Test.Container;
             var storage = container.Resolve<IProfileStorage>();
             var dbProfile = storage.GetProfile();
             dbProfile.Should().BeSameAs(ProfileModel.Null);
@@ -39,7 +39,7 @@ namespace UnitTestProject.Database.Table
         [TestMethod]
         public void SavingAndRestoringProfile()
         {
-            var container = TestInitialization.Container;
+            var container = Test.Container;
             var storage = container.Resolve<IProfileStorage>();
             var stProfile = CreateProfile();
             storage.SaveProfile(stProfile);
@@ -50,7 +50,7 @@ namespace UnitTestProject.Database.Table
         [TestMethod]
         public void RewritingProfile()
         {
-            var container = TestInitialization.Container;
+            var container = Test.Container;
             var storage = container.Resolve<IProfileStorage>();
             var stProfile1 = CreateProfile(); stProfile1.Name = "Saturn";
             var stProfile2 = CreateProfile(); stProfile2.Name = "Jupiter";
@@ -63,7 +63,7 @@ namespace UnitTestProject.Database.Table
         [TestMethod]
         public void ClearProfile()
         {
-            var container = TestInitialization.Container;
+            var container = Test.Container;
             var storage = container.Resolve<IProfileStorage>();
             var stProfile = CreateProfile();
             storage.SaveProfile(stProfile);

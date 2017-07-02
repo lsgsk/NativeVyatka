@@ -1,12 +1,11 @@
-﻿using Abstractions.Interfaces.Settings;
-using Plugin.Settings;
+﻿using Plugin.Settings;
 using Abstractions.Constants;
-using System;
 using Plugin.Settings.Abstractions;
+using Abstractions.Interfaces.Settings;
 
 namespace NativeVyatkaCore.Settings
 {
-    public class SessionSettings : ISessionSettings
+    public class SettingsProvider : ISettingsProvider
     {
         private ISettings Settings => CrossSettings.Current;
 
@@ -25,9 +24,8 @@ namespace NativeVyatkaCore.Settings
         {
             get
             {
-               return Settings.GetValueOrDefault(CsrfTokenKey, string.Empty);
+                return Settings.GetValueOrDefault(CsrfTokenKey, string.Empty);
             }
-
             set
             {
                 Settings.AddOrUpdateValue(CsrfTokenKey, value);

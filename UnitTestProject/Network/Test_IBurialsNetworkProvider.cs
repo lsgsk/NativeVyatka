@@ -26,7 +26,7 @@ namespace UnitTestProject.Network
         public static IBurialsNetworkProvider CreateProvider(bool networkSuccess = true, CancellationToken token = new CancellationToken())
         {
             var mock = new Mock<IBurialRestClient>();
-            mock.Setup(x => x.UploadBurialsAsync(It.IsAny<IEnumerable<BurialModel>>())).Returns(async () =>
+            mock.Setup(x => x.UploadBurialAsync(It.IsAny<IEnumerable<BurialModel>>())).Returns(async () =>
             {
                 await Task.Delay(0);
                 if (!networkSuccess || token.IsCancellationRequested)
@@ -34,7 +34,7 @@ namespace UnitTestProject.Network
                     throw new BurialUploadException();
                 }
             });          
-            var container = TestInitialization.CreateChildContainer();
+            var container = Test.CreateChildContainer();
             container.RegisterInstance(mock.Object);
             return container.Resolve<IBurialsNetworkProvider>();
         }
@@ -42,8 +42,8 @@ namespace UnitTestProject.Network
         [TestInitialize]
         public void PrepareDatabase()
         {
-            TestInitialization.Container.Resolve<ISessionSettings>().ClearPrefs();
-            TestInitialization.Container.Resolve<IDataStorage>().ClearDataBase();
+            Test.Container.Resolve<ISettingsProvider>().ClearPrefs();
+            Test.Container.Resolve<IDataStorage>().ClearDataBase();
         }
 
         [TestMethod]

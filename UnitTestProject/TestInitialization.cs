@@ -13,12 +13,13 @@ using System;
 using Acr.UserDialogs;
 using Plugin.Media.Abstractions;
 using System.IO;
+using Abstractions.Models.Network.ServiceEntities;
 
 namespace UnitTestProject
 {
-    public static class TestInitialization
+    public static class Test
     {
-        static TestInitialization()
+        static Test()
         {
             RegisterTypesIntoDI.InitContainer(container);
             SQLitePCL.Batteries.Init();
@@ -115,6 +116,32 @@ namespace UnitTestProject
         public static MediaFile CreatePhoto()
         {
             return new MediaFile("folder/newimage.png", () => new MemoryStream());
+        }
+
+        public static ApiProfile GetServerProfile()
+        {
+            return new ApiProfile()
+            {
+                sessid = "rVVclCwzWSNSLqL9BR-Gstvki_voqQ0M2tnZ570W3n8",
+                session_name = "SESS71c9e28fb6908726055dbf62a338405f",
+                token = "mqZNaTyKNKzQDAo5yKR5atPG8bYmrhPc50vNAzRRUyA",
+                user = new ApiUser()
+                {
+                    uid = "99",
+                    name = "RVbot",
+                    mail = "zykov-ivan@rambler.ru",
+                    login = 1483439541,
+                    status = "1",
+                    picture = new ApiPicture()
+                    {
+                        fid = "11114",
+                        uid = "1",
+                        filename = "picture-99-1444378820.png",
+                        uri = "public://images/avatars/picture-99-1444378820.png",
+                        url = "http://rodnaya-vyatka.ru/sites/default/files/images/avatars/picture-99-1444378820.png",
+                    }
+                }
+            };
         }
     }
 }

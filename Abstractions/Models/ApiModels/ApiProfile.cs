@@ -2,10 +2,10 @@
 {
     public class ApiProfile
     {
-        public string Sessid { get; set; }
-        public string Session_name { get; set; }
-        public string Token { get; set; }
-        public ApiUser User { get; set; }        
+        public string sessid { get; set; }
+        public string session_name { get; set; }
+        public string token { get; set; }
+        public ApiUser user { get; set; }        
     }
     public class ApiUser
     {
@@ -13,10 +13,8 @@
         public string name { get; set; }
         public string mail { get; set; }
         public long login { get; set; }
-        public string Status { get; set; }
-        public string Timezone { get; set; }
-        public string Language { get; set; }
-        public ApiPicture Picture { get; set; }
+        public string status { get; set; }
+        public ApiPicture picture { get; set; }
     }
     public class ApiPicture
     {

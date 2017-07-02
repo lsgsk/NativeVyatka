@@ -27,8 +27,7 @@ namespace NativeVyatkaAndroid.Utilities
                         intent.PutExtra(item.Key, item.Value);
                     }
                 }
-                activity.StartActivity(intent);
-                activity.Finish();               
+                activity.StartActivity(intent);           
             }
         }
 
@@ -40,6 +39,11 @@ namespace NativeVyatkaAndroid.Utilities
             }
             var intent = new Intent(CrossCurrentActivity.Current.Activity.BaseContext, mImplementation.GetTypeFor(state));
             return intent;
+        }
+
+        public void Goback()
+        {
+            CrossCurrentActivity.Current.Activity.Finish();
         }
 
         private readonly IPageTypeImplementation mImplementation;

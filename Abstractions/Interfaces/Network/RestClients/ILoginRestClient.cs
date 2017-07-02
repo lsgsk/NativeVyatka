@@ -5,7 +5,7 @@ namespace Abstractions.Interfaces.Network.RestClients
 {
     public interface ILoginRestClient : IRestClient
     {
-        Task<ApiProfile> LoginAsync(string login, string password, string pushToken);
-        Task SiginAsync(string pushToken);
+        Task<ApiProfile> LoginAsync(string login, string password);
+        Task<ApiProfile> SiginAsync();
     }
 }

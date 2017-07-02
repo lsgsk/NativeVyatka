@@ -12,7 +12,6 @@ using Android.Content.PM;
 using Java.Interop;
 using Android.Widget;
 using Abstractions.Interfaces.Controllers;
-using Plugin.Geolocator;
 using Square.Picasso;
 
 namespace NativeVyatkaAndroid
@@ -35,7 +34,7 @@ namespace NativeVyatkaAndroid
                 SelectItem(Resource.Id.navigation_my_records);
                 mNavigationView.Menu.GetItem(0).SetChecked(true);
             }            
-        }
+        }        
 
         protected override void OnDestroy()
         {
@@ -60,7 +59,10 @@ namespace NativeVyatkaAndroid
             View header = mNavigationView.GetHeaderView(0);
             header.FindViewById<TextView>(Resource.Id.tvProfileName).Text = mController.Profile.Name;
             header.FindViewById<TextView>(Resource.Id.tvProfileEmail).Text = mController.Profile.Email;
-            Picasso.With(BaseContext).Load(mController.Profile.PictureUrl).Resize(200, 200).CenterCrop().Into(header.FindViewById<ImageView>(Resource.Id.imgProfilePhoto));
+            if (!string.IsNullOrEmpty(mController.Profile.PictureUrl))
+            {
+                Picasso.With(BaseContext).Load(mController.Profile.PictureUrl).Resize(200, 200).CenterCrop().Into(header.FindViewById<ImageView>(Resource.Id.imgProfilePhoto));
+            }
         }
 
         public bool OnNavigationItemSelected(IMenuItem menuItem)

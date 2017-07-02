@@ -21,20 +21,17 @@ namespace NativeVyatkaCore.Network
         {
             try
             {
-                if (burials?.Any() ?? false)
+                foreach (var burial in burials ?? Enumerable.Empty<BurialModel>())
                 {
-                    await mRestClient.UploadBurialsAsync(burials);
-                    foreach (var burial in burials)
-                    {
-                        burial.Updated = true;
-                        mStorage.InsertOrUpdateBurial(burial);
-                    }
-                }                               
-            }            
-            catch(BurialUploadException)
+                    await mRestClient.UploadBurialAsync(burial);
+                    burial.Updated = true;
+                    mStorage.InsertOrUpdateBurial(burial);
+                }
+            }
+            catch (BurialUploadException)
             {
                 throw new BurialSyncException();
-            }           
+            }
         }
         private readonly IBurialRestClient mRestClient;
         private readonly IBurialStorage mStorage;

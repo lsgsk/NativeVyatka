@@ -42,8 +42,8 @@ namespace NativeVyatkaAndroid
                 }                 
             };
 #if DEBUG
-            tvEmailView.Text = "RVbot";
-            tvPasswordView.Text = "test";
+            tvEmailView.Text = "Лысов Александр";
+            tvPasswordView.Text = "ui98oVaN";
 #endif
         }
 

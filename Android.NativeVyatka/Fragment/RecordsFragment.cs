@@ -48,6 +48,12 @@ namespace NativeVyatkaAndroid
             mRecyclerView.SetAdapter(mAdapter);
         }
 
+        public override void OnResume()
+        {
+            base.OnResume();
+            mAdapter.NotifyDataSetChanged();
+        }
+
         public override void OnActivityCreated(Bundle savedInstanceState)
         {
             base.OnActivityCreated(savedInstanceState);

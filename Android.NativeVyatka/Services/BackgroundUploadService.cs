@@ -58,8 +58,6 @@ namespace NativeVyatkaAndroid
                 }
             } */          
         }
-
-        private static bool Uploading = false;
         private const string ID = "id";
     }
 }

@@ -51,13 +51,13 @@ namespace UnitTestProject.Database.Table
         [TestInitialize]
         public void PrepareDatabase()
         {
-            TestInitialization.Container.Resolve<IDataStorage>().ClearDataBase();
+            Test.Container.Resolve<IDataStorage>().ClearDataBase();
         }     
         
         [TestMethod]
         public void CheckEmptyBurialsTable()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var dbCollection = storage.GetBurials();
             dbCollection.Should().NotBeNull();
             dbCollection.Should().HaveCount(0);
@@ -66,7 +66,7 @@ namespace UnitTestProject.Database.Table
         [TestMethod]
         public void SaveAndRestoreBurials()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var collection = CreateBurialsCollection();
             foreach (var burial in collection)
                 storage.InsertOrUpdateBurial(burial);
@@ -77,7 +77,7 @@ namespace UnitTestProject.Database.Table
         [TestMethod]
         public void GetNotSyncBurials()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var collection = CreateBurialsCollection();
             foreach (var burial in collection)
                 storage.InsertOrUpdateBurial(burial);
@@ -88,7 +88,7 @@ namespace UnitTestProject.Database.Table
         [TestMethod]
         public void SaveAndRestoreBurial()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var burial = CreateBurial();
             storage.InsertOrUpdateBurial(burial);
             var dbBurial = storage.GetBurial(burial.CloudId);
@@ -98,7 +98,7 @@ namespace UnitTestProject.Database.Table
         [TestMethod]
         public void CheckFindIncorrextBurial()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var burial = CreateBurial();
             storage.InsertOrUpdateBurial(burial);
             var dbBurial = storage.GetBurial(burial.CloudId + 1);
@@ -108,7 +108,7 @@ namespace UnitTestProject.Database.Table
         [TestMethod]
         public void CheckTimeInUtcBurial()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var burial = CreateBurial();
             burial.RecordTime = DateTime.UtcNow;
             burial.BirthDay = DateTime.UtcNow;
@@ -126,7 +126,7 @@ namespace UnitTestProject.Database.Table
         [TestMethod]
         public void SaveUpdateAndRestoreBurial()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var burial = CreateBurial();
             storage.InsertOrUpdateBurial(burial);
             var dbBurial = storage.GetBurial(burial.CloudId);
@@ -140,7 +140,7 @@ namespace UnitTestProject.Database.Table
         [TestMethod]
         public void DeleteBurial()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var burial = CreateBurial();
             storage.InsertOrUpdateBurial(burial);
             var dbBurial = storage.GetBurial(burial.CloudId);
@@ -153,7 +153,7 @@ namespace UnitTestProject.Database.Table
         [TestMethod]
         public void TwiceInsertedBurial()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var burial = CreateBurial();
             storage.InsertOrUpdateBurial(burial);
             storage.InsertOrUpdateBurial(burial);

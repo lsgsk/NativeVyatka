@@ -1,7 +1,5 @@
-﻿using Abstractions.Exceptions;
-using Abstractions.Models.DatabaseModels;
+﻿using Abstractions.Models.DatabaseModels;
 using System;
-using System.Threading.Tasks;
 
 namespace Abstractions.Models.AppModels
 {
@@ -68,43 +66,46 @@ namespace Abstractions.Models.AppModels
             };
         }
 
-        public async Task<ApiBurial> ToApiBurial(IBurialImageGuide guide)
+        public ApiBurial ToApiBurial()
         {
-
-
             return new ApiBurial()
             {
                 CloudId = this.CloudId,
                 Name = this.Name,
                 Surname = this.Surname,
                 Patronymic = this.Patronymic,
-                Desctiption = this.Description,
-                BirthDay = this.BirthDay,
-                DeathDay = this.DeathDay,
-                RecordTime = this.RecordTime,
+                Description = this.Description,
+                BirthDay = this.BirthDay?.ToString("dd-MM-yyyy"),
+                DeathDay = this.DeathDay?.ToString("dd-MM-yyyy"),
+                RecordTime = (Int32)(RecordTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
                 Latitude = this.Location.Latitude,
                 Longitude = this.Location.Longitude,
                 Altitude = this.Location.Altitude,
                 Heading = this.Location.Heading,
-                Picture = await ReadImage(guide, this.PicturePath)
+                Picture = null
             };
         }
 
-        public object Where()
+        public BurialModel(ApiBurial entity)
         {
-            throw new NotImplementedException();
-        }
-
-        private async Task<byte[]> ReadImage(IBurialImageGuide guide, string path)
-        {
-            try
+            this.CloudId = entity.CloudId;
+            this.Name = entity.Name;
+            this.Surname = entity.Surname;
+            this.Patronymic = entity.Patronymic;
+            this.Description = entity.Description;
+            this.BirthDay = DateTime.Parse(entity.BirthDay);
+            this.DeathDay = DateTime.Parse(entity.DeathDay);
+            this.RecordTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(entity.RecordTime);
+            this.Location = new Position()
             {
-                return await guide.LoadFromFileSystemAsync(this.PicturePath);
-            }
-            catch (FileGuideException)
-            {
-                return new byte[0];
-            }
+                Latitude = entity.Latitude,
+                Longitude = entity.Longitude,
+                Altitude = entity.Altitude.Value,
+                Heading = entity.Heading.Value
+            };
+            //здесь фактически устанавливается урл 
+            this.PicturePath = entity.Picture;
+            this.Updated = true;
         }
 
         public class Position

@@ -23,7 +23,7 @@ namespace NativeVyatkaCore.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -37,7 +37,7 @@ namespace NativeVyatkaCore.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NativeVyatkaCore.Properties.Resources", typeof(Resources).GetTypeInfo().Assembly);
@@ -52,7 +52,7 @@ namespace NativeVyatkaCore.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -64,7 +64,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Авторизация не удалась. Проверьте логин или пароль.
         /// </summary>
-        internal static string Authorization_LoginFailed {
+        public static string Authorization_LoginFailed {
             get {
                 return ResourceManager.GetString("Authorization_LoginFailed", resourceCulture);
             }
@@ -73,7 +73,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Не удалось выполнить вход.
         /// </summary>
-        internal static string Authorization_SigninFailed {
+        public static string Authorization_SigninFailed {
             get {
                 return ResourceManager.GetString("Authorization_SigninFailed", resourceCulture);
             }
@@ -82,7 +82,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Внимание.
         /// </summary>
-        internal static string Dialog_Attention {
+        public static string Dialog_Attention {
             get {
                 return ResourceManager.GetString("Dialog_Attention", resourceCulture);
             }
@@ -91,7 +91,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Не удалось удалить запись.
         /// </summary>
-        internal static string EditScreeen_DeleteFailed {
+        public static string EditScreeen_DeleteFailed {
             get {
                 return ResourceManager.GetString("EditScreeen_DeleteFailed", resourceCulture);
             }
@@ -100,7 +100,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Запись удалена.
         /// </summary>
-        internal static string EditScreeen_DeleteFinised {
+        public static string EditScreeen_DeleteFinised {
             get {
                 return ResourceManager.GetString("EditScreeen_DeleteFinised", resourceCulture);
             }
@@ -109,7 +109,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Вы действительно хотите удалить запись?.
         /// </summary>
-        internal static string EditScreeen_DeleteQuestion {
+        public static string EditScreeen_DeleteQuestion {
             get {
                 return ResourceManager.GetString("EditScreeen_DeleteQuestion", resourceCulture);
             }
@@ -118,7 +118,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Сохранить измения и сихранизировать запись?.
         /// </summary>
-        internal static string EditScreeen_SaveAndSync {
+        public static string EditScreeen_SaveAndSync {
             get {
                 return ResourceManager.GetString("EditScreeen_SaveAndSync", resourceCulture);
             }
@@ -127,7 +127,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Синхранизация не удалась.
         /// </summary>
-        internal static string EditScreeen_SyncFailed {
+        public static string EditScreeen_SyncFailed {
             get {
                 return ResourceManager.GetString("EditScreeen_SyncFailed", resourceCulture);
             }
@@ -136,7 +136,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Ошибка открытия захоронения.
         /// </summary>
-        internal static string EditScreen_OpeningFailed {
+        public static string EditScreen_OpeningFailed {
             get {
                 return ResourceManager.GetString("EditScreen_OpeningFailed", resourceCulture);
             }
@@ -145,7 +145,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Запись обновлена и синхранизирована.
         /// </summary>
-        internal static string EditScreen_SyncSuccess {
+        public static string EditScreen_SyncSuccess {
             get {
                 return ResourceManager.GetString("EditScreen_SyncSuccess", resourceCulture);
             }
@@ -154,7 +154,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Камера не доступна.
         /// </summary>
-        internal static string MainScreeen_CameraNotAvailable {
+        public static string MainScreeen_CameraNotAvailable {
             get {
                 return ResourceManager.GetString("MainScreeen_CameraNotAvailable", resourceCulture);
             }
@@ -163,7 +163,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to В настоящее время gps не доступен. Сделать запись невозможно.
         /// </summary>
-        internal static string MainScreeen_GpsNotAvailable {
+        public static string MainScreeen_GpsNotAvailable {
             get {
                 return ResourceManager.GetString("MainScreeen_GpsNotAvailable", resourceCulture);
             }
@@ -172,7 +172,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Синхранизация записей с сервером не удалась.
         /// </summary>
-        internal static string MainScreeen_SyncFailed {
+        public static string MainScreeen_SyncFailed {
             get {
                 return ResourceManager.GetString("MainScreeen_SyncFailed", resourceCulture);
             }
@@ -181,7 +181,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Логин не может быть пусты.
         /// </summary>
-        internal static string Validator_EmptyEmail {
+        public static string Validator_EmptyEmail {
             get {
                 return ResourceManager.GetString("Validator_EmptyEmail", resourceCulture);
             }
@@ -190,7 +190,7 @@ namespace NativeVyatkaCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Пароль не может быть пусты.
         /// </summary>
-        internal static string Validator_EmptyPassword {
+        public static string Validator_EmptyPassword {
             get {
                 return ResourceManager.GetString("Validator_EmptyPassword", resourceCulture);
             }

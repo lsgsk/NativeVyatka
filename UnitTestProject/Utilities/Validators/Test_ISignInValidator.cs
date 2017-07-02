@@ -12,7 +12,7 @@ namespace UnitTestProject.Utilities.Validators
         [TestMethod]
         public void ValidLogin()
         {
-            var validator = TestInitialization.Container.Resolve<ISignInValidator>();
+            var validator = Test.Container.Resolve<ISignInValidator>();
             validator.VerifyEmailAndPassword("qwe@qwe.ru", "qweq");
         }
 
@@ -21,7 +21,7 @@ namespace UnitTestProject.Utilities.Validators
         {
             try
             {
-                var validator = TestInitialization.Container.Resolve<ISignInValidator>();
+                var validator = Test.Container.Resolve<ISignInValidator>();
                 validator.VerifyEmailAndPassword(null, null);
                 Assert.Fail();
             }
@@ -37,7 +37,7 @@ namespace UnitTestProject.Utilities.Validators
         {
             try
             {
-                var validator = TestInitialization.Container.Resolve<ISignInValidator>();
+                var validator = Test.Container.Resolve<ISignInValidator>();
                 validator.VerifyEmailAndPassword("qwe@qwe.ru", null);
                 Assert.Fail();
             }
@@ -52,7 +52,7 @@ namespace UnitTestProject.Utilities.Validators
         {
             try
             {
-                var validator = TestInitialization.Container.Resolve<ISignInValidator>();
+                var validator = Test.Container.Resolve<ISignInValidator>();
                 validator.VerifyEmailAndPassword(string.Empty, string.Empty);
                 Assert.Fail();
             }

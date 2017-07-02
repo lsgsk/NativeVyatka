@@ -14,7 +14,7 @@ namespace NativeVyatkaCore.Controllers
 {
     public class LoginController : BaseController, ILoginController
     {
-        public LoginController(ILoginNetworkProvider loginDataProvider, ISignInValidator signInValidator, ISessionSettings settingsProvider, ICrossPageNavigator navigator, IUserDialogs dialogs, IMedia media) : base(dialogs, media)
+        public LoginController(ILoginNetworkProvider loginDataProvider, ISignInValidator signInValidator, ISettingsProvider settingsProvider, ICrossPageNavigator navigator, IUserDialogs dialogs, IMedia media) : base(dialogs, media)
         {
             this.mLoginDataProvider = loginDataProvider;
             this.mSignInValidator = signInValidator;
@@ -71,7 +71,7 @@ namespace NativeVyatkaCore.Controllers
 
         private readonly ISignInValidator mSignInValidator;
         private readonly ILoginNetworkProvider mLoginDataProvider;
-        private readonly ISessionSettings mSettingsProvider;
+        private readonly ISettingsProvider mSettingsProvider;
         private readonly ICrossPageNavigator mNavigator;
     }
 }

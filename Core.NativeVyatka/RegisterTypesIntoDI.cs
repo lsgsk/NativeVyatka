@@ -5,6 +5,7 @@ using Abstractions.Interfaces.Network;
 using Abstractions.Interfaces.Network.RestClients;
 using Abstractions.Interfaces.Plugins;
 using Abstractions.Interfaces.Settings;
+using Abstractions.Interfaces.Utilities;
 using Abstractions.Interfaces.Utilities.Validators;
 using Acr.UserDialogs;
 using Microsoft.Practices.Unity;
@@ -13,6 +14,7 @@ using NativeVyatkaCore.Database;
 using NativeVyatkaCore.Network;
 using NativeVyatkaCore.Network.RestClients;
 using NativeVyatkaCore.Settings;
+using NativeVyatkaCore.Utilities;
 using NativeVyatkaCore.Utilities.SaveProviders.IoGuide;
 using NativeVyatkaCore.Utilities.Validators;
 using Plugin.Geolocator;
@@ -33,15 +35,17 @@ namespace NativeVyatkaCore
             container.RegisterType<IProfileStorage, BurialDatabase>();
             container.RegisterType<IBurialStorage, BurialDatabase>();
             //----------------------------------------------------------------------------------------
+            container.RegisterType<IHttpClientFactory, HttpClientFactory>();
             container.RegisterType<ILoginNetworkProvider, LoginNetworkProvider> ();
             container.RegisterType<IBurialsNetworkProvider, BurialsNetworkProvider>();
 
             container.RegisterType<ILoginRestClient, LoginRestClient>()
                      .RegisterType<IBurialRestClient, BurialRestClient>();
             //----------------------------------------------------------------------------------------
-            container.RegisterType<ISessionSettings, SessionSettings>();
+            container.RegisterType<ISettingsProvider, SettingsProvider>();
             container.RegisterType<ISignInValidator, SignInValidator>();
 
+            container.RegisterType<IApiBurialConverter, ApiBurialConverter>();
             container.RegisterType<IBurialImageGuide, BurialImageGuide>();
             container.RegisterInstance<IGeolocator>(CrossGeolocator.Current);            
             container.RegisterInstance<IMedia>(CrossMedia.Current);            

@@ -7,7 +7,6 @@ namespace Abstractions.Interfaces.Controllers
     public interface IBurialEditController: IBaseController
     {
         BurialModel Burial { get; set; }
-        void ForceGoBack();
         Task<string> RetakePhotoAsync();
         Task<DateTime?> SetBirthTimeAsync();
         Task<DateTime?> SetDeathTimeAsync();

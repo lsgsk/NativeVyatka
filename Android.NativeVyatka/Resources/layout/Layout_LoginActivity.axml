@@ -26,7 +26,7 @@
                         android:id="@+id/tvEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_email"
+                        android:hint="@string/autorization_email"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:singleLine="true" />
@@ -38,7 +38,7 @@
                         android:id="@+id/tvPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_password"
+                        android:hint="@string/autorization_password"
                         android:imeActionId="@+id/login"
                         android:imeActionLabel="action_sign_in_short"
                         android:imeOptions="actionUnspecified"
@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/base_margin"
-                    android:text="@string/action_sign_in"
+                    android:text="@string/autorization_signin"
                     android:textStyle="bold" />
             </LinearLayout>
         </ScrollView>

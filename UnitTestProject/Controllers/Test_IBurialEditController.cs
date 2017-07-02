@@ -25,19 +25,19 @@ namespace UnitTestProject.Controllers
     {
         public static IBurialEditController CreateController(bool network = true, string message = null, string title = null, bool select = true,  TaskCompletionSource<Tuple<PageStates, Dictionary<string, string>>> navigationCallback = null, bool gps = true, bool gpsTaken = true, bool camera = true, bool photoTaken = true)
         {
-            var container = TestInitialization.CreateChildContainer();
+            var container = Test.CreateChildContainer();
             container.RegisterInstance<IBurialsNetworkProvider>(Test_IBurialsNetworkProvider.CreateProvider(network));
-            container.RegisterInstance<IUserDialogs>(TestInitialization.CreateMockUserDialog(message, title, select));
-            container.RegisterInstance<ICrossPageNavigator>(TestInitialization.CreateMockNavigation(navigationCallback));
-            container.RegisterInstance<IMedia>(TestInitialization.CreateMockMedia(camera, photoTaken));
+            container.RegisterInstance<IUserDialogs>(Test.CreateMockUserDialog(message, title, select));
+            container.RegisterInstance<ICrossPageNavigator>(Test.CreateMockNavigation(navigationCallback));
+            container.RegisterInstance<IMedia>(Test.CreateMockMedia(camera, photoTaken));
             return container.Resolve<IBurialEditController>();
         }
 
         [TestInitialize]
         public void PrepareDatabase()
         {
-            TestInitialization.Container.Resolve<ISessionSettings>().ClearPrefs();
-            TestInitialization.Container.Resolve<IDataStorage>().ClearDataBase();
+            Test.Container.Resolve<ISettingsProvider>().ClearPrefs();
+            Test.Container.Resolve<IDataStorage>().ClearDataBase();
         }
 
         [TestMethod]
@@ -105,7 +105,7 @@ namespace UnitTestProject.Controllers
             controller.Burial = Test_IBurialStorage.CreateBurial();
             controller.Burial.Updated = false;
             await controller.SaveAndUploadBurialAsync();
-            var dbBurial = TestInitialization.Container.Resolve<IBurialStorage>().GetBurial(controller.Burial.CloudId);
+            var dbBurial = Test.Container.Resolve<IBurialStorage>().GetBurial(controller.Burial.CloudId);
             dbBurial.Should().NotBeNull();
             dbBurial.Updated.Should().BeTrue();
         }
@@ -117,7 +117,7 @@ namespace UnitTestProject.Controllers
             controller.Burial = Test_IBurialStorage.CreateBurial();
             controller.Burial.Updated = false;
             await controller.SaveAndUploadBurialAsync();
-            var dbBurial = TestInitialization.Container.Resolve<IBurialStorage>().GetBurial(controller.Burial.CloudId);
+            var dbBurial = Test.Container.Resolve<IBurialStorage>().GetBurial(controller.Burial.CloudId);
             dbBurial.Should().NotBeNull();
             dbBurial.Updated.Should().BeFalse();
         }
@@ -130,7 +130,7 @@ namespace UnitTestProject.Controllers
             controller.Burial = Test_IBurialStorage.CreateBurial();
             controller.Updated = true;
             await controller.SaveAndUploadBurialAndGoBackAsync();
-            var dbBurial = TestInitialization.Container.Resolve<IBurialStorage>().GetBurial(controller.Burial.CloudId);            
+            var dbBurial = Test.Container.Resolve<IBurialStorage>().GetBurial(controller.Burial.CloudId);            
             dbBurial.Updated.Should().BeTrue();
             controller.Burial.Updated = true;
             dbBurial.ShouldBeEquivalentTo(controller.Burial);
@@ -146,7 +146,7 @@ namespace UnitTestProject.Controllers
             controller.Burial = Test_IBurialStorage.CreateBurial();
             controller.Updated = true;
             await controller.SaveAndUploadBurialAndGoBackAsync();
-            var dbBurial = TestInitialization.Container.Resolve<IBurialStorage>().GetBurial(controller.Burial.CloudId);
+            var dbBurial = Test.Container.Resolve<IBurialStorage>().GetBurial(controller.Burial.CloudId);
             dbBurial.ShouldBeEquivalentTo(BurialModel.Null);
             var result = await callback.Task;
             result.Item1.Should().Be(PageStates.BulialListPage);
@@ -155,7 +155,7 @@ namespace UnitTestProject.Controllers
         [TestMethod]
         public async Task DeleteRecordAsync()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var callback = new TaskCompletionSource<Tuple<PageStates, Dictionary<string, string>>>();
             var controller = CreateController(navigationCallback: callback, message: Resources.EditScreeen_DeleteFinised);
             controller.Burial = Test_IBurialStorage.CreateBurial();
@@ -170,7 +170,7 @@ namespace UnitTestProject.Controllers
         [TestMethod]
         public async Task CancelDeleteRecordAsync()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var callback = new TaskCompletionSource<Tuple<PageStates, Dictionary<string, string>>>();
             var controller = CreateController(select:false, navigationCallback: callback);
             controller.Burial = Test_IBurialStorage.CreateBurial();

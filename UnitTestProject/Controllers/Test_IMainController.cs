@@ -28,18 +28,18 @@ namespace UnitTestProject.Controllers
         [TestInitialize]
         public void PrepareDatabase()
         {
-            TestInitialization.Container.Resolve<ISessionSettings>().ClearPrefs();
-            TestInitialization.Container.Resolve<IDataStorage>().ClearDataBase();
+            Test.Container.Resolve<ISettingsProvider>().ClearPrefs();
+            Test.Container.Resolve<IDataStorage>().ClearDataBase();
         }
 
         public static IMainController CreateController(bool network = true, string message = null, string title = null, TaskCompletionSource<Tuple<PageStates, Dictionary<string, string>>> navigationCallback = null,  bool gps = true, bool gpsTaken = true, bool camera = true, bool photoTaken = true)
         {
-            var container = TestInitialization.CreateChildContainer();
+            var container = Test.CreateChildContainer();
             container.RegisterInstance<IBurialsNetworkProvider>(Test_IBurialsNetworkProvider.CreateProvider(network));
-            container.RegisterInstance<IUserDialogs>(TestInitialization.CreateMockUserDialog(message, title));
-            container.RegisterInstance<ICrossPageNavigator>(TestInitialization.CreateMockNavigation(navigationCallback));
-            container.RegisterInstance<IGeolocator>(TestInitialization.CreateMockGeolocator(gps, gpsTaken));
-            container.RegisterInstance<IMedia>(TestInitialization.CreateMockMedia(camera, photoTaken));
+            container.RegisterInstance<IUserDialogs>(Test.CreateMockUserDialog(message, title));
+            container.RegisterInstance<ICrossPageNavigator>(Test.CreateMockNavigation(navigationCallback));
+            container.RegisterInstance<IGeolocator>(Test.CreateMockGeolocator(gps, gpsTaken));
+            container.RegisterInstance<IMedia>(Test.CreateMockMedia(camera, photoTaken));
             return container.Resolve<IMainController>();
         }
 
@@ -47,7 +47,7 @@ namespace UnitTestProject.Controllers
         public void SuccessCheckProfile()
         {
             var profile = Test_IProfileStorage.CreateProfile();
-            TestInitialization.Container.Resolve<IProfileStorage>().SaveProfile(profile);
+            Test.Container.Resolve<IProfileStorage>().SaveProfile(profile);
             var controller = CreateController();
             controller.Profile.ShouldBeEquivalentTo(profile);
         }
@@ -112,7 +112,7 @@ namespace UnitTestProject.Controllers
         [TestMethod]
         public void CheckGetBurials()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var controller = CreateController() as IMainRecordsController;
             controller.GetBurials().Should().BeEmpty();
             var collection = Test_IBurialStorage.CreateBurialsCollection();
@@ -146,7 +146,7 @@ namespace UnitTestProject.Controllers
         [TestMethod]
         public async Task TryForceSyncBurials()
         {
-            var storage = TestInitialization.Container.Resolve<IBurialStorage>();
+            var storage = Test.Container.Resolve<IBurialStorage>();
             var controller = CreateController();
             var collection = Test_IBurialStorage.CreateBurialsCollection();
             foreach (var burial in collection)

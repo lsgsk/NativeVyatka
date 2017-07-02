@@ -14,7 +14,7 @@ namespace Abstractions.Models.AppModels
             this.Uid = entity.uid;
             this.Name = entity.name;
             this.Email = entity.mail;
-            this.PictureUrl = entity.Picture.url;
+            this.PictureUrl = entity.picture?.url;
         }
 
         public ProfileModel(ProfileEntity entity)

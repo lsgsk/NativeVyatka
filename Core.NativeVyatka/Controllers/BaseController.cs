@@ -65,7 +65,7 @@ namespace NativeVyatkaCore.Controllers
                 {
                     var file = await mMedia.TakePhotoAsync(new StoreCameraMediaOptions
                     {
-                        CustomPhotoSize = 50,
+                        PhotoSize = PhotoSize.Small,
                         Directory = "BurialFolder",
                         Name = Path.GetRandomFileName() + ".jpg"
                     });

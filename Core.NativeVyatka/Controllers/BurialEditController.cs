@@ -49,12 +49,6 @@ namespace NativeVyatkaCore.Controllers
             }
         }
 
-        public async void ForceGoBack()
-        {
-            await AlertAsync(Resources.EditScreen_OpeningFailed, Resources.Dialog_Attention);
-            mNavigator.GoToPage(PageStates.BulialListPage);        
-        }
-
         public async Task<string> RetakePhotoAsync()
         {
             var newPhotoPath = await CreatePhoto();
@@ -99,6 +93,7 @@ namespace NativeVyatkaCore.Controllers
                 await mBurialsDataProvider.UploadBurialsAsync(new[] { Burial });
                 Updated = Progress = false;
                 await AlertAsync(Resources.EditScreen_SyncSuccess);
+                mNavigator.Goback();
             }
             catch (BurialSyncException)
             {

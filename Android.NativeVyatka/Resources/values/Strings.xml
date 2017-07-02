@@ -20,9 +20,17 @@
     <string name="dialog_cancel">Отмена</string>
 
     <!-- подробный экран -->
-    <string name="desciption_unknown">Неизвестно</string>
-
-    <!--  меню -->
+    <string name="burial_edit_title">Карточка профиля</string>
+    <string name="desciption_unknown">Неизвестно</string> 
+    <string name="burial_edit_name">Имя</string>
+    <string name="burial_edit_surname">Фамилия</string>
+    <string name="burial_edit_patronymic">Отчество</string>
+    <string name="burial_edit_birth_time">Дата рождения</string>   
+    <string name="burial_edit_death_time">Дата смерти</string>
+    <string name="burial_edit_record_time">Дата съемки</string>
+    <string name="burial_edit_description">Описание</string>
+  
+  <!--  меню -->
     <string name="action_filter">Фильтр</string>
     <string name="action_search">Поиск</string>
     <string name="action_search_hint">Поиск</string>

@@ -23,16 +23,16 @@ namespace UnitTestProject.Controllers
         [TestInitialize]
         public void PrepareDatabase()
         {
-            TestInitialization.Container.Resolve<ISessionSettings>().ClearPrefs();
-            TestInitialization.Container.Resolve<IDataStorage>().ClearDataBase();
+            Test.Container.Resolve<ISettingsProvider>().ClearPrefs();
+            Test.Container.Resolve<IDataStorage>().ClearDataBase();
         }
 
         public static ILoginController CreateController(bool networkSuccess = true, string awaitingMessage = null, string awaitingTitle = null, TaskCompletionSource<Tuple<PageStates, Dictionary<string, string>>> navigationCallback = null)
         {
-            var container = TestInitialization.CreateChildContainer();
+            var container = Test.CreateChildContainer();
             container.RegisterInstance<ILoginNetworkProvider>(Test_LoginNetworkProvider.CreateProvider(networkSuccess));
-            container.RegisterInstance<IUserDialogs>(TestInitialization.CreateMockUserDialog(awaitingMessage, awaitingTitle));
-            container.RegisterInstance<ICrossPageNavigator>(TestInitialization.CreateMockNavigation(navigationCallback));
+            container.RegisterInstance<IUserDialogs>(Test.CreateMockUserDialog(awaitingMessage, awaitingTitle));
+            container.RegisterInstance<ICrossPageNavigator>(Test.CreateMockNavigation(navigationCallback));
             return container.Resolve<ILoginController>();
         }
 
@@ -71,7 +71,7 @@ namespace UnitTestProject.Controllers
         public async Task SuccessAutoLogin()
         {
             var callback = new TaskCompletionSource<Tuple<PageStates, Dictionary<string, string>>>();
-            var settings = TestInitialization.Container.Resolve<ISessionSettings>();
+            var settings = Test.Container.Resolve<ISettingsProvider>();
             settings.SessionId = "correct_session";
             var controller = CreateController(navigationCallback: callback);
             controller.TryAutoLogin();
