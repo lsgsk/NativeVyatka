@@ -8,6 +8,7 @@ using Abstractions.Models;
 using Abstractions.Models.AppModels;
 using Acr.UserDialogs;
 using NativeVyatkaCore.Properties;
+using NativeVyatkaCore.Utilities;
 using Plugin.Media.Abstractions;
 using System;
 using System.Threading.Tasks;
@@ -54,6 +55,7 @@ namespace NativeVyatkaCore.Controllers
             var newPhotoPath = await CreatePhoto();
             if (!string.IsNullOrEmpty(newPhotoPath))
             {
+                //отменить смену фото невозможно
                 await TryDeletePicture(Burial.PicturePath);
                 Burial.PicturePath = newPhotoPath;
                 Updated = true;
@@ -100,19 +102,31 @@ namespace NativeVyatkaCore.Controllers
                 Progress = false;
                 await AlertAsync(Resources.EditScreeen_SyncFailed, Resources.Dialog_Attention);
             }
+            catch(Exception ex)
+            {
+                iConsole.Error(ex);
+            }
         }
 
         public async Task SaveAndUploadBurialAndGoBackAsync()
         {
             if (Updated)
             {
-                var confirm = await ConfirmAsync(Resources.EditScreeen_SaveAndSync);
+                var confirm = await ConfirmAsync(Resources.EditScreeen_SaveAndSync, okText: Resources.Dialog_Yes, cancelText: Resources.Dialog_No);
                 if (confirm)
                 {
-                    await SaveAndUploadBurialAsync();                    
+                    await SaveAndUploadBurialAsync();
+                }
+                else
+                {
+                    //если запись не сохранялась, картинку нужно удалить
+                    if(mStorage.GetBurial(burial.CloudId) == BurialModel.Null)
+                    {
+                        await TryDeletePicture(Burial.PicturePath);
+                    }
                 }
             }
-            mNavigator.GoToPage(PageStates.BulialListPage);
+            mNavigator.Goback();
         }
 
         public async Task DeleteRecordAsync()
@@ -124,7 +138,7 @@ namespace NativeVyatkaCore.Controllers
                 mStorage.DeleteBurial(Burial.CloudId);
                 await AlertAsync(Resources.EditScreeen_DeleteFinised);
             }
-            mNavigator.GoToPage(PageStates.BulialListPage);
+            mNavigator.Goback();
         }  
         
         private async Task TryDeletePicture(string picturePath)

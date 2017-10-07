@@ -36,8 +36,7 @@ namespace NativeVyatkaCore.Controllers
                 {
                     Progress = true;
                     await mLoginDataProvider.SiginAsync();
-                    //TODO тут отправить, всех, кто не синхранизирован
-                    mNavigator.GoToPage(PageStates.BulialListPage);
+                    mNavigator.GoToPage(PageStates.BulialListPage, closePrevious: true);
                     Progress = false;
                 }
                 catch (AuthorizationSyncException)
@@ -55,7 +54,7 @@ namespace NativeVyatkaCore.Controllers
                 mSignInValidator.VerifyEmailAndPassword(email, password);
                 Progress = true;                
                 await mLoginDataProvider.LoginAsync(email, password);
-                mNavigator.GoToPage(PageStates.BulialListPage);
+                mNavigator.GoToPage(PageStates.BulialListPage, closePrevious:true);
                 Progress = false;
             }
             catch(NotValidLoginOrPasswordException)

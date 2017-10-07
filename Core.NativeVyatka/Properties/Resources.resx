@@ -162,4 +162,10 @@
   <data name="Validator_EmptyPassword" xml:space="preserve">
     <value>Пароль не может быть пусты</value>
   </data>
+  <data name="Dialog_No" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="Dialog_Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
 </root>

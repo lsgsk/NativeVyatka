@@ -118,21 +118,21 @@ namespace UnitTestProject
             return new MediaFile("folder/newimage.png", () => new MemoryStream());
         }
 
-        public static ApiProfile GetServerProfile()
+        public static LoginApiProfile GetServerProfile()
         {
-            return new ApiProfile()
+            return new LoginApiProfile()
             {
                 sessid = "rVVclCwzWSNSLqL9BR-Gstvki_voqQ0M2tnZ570W3n8",
                 session_name = "SESS71c9e28fb6908726055dbf62a338405f",
                 token = "mqZNaTyKNKzQDAo5yKR5atPG8bYmrhPc50vNAzRRUyA",
-                user = new ApiUser()
+                user = new LoginApiUser()
                 {
                     uid = "99",
                     name = "RVbot",
                     mail = "zykov-ivan@rambler.ru",
                     login = 1483439541,
                     status = "1",
-                    picture = new ApiPicture()
+                    picture = new LoginApiPicture()
                     {
                         fid = "11114",
                         uid = "1",

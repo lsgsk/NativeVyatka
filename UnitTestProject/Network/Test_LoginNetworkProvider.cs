@@ -20,7 +20,7 @@ namespace UnitTestProject.Network
         public static ILoginNetworkProvider CreateProvider(bool success = true)
         {
             var mock = new Mock<ILoginRestClient>();
-            Func<Task<ApiProfile>> action = () =>
+            Func<Task<LoginApiProfile>> action = () =>
                 {
                     if (success)
                     {

@@ -14,7 +14,7 @@ namespace NativeVyatkaAndroid.Utilities
             this.mImplementation = implementation;
         }
 
-        public void GoToPage(PageStates state, Dictionary<string, string> extras)
+        public void GoToPage(PageStates state, Dictionary<string, string> extras = null, bool closePrevious = false)
         {
             var activity = CrossCurrentActivity.Current.Activity;
             if (activity != null)
@@ -27,7 +27,11 @@ namespace NativeVyatkaAndroid.Utilities
                         intent.PutExtra(item.Key, item.Value);
                     }
                 }
-                activity.StartActivity(intent);           
+                activity.StartActivity(intent);   
+                if(closePrevious)
+                {
+                    activity.Finish();
+                }
             }
         }
 

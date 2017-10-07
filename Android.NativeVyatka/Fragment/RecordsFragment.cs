@@ -22,10 +22,11 @@ namespace NativeVyatkaAndroid
             mController = (context as MainActivity).mController;
         }
 
-        public override void OnCreate(Bundle savedInstanceState)
+        public async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             HasOptionsMenu = true;
+            await ObtainData();
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -51,7 +52,7 @@ namespace NativeVyatkaAndroid
         public override void OnResume()
         {
             base.OnResume();
-            mAdapter.NotifyDataSetChanged();
+            UpdateRecorsd();
         }
 
         public override void OnActivityCreated(Bundle savedInstanceState)
@@ -62,20 +63,28 @@ namespace NativeVyatkaAndroid
             DisplayRecords();
         }
 
-        protected void DisplayRecords()
+        public void DisplayRecords()
         {
             SetContentShown(false);
+            UpdateRecorsd();
+            SetContentShown(true);
+        }
+
+        private void UpdateRecorsd()
+        {
             var items = mController.GetBurials();
             mAdapter.UpdateItems(items);
             SetContentEmpty(items.Count == 0);
-            SetContentShown(true);
         }
 
         protected async Task ObtainData()
         {
             await mController.ForceSyncBurials();
-            DisplayRecords();
-            Refresher.Refreshing = false;
+            if (View != null)
+            {
+                DisplayRecords();
+                Refresher.Refreshing = false;
+            }
         }
 
         private void BurialRecordItemClick (object sender, BaseEventArgs<BurialModel> e)

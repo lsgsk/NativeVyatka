@@ -41,9 +41,9 @@ namespace NativeVyatkaCore.Controllers
             return mDialogs.AlertAsync(message, title);
         }
 
-        public virtual Task<bool> ConfirmAsync(string message, string title = null)
+        public virtual Task<bool> ConfirmAsync(string message, string title = null, string okText = null, string cancelText = null)
         {
-            return mDialogs.ConfirmAsync(message, title);
+            return mDialogs.ConfirmAsync(message, title, okText, cancelText);
         }
 
         public virtual Task<DatePromptResult> DatePromptAsync(DateTime? time = null, DateTime? maxTime = null, DateTime? minTime = null)

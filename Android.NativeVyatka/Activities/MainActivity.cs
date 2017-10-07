@@ -28,13 +28,13 @@ namespace NativeVyatkaAndroid
         {
             base.OnCreate(savedInstanceState);
             FindAndBindViews();
-            SetProfile();
+            DisplayProfile();
             if (savedInstanceState == null)
             {
                 SelectItem(Resource.Id.navigation_my_records);
                 mNavigationView.Menu.GetItem(0).SetChecked(true);
-            }            
-        }        
+            }
+        }
 
         protected override void OnDestroy()
         {
@@ -54,7 +54,7 @@ namespace NativeVyatkaAndroid
             mNavigationView.SetNavigationItemSelectedListener(this);            
         }
 
-        private void SetProfile()
+        private void DisplayProfile()
         {
             View header = mNavigationView.GetHeaderView(0);
             header.FindViewById<TextView>(Resource.Id.tvProfileName).Text = mController.Profile.Name;
@@ -75,22 +75,21 @@ namespace NativeVyatkaAndroid
 
         protected void SelectItem(int itemId)
         {
-            Fragment fragment = null;
             string tag = null;
             switch (itemId)
             { 
                 case Resource.Id.navigation_my_records:
-                    fragment = RecordsFragment.NewInstance();
+                    mFragment = RecordsFragment.NewInstance();
                     tag = RecordsFragment.RecordsFragmentTag;
                     break;
                 case Resource.Id.navigation_map_records:
-                    fragment = MapFragment.NewInstance();
+                    mFragment = MapFragment.NewInstance();
                     tag = MapFragment.MapFragmentTag;
                     break;
             }
-            if (fragment != null)
+            if (mFragment != null)
             { 
-                SupportFragmentManager.BeginTransaction().Replace(Resource.Id.content_frame, fragment, tag).AddToBackStack(tag).Commit();
+                SupportFragmentManager.BeginTransaction().Replace(Resource.Id.content_frame, mFragment, tag).AddToBackStack(tag).Commit();
             }
         }
 
@@ -108,7 +107,7 @@ namespace NativeVyatkaAndroid
                 }
                 else
                 {
-                    base.OnBackPressed();
+                    Finish();
                 }
             }
         }
@@ -138,6 +137,7 @@ namespace NativeVyatkaAndroid
         public readonly IMainController mController;
         protected DrawerLayout mDrawerLayout;
         protected NavigationView mNavigationView;
+        private Fragment mFragment;
     }
 }
 

@@ -46,9 +46,16 @@ namespace NativeVyatkaCore.Network
             }
         }
 
-        private void UpdateSessionAndProfile(ApiProfile value)
+        private void UpdateSessionAndProfile(LoginApiProfile value)
         {
             mSettingsProvider.CsrfToken = value.token;
+            mSettingsProvider.SessionName = value.session_name;
+            mSettingsProvider.SessionId = value.sessid;
+            pStorage.SaveProfile(new ProfileModel(value.user));
+        }
+
+        private void UpdateSessionAndProfile(SigninApiProfile value)
+        {
             mSettingsProvider.SessionName = value.session_name;
             mSettingsProvider.SessionId = value.sessid;
             pStorage.SaveProfile(new ProfileModel(value.user));

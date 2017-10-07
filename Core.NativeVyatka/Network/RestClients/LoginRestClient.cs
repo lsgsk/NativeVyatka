@@ -4,7 +4,6 @@ using Abstractions.Models.Network.ServiceEntities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Threading;
@@ -20,7 +19,7 @@ namespace NativeVyatkaCore.Network.RestClients
             this.mSettings = settings;
         }
 
-        public async Task<ApiProfile> LoginAsync(string login, string password)
+        public async Task<LoginApiProfile> LoginAsync(string login, string password)
         {
             try
             {
@@ -34,7 +33,7 @@ namespace NativeVyatkaCore.Network.RestClients
                     var response = await httpClient.PostAsync($"/rv_burial/user/login.json", content, Cancel.Token);
                     response.EnsureSuccessStatusCode();
                     var json = await response.Content.ReadAsStringAsync();
-                    return ParceJson(json);
+                    return ParceLoginJson(json);
                 }
             }
             catch (Exception ex)
@@ -44,7 +43,7 @@ namespace NativeVyatkaCore.Network.RestClients
             }
         }
 
-        public async Task<ApiProfile> SiginAsync()
+        public async Task<SigninApiProfile> SiginAsync()
         {
             try
             {
@@ -55,7 +54,7 @@ namespace NativeVyatkaCore.Network.RestClients
                     var response = await client.PostAsync("/rv_burial/system/connect.json", null, Cancel.Token);
                     response.EnsureSuccessStatusCode();
                     var json = await response.Content.ReadAsStringAsync();
-                    return ParceJson(json);                    
+                    return ParceSigninJson(json);                    
                 }
             }
             catch (Exception ex)
@@ -65,9 +64,14 @@ namespace NativeVyatkaCore.Network.RestClients
             }
         }
 
-        private ApiProfile ParceJson(string json)
+        private LoginApiProfile ParceLoginJson(string json)
         {
-            return JsonConvert.DeserializeObject<ApiProfile>(json);
+            return JsonConvert.DeserializeObject<LoginApiProfile>(json);
+        }
+
+        private SigninApiProfile ParceSigninJson(string json)
+        {
+            return JsonConvert.DeserializeObject<SigninApiProfile>(json);
         }
 
         private readonly ISettingsProvider mSettings;

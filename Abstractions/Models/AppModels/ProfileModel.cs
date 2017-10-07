@@ -1,5 +1,6 @@
 ﻿using Abstractions.Models.DatabaseModels;
-using Abstractions.Models.Network.ServiceEntities;
+using static Abstractions.Models.Network.ServiceEntities.LoginApiProfile;
+using static Abstractions.Models.Network.ServiceEntities.SigninApiProfile;
 
 namespace Abstractions.Models.AppModels
 {
@@ -9,12 +10,19 @@ namespace Abstractions.Models.AppModels
         {
         }
 
-        public ProfileModel(ApiUser entity)
+        public ProfileModel(LoginApiUser entity)
         {
             this.Uid = entity.uid;
             this.Name = entity.name;
             this.Email = entity.mail;
             this.PictureUrl = entity.picture?.url;
+        }
+
+        public ProfileModel(SigninApiUser entity)
+        {
+            this.Uid = entity.uid;
+            this.Name = entity.name;
+            this.Email = entity.mail;
         }
 
         public ProfileModel(ProfileEntity entity)
