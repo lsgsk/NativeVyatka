@@ -11,59 +11,34 @@ namespace NativeVyatkaCore.Settings
 
         public string ServiceUrl
         {
-            get
-            {
-                return Settings.GetValueOrDefault(ServiceUrlKey, ApConstant.ServiceUrl);
-            }
-            set
-            {
-                Settings.AddOrUpdateValue(ServiceUrlKey, value);
-            }
+            get => Settings.GetValueOrDefault(ServiceUrlKey, ApConstant.ServiceUrl);            
+            set => Settings.AddOrUpdateValue(ServiceUrlKey, value);            
         }
         public string CsrfToken
         {
-            get
-            {
-                return Settings.GetValueOrDefault(CsrfTokenKey, string.Empty);
-            }
-            set
-            {
-                Settings.AddOrUpdateValue(CsrfTokenKey, value);
-            }
+            get => Settings.GetValueOrDefault(CsrfTokenKey, string.Empty);
+            set => Settings.AddOrUpdateValue(CsrfTokenKey, value);
         }
         public string PushToken
         {
-            get
-            {
-                return Settings.GetValueOrDefault(PushTokenKey, string.Empty);
-            }
-            set
-            {
-                Settings.AddOrUpdateValue(PushTokenKey, value);
-            }
+            get => Settings.GetValueOrDefault(PushTokenKey, string.Empty);            
+            set => Settings.AddOrUpdateValue(PushTokenKey, value);            
         }
         public string SessionId
         {
-            get
-            {
-                return Settings.GetValueOrDefault(SessionIdKey, string.Empty);
-            }
-            set
-            {
-                Settings.AddOrUpdateValue(SessionIdKey, value);
-            }
+            get => Settings.GetValueOrDefault(SessionIdKey, string.Empty);            
+            set => Settings.AddOrUpdateValue(SessionIdKey, value);            
         }
         public string SessionName
         {
-            get
-            {
-                return Settings.GetValueOrDefault(SessionNameKey, string.Empty);
-            }
+            get => Settings.GetValueOrDefault(SessionNameKey, string.Empty);          
+            set => Settings.AddOrUpdateValue(SessionNameKey, value);            
+        }
 
-            set
-            {
-                Settings.AddOrUpdateValue(SessionNameKey, value);
-            }
+        public int LastSynchronization
+        {
+            get => Settings.GetValueOrDefault(LastSynchronizationKey, 0);
+            set => Settings.AddOrUpdateValue(LastSynchronizationKey, value);
         }
 
         public void ClearPrefs()
@@ -79,6 +54,7 @@ namespace NativeVyatkaCore.Settings
         public const string PushTokenKey = "PushTokenKey";
         public const string CsrfTokenKey = "CsrfTokenKey";
         public const string SessionNameKey = "SessionNameKey";
-        public const string SessionIdKey = "SessionIdKey";       
+        public const string SessionIdKey = "SessionIdKey";
+        public const string LastSynchronizationKey = "LastSynchronizationKet";
     }
 }

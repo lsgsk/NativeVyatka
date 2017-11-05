@@ -12,7 +12,7 @@ namespace NativeVyatkaAndroid
         public TextView tvDescription { get; private set; }
         public ImageView imgImage { get; private set; }
         public View vIsSended { get; private set; }
-       
+
         public void FindViews(View view)
         {
             tvName = view.FindViewById<TextView>(Resource.Id.tvName);
@@ -28,10 +28,14 @@ namespace NativeVyatkaAndroid
             tvDescription.Text = string.IsNullOrEmpty(burial.Description) ? "Без описания" : burial.Description;
             if (!string.IsNullOrEmpty(burial.PicturePath))
             {
-                Picasso.With(imgImage.Context).Load(new File(burial.PicturePath)).Resize(100, 100).CenterCrop().Into(imgImage);
+                var picasso = Picasso.With(imgImage.Context);
+                var creator = (burial.PicturePath.StartsWith("http")) 
+                    ? picasso.Load(burial.PicturePath) 
+                    : picasso.Load(new File(burial.PicturePath));
+                creator.Resize(100, 100).CenterCrop().Into(imgImage);
             }
             vIsSended.Visibility = burial.Updated ? ViewStates.Gone : ViewStates.Visible;
         }
-    }    
+    }
 }
 

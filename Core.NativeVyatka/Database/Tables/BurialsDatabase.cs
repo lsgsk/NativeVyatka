@@ -32,7 +32,7 @@ namespace NativeVyatkaCore.Database
             {
                 using (var conn = GetConnection())
                 {
-                    return conn.Table<BurialEntity>().ToList().Select(x => new BurialModel(x)).ToList();
+                    return conn.Table<BurialEntity>().ToList().Select(x => new BurialModel(x)).OrderByDescending(x => x.RecordTime).ToList();
                 }
             }
             catch (Exception ex)

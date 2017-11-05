@@ -2,7 +2,10 @@
 using Abstractions.Interfaces.Database.Tables;
 using Abstractions.Interfaces.Network;
 using Abstractions.Interfaces.Network.RestClients;
+using Abstractions.Interfaces.Settings;
 using Abstractions.Models.AppModels;
+using NativeVyatkaCore.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,10 +14,11 @@ namespace NativeVyatkaCore.Network
 {
     public class BurialsNetworkProvider : IBurialsNetworkProvider
     {
-        public BurialsNetworkProvider(IBurialRestClient restClient, IBurialStorage storage)
+        public BurialsNetworkProvider(IBurialRestClient restClient, IBurialStorage storage, ISettingsProvider settings)
         {
-            this.mRestClient = restClient;
-            this.mStorage = storage;
+            this.restClient = restClient;
+            this.storage = storage;
+            this.settings = settings;
         }
 
         public async Task UploadBurialAsync(BurialModel burial)
@@ -23,9 +27,17 @@ namespace NativeVyatkaCore.Network
             {
                 if (burial != null && burial != BurialModel.Null)
                 {
-                    await mRestClient.UploadBurialAsync(burial);
+                    if(burial.Uploaded)
+                    {
+                        await restClient.UpdateBurialAsync(burial);
+                    }
+                    else
+                    {
+                        await restClient.UploadNewBurialAsync(burial);
+                        burial.Uploaded = true;
+                    }                    
                     burial.Updated = true;
-                    mStorage.InsertOrUpdateBurial(burial);
+                    storage.InsertOrUpdateBurial(burial);
                 }
             }
             catch (BurialUploadException)
@@ -34,31 +46,49 @@ namespace NativeVyatkaCore.Network
             }
         }
 
-        public async Task SynchronizeBurialsAsync(IEnumerable<BurialModel> burials)
+        public async Task SynchronizeBurialsAsync()
         {
             try
             {
+                var burials = storage.GetNotSyncBurials();
                 foreach (var burial in burials ?? Enumerable.Empty<BurialModel>())
                 {
-                    await mRestClient.UploadBurialAsync(burial);
-                    burial.Updated = true;
-                    mStorage.InsertOrUpdateBurial(burial);
+                    try
+                    {
+                        await restClient.UploadNewBurialAsync(burial);
+                        burial.Updated = true;
+                        storage.InsertOrUpdateBurial(burial);
+                    }
+                    catch(BurialUploadException)
+                    {
+                    }
                 }
-                foreach (var burial in await mRestClient.DownloadBurialsAsync() ?? Enumerable.Empty<BurialModel>())
+
+                foreach (var burial in await restClient.DownloadBurialsAsync(0/*settings.LastSynchronization*/) ?? Enumerable.Empty<BurialModel>())
                 {
-                    mStorage.InsertOrUpdateBurial(burial);                    
+                    if (burial.Status == BurialModel.BurialStatus.ToRemove)
+                    {
+                        storage.DeleteBurial(burial.CloudId);
+                    }
+                    else
+                    {
+                        storage.InsertOrUpdateBurial(burial);
+                    }
                 }
+                settings.LastSynchronization = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             }
             catch (BurialUploadException)
             {
                 throw new BurialSyncException();
             }
+            catch(Exception ex)
+            {
+                iConsole.Error(ex);
+                throw new BurialSyncException();
+            }
         }
-
-
-
-
-        private readonly IBurialRestClient mRestClient;
-        private readonly IBurialStorage mStorage;
+        private readonly IBurialRestClient restClient;
+        private readonly IBurialStorage storage;
+        private readonly ISettingsProvider settings;
     }
 }

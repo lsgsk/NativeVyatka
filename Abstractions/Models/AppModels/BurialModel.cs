@@ -6,6 +6,7 @@ namespace Abstractions.Models.AppModels
     public class BurialModel
     {
         public string CloudId { get; set; }
+        public BurialStatus Status { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Patronymic { get; set; }
@@ -16,6 +17,7 @@ namespace Abstractions.Models.AppModels
         public Position Location { get; set; }
         public string PicturePath { get; set; }
         public bool Updated { get; set; }
+        public bool Uploaded { get; set; }
 
         public BurialModel()
         {
@@ -27,6 +29,7 @@ namespace Abstractions.Models.AppModels
         public BurialModel(BurialEntity entity)
         {
             this.CloudId = entity.CloudId;
+            this.Status = BurialStatus.Normal;
             this.Name = entity.Name;
             this.Surname = entity.Surname;
             this.Patronymic = entity.Patronymic;
@@ -43,6 +46,7 @@ namespace Abstractions.Models.AppModels
             };           
             this.PicturePath = entity.PicturePath;
             this.Updated = entity.Updated;
+            this.Uploaded = entity.Uploaded;
         }
 
         public BurialEntity ToBurialEntity()
@@ -63,6 +67,7 @@ namespace Abstractions.Models.AppModels
                 Heading = this.Location.Heading,
                 PicturePath = this.PicturePath,
                 Updated = this.Updated,
+                Uploaded = this.Uploaded
             };
         }
 
@@ -71,24 +76,26 @@ namespace Abstractions.Models.AppModels
             return new ApiBurial()
             {
                 CloudId = this.CloudId,
+                Status = 1,
                 Name = this.Name,
                 Surname = this.Surname,
                 Patronymic = this.Patronymic,
                 Description = this.Description,
                 BirthDay = this.BirthDay?.ToString("dd-MM-yyyy"),
                 DeathDay = this.DeathDay?.ToString("dd-MM-yyyy"),
-                RecordTime = (Int32)(RecordTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
+                RecordTime = (Int32)(this.RecordTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
                 Latitude = this.Location.Latitude,
                 Longitude = this.Location.Longitude,
                 Altitude = this.Location.Altitude,
                 Heading = this.Location.Heading,
-                Picture = null
+                PictureUrl = null
             };
         }
 
         public BurialModel(ApiBurial entity)
         {
             this.CloudId = entity.CloudId;
+            this.Status = (BurialStatus)entity.Status;
             this.Name = entity.Name;
             this.Surname = entity.Surname;
             this.Patronymic = entity.Patronymic;
@@ -110,18 +117,24 @@ namespace Abstractions.Models.AppModels
                 Heading = entity.Heading
             };
             //здесь фактически устанавливается урл 
-            this.PicturePath = entity.Picture;
+            this.PicturePath = entity.PictureUrl;
             this.Updated = true;
+            this.Uploaded = true;
         }
 
         public class Position
         {
             public double Latitude { get; set; }
             public double Longitude { get; set; }
-            public double Altitude { get; set; }
-            public double Heading { get; set; }
+            public double? Altitude { get; set; }
+            public double? Heading { get; set; }
         }
 
+        public enum BurialStatus
+        {            
+            ToRemove = 0,
+            Normal = 1,
+        }
         public static BurialModel Null = new BurialModel();
     }
 }

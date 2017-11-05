@@ -20,7 +20,7 @@ namespace NativeVyatkaCore.Network.RestClients
             this.mFactory = factory;
         }
 
-        public async Task UploadBurialAsync(BurialModel burial)
+        public async Task UploadNewBurialAsync(BurialModel burial)
         {
             try
             {
@@ -38,13 +38,32 @@ namespace NativeVyatkaCore.Network.RestClients
             }
         }
 
-        public async Task<IEnumerable<BurialModel>> DownloadBurialsAsync()
+        public async Task UpdateBurialAsync(BurialModel burial)
         {
             try
             {
                 using (var client = mFactory.GetAuthClient())
                 {
-                    var response = await client.PostAsync("/rv_burial/burial/index.json", null, Cancel.Token);
+                    var json = await mConverter.Serialize(burial);
+                    var response = await client.PostAsync("/rv_burial/burial/update.json", new StringContent(json, Encoding.UTF8, "application/json"), Cancel.Token);
+                    response.EnsureSuccessStatusCode();
+                }
+            }
+            catch (Exception ex)
+            {
+                iConsole.Error(ex);
+                throw new BurialUploadException();
+            }
+        }
+
+        public async Task<IEnumerable<BurialModel>> DownloadBurialsAsync(int lastSynchronization)
+        {
+            try
+            {
+                using (var client = mFactory.GetAuthClient())
+                {
+                    var content = new FormUrlEncodedContent(new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("LastSynchronization", lastSynchronization.ToString())});
+                    var response = await client.PostAsync("/rv_burial/burial/index.json", content, Cancel.Token);
                     response.EnsureSuccessStatusCode();
                     var json = await response.Content.ReadAsStringAsync();
                     return mConverter.ParceJson(json);

@@ -21,7 +21,7 @@ namespace NativeVyatkaCore.Utilities
         {
             var item = model.ToApiBurial();
             var image = await ReadImage(model.PicturePath);
-            item.Picture = System.Convert.ToBase64String(image);
+            item.PictureUrl = System.Convert.ToBase64String(image);
             return item;
         }
 

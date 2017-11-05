@@ -7,6 +7,7 @@
         string CsrfToken { get; set; }
         string SessionName { get; set; }
         string SessionId { get; set; }
+        int LastSynchronization { get; set; }
         void ClearPrefs();
     }
 }

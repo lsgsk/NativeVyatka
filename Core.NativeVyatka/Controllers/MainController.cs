@@ -96,9 +96,8 @@ namespace NativeVyatkaCore.Controllers
         {
             try
             {
-                Progress = true;
-                var burials = mBstorage.GetNotSyncBurials();
-                await mBurialsNetworkProvider.SynchronizeBurialsAsync(burials);                
+                Progress = true;                
+                await mBurialsNetworkProvider.SynchronizeBurialsAsync();                
                 Progress = false;
             }
             catch (BurialSyncException)

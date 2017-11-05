@@ -6,7 +6,8 @@ namespace Abstractions.Interfaces.Network.RestClients
 {
     public interface IBurialRestClient : IRestClient
     {
-        Task UploadBurialAsync(BurialModel burial);
-        Task<IEnumerable<BurialModel>> DownloadBurialsAsync();
+        Task UploadNewBurialAsync(BurialModel burial);
+        Task UpdateBurialAsync(BurialModel burial);
+        Task<IEnumerable<BurialModel>> DownloadBurialsAsync(int lastSynchronization);
     }
 }

@@ -72,7 +72,11 @@ namespace NativeVyatkaAndroid
 
         private void OnDisplayBurial(BurialModel burial)
         {
-            Picasso.With(BaseContext).Load(new Java.IO.File(burial.PicturePath)).ResizeDimen(Resource.Dimension.photo_size, Resource.Dimension.photo_size).CenterInside().OnlyScaleDown().Into(imgPhoto);
+            var picasso = Picasso.With(BaseContext);
+            var creator = (burial.PicturePath.StartsWith("http"))
+                ? picasso.Load(burial.PicturePath)
+                : picasso.Load(new Java.IO.File(burial.PicturePath));
+            creator.ResizeDimen(Resource.Dimension.photo_size, Resource.Dimension.photo_size).CenterInside().OnlyScaleDown().Into(imgPhoto);
             SupportActionBar.Title = $"{burial.Name} {burial.Surname} {burial.Patronymic}";
             etName.Text = burial.Name;
             etSurname.Text = burial.Surname;

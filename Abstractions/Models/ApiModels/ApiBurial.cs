@@ -1,10 +1,9 @@
-﻿using System;
-
-namespace Abstractions
+﻿namespace Abstractions
 {
     public class ApiBurial
     {
         public string CloudId { get; set; }
+        public int Status { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Patronymic { get; set; }
@@ -14,9 +13,9 @@ namespace Abstractions
         public long RecordTime { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public double Altitude { get; set; }
-        public double Heading { get; set; }
-        public string Picture { get; set; }
+        public double? Altitude { get; set; }
+        public double? Heading { get; set; }
+        public string PictureUrl { get; set; }
     }
 }
 
