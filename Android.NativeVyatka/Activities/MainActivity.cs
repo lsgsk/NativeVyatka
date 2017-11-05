@@ -13,6 +13,7 @@ using Java.Interop;
 using Android.Widget;
 using Abstractions.Interfaces.Controllers;
 using Square.Picasso;
+using Android.Graphics;
 
 namespace NativeVyatkaAndroid
 {
@@ -22,7 +23,8 @@ namespace NativeVyatkaAndroid
         public MainActivity()
         {
             mController = App.Container.Resolve<IMainController>();
-        }
+            mController.GpsEnableChanged += this.OnGpsEnableChanged;
+        }       
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -45,6 +47,7 @@ namespace NativeVyatkaAndroid
         private void FindAndBindViews()
         {
             SetContentView(Resource.Layout.Layout_MainActivity);
+            tvGpsState = FindViewById<TextView>(Resource.Id.tvGpsState);
             var mToolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             mNavigationView = FindViewById<NavigationView>(Resource.Id.navigation_drawer);
@@ -85,6 +88,9 @@ namespace NativeVyatkaAndroid
                 case Resource.Id.navigation_map_records:
                     mFragment = MapFragment.NewInstance();
                     tag = MapFragment.MapFragmentTag;
+                    break;
+                case Resource.Id.navigation_logout:
+                    mController.Logout();
                     break;
             }
             if (mFragment != null)
@@ -134,10 +140,29 @@ namespace NativeVyatkaAndroid
             }
             return base.OnOptionsItemSelected(item);
         }
+
+        private void OnGpsEnableChanged(object sender, int e)
+        {
+            tvGpsState.Text = $"Gps: {e}";
+            if (e < 1)
+            {
+                tvGpsState.SetBackgroundResource(Resource.Drawable.small_rounded_corner_red);
+            }
+            else if (e < 5)
+            {
+                tvGpsState.SetBackgroundResource(Resource.Drawable.small_rounded_corner_yellow);
+            }
+            else
+            {
+                tvGpsState.SetBackgroundColor(Color.Transparent);
+            }
+        }
+
         public readonly IMainController mController;
         protected DrawerLayout mDrawerLayout;
         protected NavigationView mNavigationView;
         private Fragment mFragment;
+        private TextView tvGpsState;
     }
 }
 

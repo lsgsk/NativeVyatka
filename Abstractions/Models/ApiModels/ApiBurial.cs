@@ -1,6 +1,6 @@
 ﻿namespace Abstractions
 {
-    public class ApiBurial
+    public abstract class ApiBurial
     {
         public string CloudId { get; set; }
         public int Status { get; set; }
@@ -15,6 +15,15 @@
         public double Longitude { get; set; }
         public double? Altitude { get; set; }
         public double? Heading { get; set; }
+    }
+
+    public class ApiBurialToSend : ApiBurial
+    {
+        public string Picture { get; set; }
+    }
+
+    public class ApiBurialToReceive : ApiBurial
+    {
         public string PictureUrl { get; set; }
     }
 }

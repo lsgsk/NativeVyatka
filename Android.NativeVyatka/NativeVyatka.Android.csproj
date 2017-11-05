@@ -251,6 +251,7 @@
     <Compile Include="Utilities\Adapters\ViewHolders\BaseEventArgs.cs" />
     <Compile Include="Services\BackgroundUploadService.cs" />
     <Compile Include="Utilities\ConsoleRealization.cs" />
+    <Compile Include="Utilities\GpsSatelliteManager.cs" />
     <Compile Include="Utilities\PageNavigator.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Utilities\Adapters\SimpleDividerItemDecoration.cs" />
@@ -319,6 +320,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\round_point.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\small_rounded_corner_red.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\small_rounded_corner_yellow.xml" />
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

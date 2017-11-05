@@ -32,7 +32,7 @@ namespace UnitTestProject.Network
                     }
                 };
             mock.Setup(x => x.LoginAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(action);
-            mock.Setup(x => x.SiginAsync()).Returns(action);
+            mock.Setup(x => x.SiginAsync()).Throws(new NotImplementedException());
             var container = Test.CreateChildContainer();
             container.RegisterInstance(mock.Object);
             return container.Resolve<ILoginNetworkProvider>();

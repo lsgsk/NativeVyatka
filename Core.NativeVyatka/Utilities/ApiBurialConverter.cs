@@ -3,7 +3,6 @@ using Abstractions.Exceptions;
 using Abstractions.Interfaces.Utilities;
 using Abstractions.Models.AppModels;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,11 +16,14 @@ namespace NativeVyatkaCore.Utilities
             this.mGuide = guide;
         }
 
-        public async Task<ApiBurial> Convert(BurialModel model)
+        public async Task<ApiBurialToSend> Convert(BurialModel model)
         {
             var item = model.ToApiBurial();
-            var image = await ReadImage(model.PicturePath);
-            item.PictureUrl = System.Convert.ToBase64String(image);
+            if (!model.PicturePath.StartsWith("http"))
+            {
+                var image = await ReadImage(model.PicturePath);
+                item.Picture = System.Convert.ToBase64String(image);
+            }
             return item;
         }
 
@@ -45,7 +47,7 @@ namespace NativeVyatkaCore.Utilities
 
         public IEnumerable<BurialModel> ParceJson(string json)
         {
-            var collection = JsonConvert.DeserializeObject<IEnumerable<ApiBurial>>(json);
+            var collection = JsonConvert.DeserializeObject<IEnumerable<ApiBurialToReceive>>(json);
             return collection.Select(x => new BurialModel(x));
         }
 

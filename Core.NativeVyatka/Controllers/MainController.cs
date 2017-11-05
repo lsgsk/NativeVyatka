@@ -14,20 +14,26 @@ using NativeVyatkaCore.Properties;
 using Acr.UserDialogs;
 using Plugin.Media.Abstractions;
 using Abstractions.Interfaces.Network;
-using System.Linq;
+using Abstractions.Interfaces.Utilities;
+using Abstractions;
+using Abstractions.Interfaces.Settings;
 
 namespace NativeVyatkaCore.Controllers
 {
     public class MainController : BaseController, IMainController
     {
-        public MainController(IBurialsNetworkProvider burialsNetworkProvider, ICrossPageNavigator navigator, IProfileStorage pstorage, IBurialStorage bstorage, IGeolocator geolocator, IUserDialogs dialogs, IMedia media) : base(dialogs, media)
+        public MainController(IBurialsNetworkProvider burialsNetworkProvider, ICrossPageNavigator navigator, IProfileStorage pstorage, IBurialStorage bstorage, IGeolocator geolocator, IUserDialogs dialogs, IMedia media, IGpsSatelliteManager satelliteManager, IDataStorage storage, ISettingsProvider settings) : base(dialogs, media)
         {
             this.mNavigator = navigator;
             this.mPstorage = pstorage;
             this.mBstorage = bstorage;
+            this.storage = storage;
+            this.settings = settings;
             this.mGeolocator = geolocator;
+            this.satelliteManager = satelliteManager;
             this.mBurialsNetworkProvider = burialsNetworkProvider;
             this.mGeolocator.StartListeningAsync(new TimeSpan(10000), 5, true);
+            satelliteManager.OnGpsEnableChanged += this.OnGpsEnableChanged;
         }
 
         public async override void Dispose()
@@ -36,19 +42,26 @@ namespace NativeVyatkaCore.Controllers
             await mGeolocator.StopListeningAsync();
         }
 
+        public void Logout()
+        {
+            settings.ClearPrefs();
+            storage.ClearDataBase();
+            mNavigator.GoToPage(PageStates.LoginPage, closePrevious:true);
+        }
+
         public async Task CreateNewBurial()
         {
             var burial = new BurialModel();
             if (mGeolocator.IsGeolocationAvailable)
             {
                 Progress = true;
+                var position = await mGeolocator.GetPositionAsync(TimeSpan.FromSeconds(15));
                 var path = await CreatePhoto();
                 if(!string.IsNullOrEmpty(path))
                 {
                     burial.PicturePath = path;
                     try
-                    {
-                        var position = await mGeolocator.GetPositionAsync(new TimeSpan(5000));
+                    {                        
                         burial.Location.Latitude = position.Latitude;
                         burial.Location.Longitude = position.Longitude;
                         burial.Location.Altitude = position.Altitude;
@@ -107,10 +120,18 @@ namespace NativeVyatkaCore.Controllers
             }
         }
 
+        private void OnGpsEnableChanged(object sender, int e)
+        {
+            GpsEnableChanged?.Invoke(this, e);
+        }
         private IBurialsNetworkProvider mBurialsNetworkProvider;
         private readonly IGeolocator mGeolocator;
         private readonly IProfileStorage mPstorage;
         private readonly IBurialStorage mBstorage;
+        private readonly IDataStorage storage;
+        private readonly ISettingsProvider settings;
         private readonly ICrossPageNavigator mNavigator;
+        private readonly IGpsSatelliteManager satelliteManager;
+        public event EventHandler<int> GpsEnableChanged;
     }
 }

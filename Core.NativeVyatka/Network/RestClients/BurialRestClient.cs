@@ -60,6 +60,9 @@ namespace NativeVyatkaCore.Network.RestClients
         {
             try
             {
+#if DEBUG
+                lastSynchronization = 0;
+#endif
                 using (var client = mFactory.GetAuthClient())
                 {
                     var content = new FormUrlEncodedContent(new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("LastSynchronization", lastSynchronization.ToString())});

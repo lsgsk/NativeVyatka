@@ -34,9 +34,11 @@
     <string name="action_filter">Фильтр</string>
     <string name="action_search">Поиск</string>
     <string name="action_search_hint">Поиск</string>
+  
     <string name="navigation_my_records">Мои записи</string>
     <string name="navigation_map_records">Карта записей</string>
-    <string name="navigation_additional">Дополнительно</string>
+    <string name="navigation_logout">Выйти</string>
+  
     <string name="navigation_settings">Настройки</string>
     <string name="navigation_about">О программе</string>
 

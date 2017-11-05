@@ -6,7 +6,7 @@ namespace Abstractions.Interfaces.Utilities
 {
     public interface IApiBurialConverter
     {
-        Task<ApiBurial> Convert(BurialModel model);
+        Task<ApiBurialToSend> Convert(BurialModel model);
         Task<string> Serialize(BurialModel model);
         IEnumerable<BurialModel> ParceJson(string json);
     }

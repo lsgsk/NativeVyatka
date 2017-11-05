@@ -71,9 +71,9 @@ namespace Abstractions.Models.AppModels
             };
         }
 
-        public ApiBurial ToApiBurial()
+        public ApiBurialToSend ToApiBurial()
         {
-            return new ApiBurial()
+            return new ApiBurialToSend()
             {
                 CloudId = this.CloudId,
                 Status = 1,
@@ -88,11 +88,11 @@ namespace Abstractions.Models.AppModels
                 Longitude = this.Location.Longitude,
                 Altitude = this.Location.Altitude,
                 Heading = this.Location.Heading,
-                PictureUrl = null
+                Picture = null
             };
         }
 
-        public BurialModel(ApiBurial entity)
+        public BurialModel(ApiBurialToReceive entity)
         {
             this.CloudId = entity.CloudId;
             this.Status = (BurialStatus)entity.Status;

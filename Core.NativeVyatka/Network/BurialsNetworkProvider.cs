@@ -6,7 +6,6 @@ using Abstractions.Interfaces.Settings;
 using Abstractions.Models.AppModels;
 using NativeVyatkaCore.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 

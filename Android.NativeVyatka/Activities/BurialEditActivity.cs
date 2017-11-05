@@ -188,9 +188,9 @@ namespace NativeVyatkaAndroid
                 case Resource.Id.action_delete:
                     mController.DeleteRecordAsync();
                     break;
-                case Resource.Id.action_rephoto:
+                /*case Resource.Id.action_rephoto:
                     OnRetakePhoto();
-                    break;
+                    break;*/
             }
             return base.OnOptionsItemSelected(item);
         }
