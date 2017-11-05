@@ -26,7 +26,10 @@ namespace NativeVyatkaAndroid
             var name = $"{burial.Surname} {burial.Name} {burial.Patronymic}";
             tvName.Text = string.IsNullOrWhiteSpace(name) ? "Неизвестное захоронение" : name;
             tvDescription.Text = string.IsNullOrEmpty(burial.Description) ? "Без описания" : burial.Description;
-            Picasso.With(imgImage.Context).Load(new File(burial.PicturePath)).Resize(100, 100).CenterCrop().Into(imgImage);
+            if (!string.IsNullOrEmpty(burial.PicturePath))
+            {
+                Picasso.With(imgImage.Context).Load(new File(burial.PicturePath)).Resize(100, 100).CenterCrop().Into(imgImage);
+            }
             vIsSended.Visibility = burial.Updated ? ViewStates.Gone : ViewStates.Visible;
         }
     }    

@@ -3,12 +3,10 @@ using SQLite;
 
 namespace Abstractions.Models.DatabaseModels
 {
-    [Table(BurialEntity.BurialTableName)]
+    [Table(BurialTableName)]
     public class BurialEntity
     {     
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-
+        [PrimaryKey]
         public string CloudId { get; set;}
         public string Name { get; set; }
         public string Surname { get; set; }

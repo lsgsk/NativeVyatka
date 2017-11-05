@@ -84,9 +84,7 @@ namespace NativeVyatkaCore.Database
                     var burial = conn.Find<BurialEntity>(x => x.CloudId == item.CloudId);
                     if (burial != null)
                     {
-                        var newBurial = item.ToBurialEntity();
-                        newBurial.Id = burial.Id;
-                        conn.Update(newBurial);
+                        conn.Update(item.ToBurialEntity());
                     }
                     else
                     {
@@ -109,7 +107,7 @@ namespace NativeVyatkaCore.Database
                     var burial = conn.Table<BurialEntity>().Where(x => x.CloudId == cloudId).FirstOrDefault();
                     if (burial != null)
                     {
-                        conn.Delete<BurialEntity>(burial.Id);
+                        conn.Delete<BurialEntity>(burial.CloudId);
                     }
                 }
             }

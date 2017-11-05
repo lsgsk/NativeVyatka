@@ -93,15 +93,21 @@ namespace Abstractions.Models.AppModels
             this.Surname = entity.Surname;
             this.Patronymic = entity.Patronymic;
             this.Description = entity.Description;
-            this.BirthDay = DateTime.Parse(entity.BirthDay);
-            this.DeathDay = DateTime.Parse(entity.DeathDay);
+            if (entity.BirthDay != "00-00-0000")
+            {
+                this.BirthDay = DateTime.Parse(entity.BirthDay);
+            }
+            if (entity.DeathDay != "00-00-0000")
+            {
+                this.DeathDay = DateTime.Parse(entity.DeathDay);
+            }
             this.RecordTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(entity.RecordTime);
             this.Location = new Position()
             {
                 Latitude = entity.Latitude,
                 Longitude = entity.Longitude,
-                Altitude = entity.Altitude.Value,
-                Heading = entity.Heading.Value
+                Altitude = entity.Altitude,
+                Heading = entity.Heading
             };
             //здесь фактически устанавливается урл 
             this.PicturePath = entity.Picture;

@@ -6,6 +6,7 @@ namespace Abstractions.Interfaces.Network
 {
     public interface IBurialsNetworkProvider
     {
-        Task UploadBurialsAsync(IEnumerable<BurialModel> burials);
+        Task UploadBurialAsync(BurialModel burial);
+        Task SynchronizeBurialsAsync(IEnumerable<BurialModel> burials);
     }
 }

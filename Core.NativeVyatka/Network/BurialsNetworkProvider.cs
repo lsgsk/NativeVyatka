@@ -17,11 +17,11 @@ namespace NativeVyatkaCore.Network
             this.mStorage = storage;
         }
 
-        public async Task UploadBurialsAsync(IEnumerable<BurialModel> burials)
+        public async Task UploadBurialAsync(BurialModel burial)
         {
             try
             {
-                foreach (var burial in burials ?? Enumerable.Empty<BurialModel>())
+                if (burial != null && burial != BurialModel.Null)
                 {
                     await mRestClient.UploadBurialAsync(burial);
                     burial.Updated = true;
@@ -33,6 +33,31 @@ namespace NativeVyatkaCore.Network
                 throw new BurialSyncException();
             }
         }
+
+        public async Task SynchronizeBurialsAsync(IEnumerable<BurialModel> burials)
+        {
+            try
+            {
+                foreach (var burial in burials ?? Enumerable.Empty<BurialModel>())
+                {
+                    await mRestClient.UploadBurialAsync(burial);
+                    burial.Updated = true;
+                    mStorage.InsertOrUpdateBurial(burial);
+                }
+                foreach (var burial in await mRestClient.DownloadBurialsAsync() ?? Enumerable.Empty<BurialModel>())
+                {
+                    mStorage.InsertOrUpdateBurial(burial);                    
+                }
+            }
+            catch (BurialUploadException)
+            {
+                throw new BurialSyncException();
+            }
+        }
+
+
+
+
         private readonly IBurialRestClient mRestClient;
         private readonly IBurialStorage mStorage;
     }

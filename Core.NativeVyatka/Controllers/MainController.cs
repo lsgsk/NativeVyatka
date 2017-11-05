@@ -27,7 +27,7 @@ namespace NativeVyatkaCore.Controllers
             this.mBstorage = bstorage;
             this.mGeolocator = geolocator;
             this.mBurialsNetworkProvider = burialsNetworkProvider;
-            this.mGeolocator.StartListeningAsync(10000, 5, true);
+            this.mGeolocator.StartListeningAsync(new TimeSpan(10000), 5, true);
         }
 
         public async override void Dispose()
@@ -48,7 +48,7 @@ namespace NativeVyatkaCore.Controllers
                     burial.PicturePath = path;
                     try
                     {
-                        var position = await mGeolocator.GetPositionAsync(5000);
+                        var position = await mGeolocator.GetPositionAsync(new TimeSpan(5000));
                         burial.Location.Latitude = position.Latitude;
                         burial.Location.Longitude = position.Longitude;
                         burial.Location.Altitude = position.Altitude;
@@ -98,10 +98,7 @@ namespace NativeVyatkaCore.Controllers
             {
                 Progress = true;
                 var burials = mBstorage.GetNotSyncBurials();
-                if (burials.Any())
-                {
-                    await mBurialsNetworkProvider.UploadBurialsAsync(burials);
-                }
+                await mBurialsNetworkProvider.SynchronizeBurialsAsync(burials);                
                 Progress = false;
             }
             catch (BurialSyncException)

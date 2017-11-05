@@ -92,7 +92,7 @@ namespace NativeVyatkaCore.Controllers
             mStorage.InsertOrUpdateBurial(Burial);
             try
             {
-                await mBurialsDataProvider.UploadBurialsAsync(new[] { Burial });
+                await mBurialsDataProvider.UploadBurialAsync(Burial);
                 Updated = Progress = false;
                 await AlertAsync(Resources.EditScreen_SyncSuccess);
                 mNavigator.Goback();

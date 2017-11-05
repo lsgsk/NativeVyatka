@@ -7,6 +7,7 @@ using NativeVyatkaCore;
 using Acr.UserDialogs;
 using NativeVyatkaCore.Database;
 using NativeVyatkaCore.Utilities;
+using System.Net;
 
 namespace NativeVyatkaAndroid
 {
@@ -14,7 +15,7 @@ namespace NativeVyatkaAndroid
     public class App : Application, Application.IActivityLifecycleCallbacks
     {
         public App(IntPtr handle, JniHandleOwnership transer):base(handle, transer)
-        {      
+        {            
         }
 
         public override void OnCreate()
