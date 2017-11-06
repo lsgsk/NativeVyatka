@@ -41,10 +41,10 @@ namespace NativeVyatkaAndroid
                     OnSignInClick(null);                    
                 }                 
             };
-//#if DEBUG
+#if DEBUG
             tvEmailView.Text = "Лысов Александр";
             tvPasswordView.Text = "ui98oVaN";
-//#endif
+#endif
         }
 
         [Export("OnSignInClick")]
