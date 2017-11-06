@@ -10,7 +10,7 @@ using Abstractions.Interfaces.Utilities.Validators;
 using Acr.UserDialogs;
 using DeviceMotion.Plugin;
 using DeviceMotion.Plugin.Abstractions;
-using Microsoft.Practices.Unity;
+using Unity;
 using NativeVyatkaCore.Controllers;
 using NativeVyatkaCore.Database;
 using NativeVyatkaCore.Network;
@@ -23,6 +23,7 @@ using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using Unity.Lifetime;
 
 namespace NativeVyatkaCore
 {

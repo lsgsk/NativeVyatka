@@ -87,17 +87,23 @@ namespace NativeVyatkaAndroid
             }
         }
 
+        protected async void TryObtainData()
+        {
+            await ObtainData();
+        }
+
         private void BurialRecordItemClick (object sender, BaseEventArgs<BurialModel> e)
         {
             mController.DisplayBurial(e.Item);
-        }      
+        }           
+        
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
             {
                 case Resource.Id.action_sync:
-                    Task.Run(ObtainData);
+                    TryObtainData();
                     break;
             }
             return base.OnOptionsItemSelected(item);

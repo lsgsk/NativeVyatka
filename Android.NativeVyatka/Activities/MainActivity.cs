@@ -7,13 +7,12 @@ using Fragment = Android.Support.V4.App.Fragment;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Support.V4.View;
-using Microsoft.Practices.Unity;
 using Android.Content.PM;
 using Java.Interop;
 using Android.Widget;
 using Abstractions.Interfaces.Controllers;
 using Square.Picasso;
-using Android.Graphics;
+using Unity;
 
 namespace NativeVyatkaAndroid
 {

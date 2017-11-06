@@ -4,7 +4,7 @@ using Android.Content.PM;
 using Android.Widget;
 using Java.Interop;
 using Android.Views;
-using Microsoft.Practices.Unity;
+using Unity;
 using Android.Content;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Android.OS;
@@ -62,14 +62,18 @@ namespace NativeVyatkaAndroid
             etSurname.Text = burial.Surname;
             etPatronymic.Text = burial.Patronymic;
             etDescription.Text = burial.Description;
-            DisplayDate(etPhotoTime, burial.RecordTime);
-            DisplayDate(etBirthTime, burial.BirthDay);
-            DisplayDate(etDeathTime, burial.DeathDay);
-        }
+            etPhotoTime.Text = burial.RecordTime.ToShortDateString();
 
-        private void DisplayDate(EditText et, DateTime? time)
-        {
-            et.Text = time.HasValue ? time.Value.ToShortDateString() : GetString(Resource.String.desciption_unknown);
+
+            var birth = burial.BirthDay.Split('-');
+            etBirthTimeDay.Text = birth[0] == "00" ? string.Empty : birth[0];
+            etBirthTimeMonth.Text = birth[1] == "00" ? string.Empty : birth[1];
+            etBirthTimeYear.Text = birth[2] == "0000" ? string.Empty : birth[2];
+
+            var death = burial.DeathDay.Split('-');
+            etDeathTimeDay.Text = death[0] == "00" ? string.Empty : death[0];
+            etDeathTimeMonth.Text = death[1] == "00" ? string.Empty : death[1];
+            etDeathTimeYear.Text = death[2] == "0000" ? string.Empty : death[2];
         }
 
         private void FindAndBindViews(Bundle savedInstanceState)
@@ -104,11 +108,48 @@ namespace NativeVyatkaAndroid
                 BurialNeedToBeUpdated(etDescription);
             };
             etPhotoTime = FindViewById<EditText>(Resource.Id.etPhotoTime);
-            etBirthTime = FindViewById<EditText>(Resource.Id.etBirthTime);
-            etDeathTime = FindViewById<EditText>(Resource.Id.etDeathTime);
+
+            etBirthTimeDay = FindViewById<EditText>(Resource.Id.etBirthTimeDay);
+            etBirthTimeMonth = FindViewById<EditText>(Resource.Id.etBirthTimeMonth);
+            etBirthTimeYear = FindViewById<EditText>(Resource.Id.etBirthTimeYear);
+            etBirthTimeDay.TextChanged += (s, e) =>
+            {
+                mController.SetBirthTime(etBirthTimeDay.Text, etBirthTimeMonth.Text, etBirthTimeYear.Text);
+                BurialNeedToBeUpdated(etBirthTimeDay);
+            };
+            etBirthTimeMonth.TextChanged += (s, e) =>
+            {
+                mController.SetBirthTime(etBirthTimeDay.Text, etBirthTimeMonth.Text, etBirthTimeYear.Text);
+                BurialNeedToBeUpdated(etBirthTimeMonth);
+            };
+            etBirthTimeYear.TextChanged += (s, e) =>
+            {
+                mController.SetBirthTime(etBirthTimeDay.Text, etBirthTimeMonth.Text, etBirthTimeYear.Text);
+                BurialNeedToBeUpdated(etBirthTimeYear);
+            };
+
+            etDeathTimeDay = FindViewById<EditText>(Resource.Id.etDeathTimeDay);
+            etDeathTimeMonth = FindViewById<EditText>(Resource.Id.etDeathTimeMonth);
+            etDeathTimeYear = FindViewById<EditText>(Resource.Id.etDeathTimeYear);
+            etDeathTimeDay.TextChanged += (s, e) =>
+            {
+                mController.SetDeathTime(etDeathTimeDay.Text, etDeathTimeMonth.Text, etDeathTimeYear.Text);
+                BurialNeedToBeUpdated(etDeathTimeDay);
+            };
+            etDeathTimeMonth.TextChanged += (s, e) =>
+            {
+                mController.SetDeathTime(etDeathTimeDay.Text, etDeathTimeMonth.Text, etDeathTimeYear.Text);
+                BurialNeedToBeUpdated(etDeathTimeMonth);
+            };
+            etDeathTimeYear.TextChanged += (s, e) =>
+            {
+                mController.SetDeathTime(etDeathTimeDay.Text, etDeathTimeMonth.Text, etDeathTimeYear.Text);
+                BurialNeedToBeUpdated(etDeathTimeYear);
+            };
+
             mSaveIcon = FindViewById<FloatingActionButton>(Resource.Id.fabSave);
             OnBurialUpdated(null, mController.Updated);
-        }
+        }        
 
         private void BurialNeedToBeUpdated(EditText view)
         {
@@ -132,19 +173,7 @@ namespace NativeVyatkaAndroid
         public async void OnSaveClick(View view)
         {
            await mController.SaveAndUploadBurialAsync();
-        }
-
-        [Export("OnSetBirthTime")]
-        public async void OnSetBirthTime(View view)
-        {
-            DisplayDate(etBirthTime, await mController.SetBirthTimeAsync());
-        }
-
-        [Export("OnSetDeathTime")]
-        public async void OnSetDeathTime(View view)
-        {
-            DisplayDate(etDeathTime, await mController.SetDeathTimeAsync());
-        }       
+        }          
 
         private void OnBurialUpdated(object sender, bool e)
         {
@@ -169,7 +198,9 @@ namespace NativeVyatkaAndroid
 
         private readonly IBurialEditController mController;
         private ImageView imgPhoto;
-        private EditText etName, etSurname, etPatronymic, etDescription, etPhotoTime, etBirthTime, etDeathTime;
+        private EditText etName, etSurname, etPatronymic, etDescription, etPhotoTime;
+        private EditText etBirthTimeDay, etBirthTimeMonth, etBirthTimeYear;
+        private EditText etDeathTimeDay, etDeathTimeMonth, etDeathTimeYear;
         private FloatingActionButton mSaveIcon;
     }
 }

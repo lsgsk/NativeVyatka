@@ -8,8 +8,8 @@ namespace Abstractions.Interfaces.Controllers
     {
         BurialModel Burial { get; set; }
         Task<string> RetakePhotoAsync();
-        Task<DateTime?> SetBirthTimeAsync();
-        Task<DateTime?> SetDeathTimeAsync();
+        void SetBirthTime(string day, string month, string year);
+        void SetDeathTime(string day, string month, string year);
         Task SaveAndUploadBurialAsync();
         Task SaveAndUploadBurialAndGoBackAsync();
         Task DeleteRecordAsync();

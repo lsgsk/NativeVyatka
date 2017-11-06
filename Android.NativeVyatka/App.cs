@@ -2,12 +2,11 @@ using System;
 using Android.App;
 using Android.Runtime;
 using Plugin.CurrentActivity;
-using Microsoft.Practices.Unity;
 using NativeVyatkaCore;
 using Acr.UserDialogs;
 using NativeVyatkaCore.Database;
 using NativeVyatkaCore.Utilities;
-using System.Net;
+using Unity;
 
 namespace NativeVyatkaAndroid
 {

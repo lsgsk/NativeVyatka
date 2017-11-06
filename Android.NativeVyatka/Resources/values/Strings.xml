@@ -29,7 +29,11 @@
     <string name="burial_edit_death_time">Дата смерти</string>
     <string name="burial_edit_record_time">Дата съемки</string>
     <string name="burial_edit_description">Описание</string>
-  
+
+  <string name="burial_edit_day">День</string>
+  <string name="burial_edit_month">Месяц</string>
+  <string name="burial_edit_year">Год</string>
+
   <!--  меню -->
     <string name="action_filter">Фильтр</string>
     <string name="action_search">Поиск</string>

@@ -6,13 +6,13 @@ using Android.Content.PM;
 using Android.Accounts;
 using Android.Support.Design.Widget;
 using Abstractions.Interfaces.Controllers;
-using Microsoft.Practices.Unity;
+using Unity;
 using Java.Interop;
 using Abstractions.Exceptions;
 
 namespace NativeVyatkaAndroid
 {
-    [Activity(MainLauncher = true, Theme = "@style/AppTheme", WindowSoftInputMode = SoftInput.StateAlwaysHidden, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
+    [Activity(MainLauncher = true, Icon = "@drawable/ic_launcher_round", Theme = "@style/AppTheme", WindowSoftInputMode = SoftInput.StateAlwaysHidden, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
     public class LoginActivity : AccountAuthenticatorActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

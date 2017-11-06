@@ -12,8 +12,8 @@ namespace Abstractions.Models.DatabaseModels
         public string Surname { get; set; }
         public string Patronymic { get; set; }
         public string Desctiption { get; set; }
-        public DateTime? BirthDay { get; set; }
-        public DateTime? DeathDay { get; set; }
+        public string BirthDay { get; set; }
+        public string DeathDay { get; set; }
         public DateTime RecordTime { get; set; }        
         public double Latitude { get; set; }
         public double Longitude { get; set; }

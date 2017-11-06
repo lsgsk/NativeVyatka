@@ -11,8 +11,8 @@ namespace Abstractions.Models.AppModels
         public string Surname { get; set; }
         public string Patronymic { get; set; }
         public string Description { get; set; }
-        public DateTime? BirthDay { get; set; }
-        public DateTime? DeathDay { get; set; }
+        public string BirthDay { get; set; }
+        public string DeathDay { get; set; }
         public DateTime RecordTime { get; set; }
         public Position Location { get; set; }
         public string PicturePath { get; set; }
@@ -34,8 +34,8 @@ namespace Abstractions.Models.AppModels
             this.Surname = entity.Surname;
             this.Patronymic = entity.Patronymic;
             this.Description = entity.Desctiption;
-            this.BirthDay = (entity.BirthDay != null) ? DateTime.SpecifyKind(entity.BirthDay.Value, DateTimeKind.Utc) : (DateTime?)null;
-            this.DeathDay = (entity.DeathDay != null) ? DateTime.SpecifyKind(entity.DeathDay.Value, DateTimeKind.Utc) : (DateTime?)null;
+            this.BirthDay = entity.BirthDay;
+            this.DeathDay = entity.DeathDay;
             this.RecordTime = DateTime.SpecifyKind(entity.RecordTime, DateTimeKind.Utc);
             this.Location = new Position()
             {
@@ -81,8 +81,8 @@ namespace Abstractions.Models.AppModels
                 Surname = this.Surname,
                 Patronymic = this.Patronymic,
                 Description = this.Description,
-                BirthDay = this.BirthDay?.ToString("dd-MM-yyyy"),
-                DeathDay = this.DeathDay?.ToString("dd-MM-yyyy"),
+                BirthDay = this.BirthDay,
+                DeathDay = this.DeathDay,
                 RecordTime = (Int32)(this.RecordTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
                 Latitude = this.Location.Latitude,
                 Longitude = this.Location.Longitude,
@@ -100,14 +100,8 @@ namespace Abstractions.Models.AppModels
             this.Surname = entity.Surname;
             this.Patronymic = entity.Patronymic;
             this.Description = entity.Description;
-            if (entity.BirthDay != "00-00-0000")
-            {
-                this.BirthDay = DateTime.Parse(entity.BirthDay);
-            }
-            if (entity.DeathDay != "00-00-0000")
-            {
-                this.DeathDay = DateTime.Parse(entity.DeathDay);
-            }
+            this.BirthDay = entity.BirthDay;
+            this.DeathDay = entity.DeathDay;            
             this.RecordTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(entity.RecordTime);
             this.Location = new Position()
             {

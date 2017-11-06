@@ -78,6 +78,8 @@ namespace NativeVyatkaCore.Controllers
                             burial.Location.Longitude = position.Longitude;
                             burial.Location.Altitude = position.Altitude;
                             burial.Location.Heading = heading;
+                            burial.BirthDay = "00-00-0000";
+                            burial.DeathDay = "00-00-0000";
                             DisplayBurial(burial);
                         }
                         catch (Exception ex)

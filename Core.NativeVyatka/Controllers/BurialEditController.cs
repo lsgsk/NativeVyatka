@@ -4,7 +4,7 @@ using Abstractions.Interfaces.Controllers;
 using Abstractions.Interfaces.Database.Tables;
 using Abstractions.Interfaces.Network;
 using Abstractions.Interfaces.Plugins;
-using Abstractions.Models;
+
 using Abstractions.Models.AppModels;
 using Acr.UserDialogs;
 using NativeVyatkaCore.Properties;
@@ -63,26 +63,18 @@ namespace NativeVyatkaCore.Controllers
             return Burial.PicturePath;
         }
 
-        public async Task<DateTime?> SetBirthTimeAsync()
+        public void SetBirthTime(string day, string month, string year)
         {
-            var time = await DatePromptAsync(Burial.BirthDay, maxTime: burial.DeathDay);
-            if(time.Ok)
-            {
-                Burial.BirthDay = time.SelectedDate;
-                Updated = true;
-            }
-            return Burial.BirthDay;
+            Burial.BirthDay = $"{(string.IsNullOrEmpty(day) ? "00" : day.ToString())}-" +
+                              $"{(string.IsNullOrEmpty(month) ? "00" : month.ToString())}-" +
+                              $"{(string.IsNullOrEmpty(year) ? "0000" : year.ToString())}";
         }
 
-        public async Task<DateTime?> SetDeathTimeAsync()
+        public void SetDeathTime(string day, string month, string year)
         {
-            var time = await DatePromptAsync(Burial.DeathDay, minTime: Burial.BirthDay);
-            if (time.Ok)
-            {
-                Burial.DeathDay = time.SelectedDate;
-                Updated = true;
-            }
-            return Burial.DeathDay;
+            Burial.DeathDay = $"{(string.IsNullOrEmpty(day) ? "00": day.ToString())}-" +
+                              $"{(string.IsNullOrEmpty(month) ? "00" :  month.ToString())}-" +
+                              $"{(string.IsNullOrEmpty(year) ? "0000" : year.ToString())}";
         }
 
         public async Task SaveAndUploadBurialAsync()
@@ -94,8 +86,7 @@ namespace NativeVyatkaCore.Controllers
             {
                 await mBurialsDataProvider.UploadBurialAsync(Burial);
                 Updated = Progress = false;
-                await AlertAsync(Resources.EditScreen_SyncSuccess);
-                mNavigator.Goback();
+                await AlertAsync(Resources.EditScreen_SyncSuccess);                
             }
             catch (BurialSyncException)
             {
@@ -104,7 +95,12 @@ namespace NativeVyatkaCore.Controllers
             }
             catch(Exception ex)
             {
+                Progress = false;
                 iConsole.Error(ex);
+            }
+            finally
+            {
+                mNavigator.Goback();
             }
         }
 
@@ -124,9 +120,13 @@ namespace NativeVyatkaCore.Controllers
                     {
                         await TryDeletePicture(Burial.PicturePath);
                     }
+                    mNavigator.Goback();
                 }
             }
-            mNavigator.Goback();
+            else
+            {
+                mNavigator.Goback();
+            }
         }
 
         public async Task DeleteRecordAsync()
