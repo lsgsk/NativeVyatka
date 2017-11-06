@@ -2,143 +2,146 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <android.support.design.widget.AppBarLayout
-      android:id="@+id/appbar"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:layout_scrollFlags="enterAlways"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-  </android.support.design.widget.AppBarLayout>
-  <android.support.v4.widget.NestedScrollView
-      app:layout_behavior="@string/appbar_scrolling_view_behavior"
-      android:clipToPadding="false"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
-    <LinearLayout
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:clipToPadding="false"
+           android:id="@+id/svContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/base_margin">
-      <FrameLayout
-        android:background="@color/color_primary_gray"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/photo_size">
-        <ImageView
-            android:id="@+id/imgPhoto"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/photo_size"
-            android:scaleType="centerInside" />
-      </FrameLayout>
-      <android.support.design.widget.TextInputLayout
-          android:layout_margin="@dimen/base_margin"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-        <EditText
-            android:layout_margin="@dimen/base_margin"
-            android:id="@+id/etName"
-            android:inputType="textCapSentences"
-            android:hint="@string/burial_edit_name"
-            android:maxLines="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-      </android.support.design.widget.TextInputLayout>
-      <android.support.design.widget.TextInputLayout
-          android:layout_margin="@dimen/base_margin"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-        <EditText
-            android:layout_margin="@dimen/base_margin"
-            android:id="@+id/etSurname"
-            android:hint="@string/burial_edit_surname"
-            android:inputType="textCapSentences"
-            android:maxLines="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-      </android.support.design.widget.TextInputLayout>
-      <android.support.design.widget.TextInputLayout
-          android:layout_margin="@dimen/base_margin"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-        <EditText
-            android:layout_margin="@dimen/base_margin"
-            android:id="@+id/etPatronymic"
-            android:inputType="textCapSentences"
-            android:hint="@string/burial_edit_patronymic"
-            android:maxLines="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-      </android.support.design.widget.TextInputLayout>
-      <android.support.design.widget.TextInputLayout
-          android:layout_margin="@dimen/base_margin"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-        <EditText
-            android:hint="@string/burial_edit_description"
-            android:layout_margin="@dimen/base_margin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/etDescription" />
-      </android.support.design.widget.TextInputLayout>
-      <android.support.design.widget.TextInputLayout
-          android:layout_margin="@dimen/base_margin"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-        <EditText
-            android:hint="@string/burial_edit_record_time"
-            android:layout_margin="@dimen/base_margin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/etPhotoTime"
-            android:editable="false"
-            android:focusableInTouchMode="false" />
-      </android.support.design.widget.TextInputLayout>
-      <android.support.design.widget.TextInputLayout
-          android:layout_margin="@dimen/base_margin"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-        <EditText
-            android:hint="@string/burial_edit_birth_time"
-            android:layout_margin="@dimen/base_margin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/etBirthTime"
-            android:editable="false"
-            android:onClick="OnSetBirthTime"
-            android:clickable="true"
-            android:focusableInTouchMode="false"
-            style="@style/Widget.AppCompat.Spinner.Underlined" />
-      </android.support.design.widget.TextInputLayout>
-      <android.support.design.widget.TextInputLayout
-          android:layout_margin="@dimen/base_margin"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-        <EditText
-            android:hint="@string/burial_edit_death_time"
-            android:layout_margin="@dimen/base_margin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/etDeathTime"
-            android:onClick="OnSetDeathTime"
-            android:editable="false"
-            android:clickable="true"
-            android:focusableInTouchMode="false"
-            style="@style/Widget.AppCompat.Spinner.Underlined" />
-      </android.support.design.widget.TextInputLayout>
-      <com.google.android.gms.maps.MapView
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/map_size"
-          app:mapType="hybrid"
-          app:uiCompass="false"
-          app:uiZoomControls="false"
-          android:id="@+id/mapView" />
-    </LinearLayout>
-  </android.support.v4.widget.NestedScrollView>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/base_margin">
+            <FrameLayout
+                android:background="@color/color_primary_gray"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/photo_size">
+                <ImageView
+                    android:id="@+id/imgPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/photo_size"
+                    android:scaleType="centerInside" />
+            </FrameLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_margin="@dimen/base_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_margin="@dimen/base_margin"
+                    android:id="@+id/etName"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/burial_edit_name"
+                    android:maxLines="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_margin="@dimen/base_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_margin="@dimen/base_margin"
+                    android:id="@+id/etSurname"
+                    android:hint="@string/burial_edit_surname"
+                    android:inputType="textCapSentences"
+                    android:maxLines="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_margin="@dimen/base_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_margin="@dimen/base_margin"
+                    android:id="@+id/etPatronymic"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/burial_edit_patronymic"
+                    android:maxLines="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_margin="@dimen/base_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:hint="@string/burial_edit_description"
+                    android:layout_margin="@dimen/base_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etDescription" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_margin="@dimen/base_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:hint="@string/burial_edit_record_time"
+                    android:layout_margin="@dimen/base_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etPhotoTime"
+                    android:editable="false"
+                    android:focusableInTouchMode="false" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_margin="@dimen/base_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:hint="@string/burial_edit_birth_time"
+                    android:layout_margin="@dimen/base_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etBirthTime"
+                    android:editable="false"
+                    android:onClick="OnSetBirthTime"
+                    android:clickable="true"
+                    android:focusableInTouchMode="false"
+                    style="@style/Widget.AppCompat.Spinner.Underlined" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_margin="@dimen/base_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:hint="@string/burial_edit_death_time"
+                    android:layout_margin="@dimen/base_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etDeathTime"
+                    android:onClick="OnSetDeathTime"
+                    android:editable="false"
+                    android:clickable="true"
+                    android:focusableInTouchMode="false"
+                    style="@style/Widget.AppCompat.Spinner.Underlined" />
+            </android.support.design.widget.TextInputLayout>            
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+    <android.support.design.widget.FloatingActionButton
+             android:id="@+id/fabSave"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:onClick="OnSaveClick"
+             android:layout_margin="@dimen/base_fab_margin"
+             android:layout_gravity="bottom|right"
+             android:src="@drawable/ic_action_save" />
 </android.support.design.widget.CoordinatorLayout>

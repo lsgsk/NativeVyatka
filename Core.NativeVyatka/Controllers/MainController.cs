@@ -17,30 +17,40 @@ using Abstractions.Interfaces.Network;
 using Abstractions.Interfaces.Utilities;
 using Abstractions;
 using Abstractions.Interfaces.Settings;
+using DeviceMotion.Plugin.Abstractions;
 
 namespace NativeVyatkaCore.Controllers
 {
     public class MainController : BaseController, IMainController
     {
-        public MainController(IBurialsNetworkProvider burialsNetworkProvider, ICrossPageNavigator navigator, IProfileStorage pstorage, IBurialStorage bstorage, IGeolocator geolocator, IUserDialogs dialogs, IMedia media, IGpsSatelliteManager satelliteManager, IDataStorage storage, ISettingsProvider settings) : base(dialogs, media)
+        public MainController(IBurialsNetworkProvider burialsNetworkProvider, ICrossPageNavigator navigator, IProfileStorage pstorage, IBurialStorage bstorage, IGeolocator geolocator, IDeviceMotion compass, IUserDialogs dialogs, IMedia media, IGpsSatelliteManager satelliteManager, IDataStorage storage, ISettingsProvider settings) : base(dialogs, media)
         {
             this.mNavigator = navigator;
             this.mPstorage = pstorage;
             this.mBstorage = bstorage;
             this.storage = storage;
             this.settings = settings;
-            this.mGeolocator = geolocator;
+            this.geolocator = geolocator;
+            this.compass = compass;
             this.satelliteManager = satelliteManager;
             this.mBurialsNetworkProvider = burialsNetworkProvider;
-            this.mGeolocator.StartListeningAsync(new TimeSpan(10000), 5, true);
-            satelliteManager.OnGpsEnableChanged += this.OnGpsEnableChanged;
+            this.geolocator.StartListeningAsync(new TimeSpan(10000), 5, true);
+            this.compass.SensorValueChanged += this.OnSensorValueChanged;
+            this.compass.Start(MotionSensorType.Compass);
+            this.satelliteManager.OnGpsEnableChanged += OnGpsEnableChanged;
         }
 
         public async override void Dispose()
         {
             base.Dispose();
-            await mGeolocator.StopListeningAsync();
+            await geolocator.StopListeningAsync();
+            this.compass.SensorValueChanged -= OnSensorValueChanged;
         }
+
+        private void OnSensorValueChanged(object sender, SensorValueChangedEventArgs e)
+        {
+            heading = e.Value.Value;
+        }      
 
         public void Logout()
         {
@@ -51,35 +61,43 @@ namespace NativeVyatkaCore.Controllers
 
         public async Task CreateNewBurial()
         {
-            var burial = new BurialModel();
-            if (mGeolocator.IsGeolocationAvailable)
+            try
             {
-                Progress = true;
-                var position = await mGeolocator.GetPositionAsync(TimeSpan.FromSeconds(15));
-                var path = await CreatePhoto();
-                if(!string.IsNullOrEmpty(path))
+                var burial = new BurialModel();
+                if (geolocator.IsGeolocationAvailable)
                 {
-                    burial.PicturePath = path;
-                    try
-                    {                        
-                        burial.Location.Latitude = position.Latitude;
-                        burial.Location.Longitude = position.Longitude;
-                        burial.Location.Altitude = position.Altitude;
-                        burial.Location.Heading = position.Heading;
-                        DisplayBurial(burial);
-                    }
-                    catch(Exception ex)
+                    Progress = true;
+                    var position = await geolocator.GetPositionAsync(TimeSpan.FromSeconds(15));
+                    var path = await CreatePhoto();
+                    if (!string.IsNullOrEmpty(path))
                     {
-                        iConsole.Error(ex);
-                        await AlertAsync(Resources.MainScreeen_GpsNotAvailable, Resources.Dialog_Attention);
-                    }                 
+                        burial.PicturePath = path;
+                        try
+                        {
+                            burial.Location.Latitude = position.Latitude;
+                            burial.Location.Longitude = position.Longitude;
+                            burial.Location.Altitude = position.Altitude;
+                            burial.Location.Heading = heading;
+                            DisplayBurial(burial);
+                        }
+                        catch (Exception ex)
+                        {
+                            iConsole.Error(ex);
+                            await AlertAsync(Resources.MainScreeen_GpsNotAvailable, Resources.Dialog_Attention);
+                        }
+                    }
+                    Progress = false;
                 }
-                Progress = false;
+                else
+                {
+                    await AlertAsync(Resources.MainScreeen_GpsNotAvailable, Resources.Dialog_Attention);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                await AlertAsync(Resources.MainScreeen_GpsNotAvailable, Resources.Dialog_Attention);
-            }            
+                iConsole.Error(ex);
+                await AlertAsync(Resources.MainScreeen_Error, Resources.Dialog_Attention);
+            }
         }
 
         private ProfileModel profile;
@@ -124,8 +142,11 @@ namespace NativeVyatkaCore.Controllers
         {
             GpsEnableChanged?.Invoke(this, e);
         }
+
+        private double? heading = null;
         private IBurialsNetworkProvider mBurialsNetworkProvider;
-        private readonly IGeolocator mGeolocator;
+        private readonly IGeolocator geolocator;
+        private readonly IDeviceMotion compass;
         private readonly IProfileStorage mPstorage;
         private readonly IBurialStorage mBstorage;
         private readonly IDataStorage storage;

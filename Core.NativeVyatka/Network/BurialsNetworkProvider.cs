@@ -63,7 +63,7 @@ namespace NativeVyatkaCore.Network
                     }
                 }
 
-                foreach (var burial in await restClient.DownloadBurialsAsync(0/*settings.LastSynchronization*/) ?? Enumerable.Empty<BurialModel>())
+                foreach (var burial in await restClient.DownloadBurialsAsync(settings.LastSynchronization) ?? Enumerable.Empty<BurialModel>())
                 {
                     if (burial.Status == BurialModel.BurialStatus.ToRemove)
                     {

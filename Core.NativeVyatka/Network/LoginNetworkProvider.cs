@@ -56,9 +56,10 @@ namespace NativeVyatkaCore.Network
 
         private void UpdateSessionAndProfile(SigninApiProfile value)
         {
+            var user = new ProfileModel(value.user) { PictureUrl = pStorage.GetProfile().PictureUrl };
             mSettingsProvider.SessionName = value.session_name;
             mSettingsProvider.SessionId = value.sessid;
-            pStorage.SaveProfile(new ProfileModel(value.user));
+            pStorage.SaveProfile(user);
         }
 
         public void Cancel()

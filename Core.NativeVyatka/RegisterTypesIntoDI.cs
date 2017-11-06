@@ -8,6 +8,8 @@ using Abstractions.Interfaces.Settings;
 using Abstractions.Interfaces.Utilities;
 using Abstractions.Interfaces.Utilities.Validators;
 using Acr.UserDialogs;
+using DeviceMotion.Plugin;
+using DeviceMotion.Plugin.Abstractions;
 using Microsoft.Practices.Unity;
 using NativeVyatkaCore.Controllers;
 using NativeVyatkaCore.Database;
@@ -48,7 +50,8 @@ namespace NativeVyatkaCore
 
             container.RegisterType<IApiBurialConverter, ApiBurialConverter>();
             container.RegisterType<IBurialImageGuide, BurialImageGuide>();
-            container.RegisterInstance<IGeolocator>(CrossGeolocator.Current);            
+            container.RegisterInstance<IGeolocator>(CrossGeolocator.Current);
+            container.RegisterInstance<IDeviceMotion>(CrossDeviceMotion.Current);
             container.RegisterInstance<IMedia>(CrossMedia.Current);
 #if ANDROID
             container.RegisterType<ICrossPageNavigator, NativeVyatkaAndroid.Utilities.PageNavigator>()

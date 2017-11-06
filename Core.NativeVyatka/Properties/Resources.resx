@@ -168,4 +168,7 @@
   <data name="Dialog_Yes" xml:space="preserve">
     <value>Да</value>
   </data>
+  <data name="MainScreeen_Error" xml:space="preserve">
+    <value>Ошибка создания записи</value>
+  </data>
 </root>

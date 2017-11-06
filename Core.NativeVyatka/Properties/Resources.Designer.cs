@@ -179,6 +179,15 @@ namespace NativeVyatkaCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ошибка создания записи.
+        /// </summary>
+        public static string MainScreeen_Error {
+            get {
+                return ResourceManager.GetString("MainScreeen_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to В настоящее время gps не доступен. Сделать запись невозможно.
         /// </summary>
         public static string MainScreeen_GpsNotAvailable {

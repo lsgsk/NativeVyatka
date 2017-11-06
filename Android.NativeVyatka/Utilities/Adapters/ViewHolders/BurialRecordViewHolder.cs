@@ -30,9 +30,9 @@ namespace NativeVyatkaAndroid
             {
                 var picasso = Picasso.With(imgImage.Context);
                 var creator = (burial.PicturePath.StartsWith("http")) 
-                    ? picasso.Load(burial.PicturePath) 
+                    ? picasso.Load(burial.PicturePath)
                     : picasso.Load(new File(burial.PicturePath));
-                creator.Resize(100, 100).CenterCrop().Into(imgImage);
+                creator.Placeholder(Resource.Drawable.nophoto).Resize(100, 100).CenterCrop().Into(imgImage);
             }
             vIsSended.Visibility = burial.Updated ? ViewStates.Gone : ViewStates.Visible;
         }

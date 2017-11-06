@@ -144,18 +144,11 @@ namespace NativeVyatkaAndroid
         private void OnGpsEnableChanged(object sender, int e)
         {
             tvGpsState.Text = $"Gps: {e}";
-            if (e < 1)
-            {
-                tvGpsState.SetBackgroundResource(Resource.Drawable.small_rounded_corner_red);
-            }
-            else if (e < 5)
-            {
-                tvGpsState.SetBackgroundResource(Resource.Drawable.small_rounded_corner_yellow);
-            }
-            else
-            {
-                tvGpsState.SetBackgroundColor(Color.Transparent);
-            }
+            tvGpsState.SetBackgroundResource(
+                (e < 1)
+                    ? Resource.Drawable.small_rounded_corner_red
+                    : (e < 5) ? Resource.Drawable.small_rounded_corner_yellow : Resource.Drawable.small_rounded_corner_green);
+
         }
 
         public readonly IMainController mController;

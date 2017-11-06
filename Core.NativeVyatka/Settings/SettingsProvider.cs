@@ -43,7 +43,7 @@ namespace NativeVyatkaCore.Settings
 
         public void ClearPrefs()
         {
-            var array = new []{ ServiceUrlKey, PushTokenKey, CsrfTokenKey, SessionNameKey, SessionIdKey };
+            var array = new []{ ServiceUrlKey, PushTokenKey, CsrfTokenKey, SessionNameKey, SessionIdKey, LastSynchronizationKey };
             foreach(var item in array)
             {
                 Settings.Remove(item);
