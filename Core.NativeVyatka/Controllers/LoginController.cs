@@ -35,14 +35,17 @@ namespace NativeVyatkaCore.Controllers
                 try
                 {
                     Progress = true;
-                    await mLoginDataProvider.SiginAsync();
-                    mNavigator.GoToPage(PageStates.BulialListPage, closePrevious: true);
+                    await mLoginDataProvider.SiginAsync();                    
                     Progress = false;
                 }
                 catch (AuthorizationSyncException)
                 {
                     Progress = false;
                     await AlertAsync(Resources.Authorization_SigninFailed, Resources.Dialog_Attention);
+                }
+                finally
+                {
+                    mNavigator.GoToPage(PageStates.BulialListPage, closePrevious: true);
                 }
             }
         }

@@ -37,11 +37,10 @@ namespace NativeVyatkaCore.Network
             try
             {
                 var user = await mRestClient.SiginAsync();
-                UpdateSessionAndProfile(user);
+                UpdateSession(user);
             }            
             catch (SigninLoadException)
             {
-                pStorage.ClearProfile();
                 throw new AuthorizationSyncException();
             }
         }
@@ -54,12 +53,10 @@ namespace NativeVyatkaCore.Network
             pStorage.SaveProfile(new ProfileModel(value.user));
         }
 
-        private void UpdateSessionAndProfile(SigninApiProfile value)
+        private void UpdateSession(SigninApiProfile value)
         {
-            var user = new ProfileModel(value.user) { PictureUrl = pStorage.GetProfile().PictureUrl };
             mSettingsProvider.SessionName = value.session_name;
             mSettingsProvider.SessionId = value.sessid;
-            pStorage.SaveProfile(user);
         }
 
         public void Cancel()

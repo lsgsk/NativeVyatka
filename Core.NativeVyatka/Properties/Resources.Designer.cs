@@ -62,7 +62,7 @@ namespace NativeVyatkaCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Авторизация не удалась. Проверьте логин или пароль.
+        ///   Looks up a localized string similar to Авторизация не удалась. Проверьте сетевое подключение, а так же  логин или пароль.
         /// </summary>
         public static string Authorization_LoginFailed {
             get {
@@ -71,7 +71,7 @@ namespace NativeVyatkaCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Не удалось выполнить вход.
+        ///   Looks up a localized string similar to Не удалось выполнить вход. Вы сможите продолжить работу в автономном режиме.
         /// </summary>
         public static string Authorization_SigninFailed {
             get {

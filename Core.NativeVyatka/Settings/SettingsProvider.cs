@@ -9,6 +9,12 @@ namespace NativeVyatkaCore.Settings
     {
         private ISettings Settings => CrossSettings.Current;
 
+        public string LoginHash
+        {
+            get => Settings.GetValueOrDefault(LoginHashKey, string.Empty);
+            set => Settings.AddOrUpdateValue(LoginHashKey, value);
+        }
+
         public string ServiceUrl
         {
             get => Settings.GetValueOrDefault(ServiceUrlKey, ApConstant.ServiceUrl);            
@@ -18,11 +24,6 @@ namespace NativeVyatkaCore.Settings
         {
             get => Settings.GetValueOrDefault(CsrfTokenKey, string.Empty);
             set => Settings.AddOrUpdateValue(CsrfTokenKey, value);
-        }
-        public string PushToken
-        {
-            get => Settings.GetValueOrDefault(PushTokenKey, string.Empty);            
-            set => Settings.AddOrUpdateValue(PushTokenKey, value);            
         }
         public string SessionId
         {
@@ -43,15 +44,15 @@ namespace NativeVyatkaCore.Settings
 
         public void ClearPrefs()
         {
-            var array = new []{ ServiceUrlKey, PushTokenKey, CsrfTokenKey, SessionNameKey, SessionIdKey, LastSynchronizationKey };
+            var array = new []{ ServiceUrlKey, CsrfTokenKey, SessionNameKey, SessionIdKey, LastSynchronizationKey };
             foreach(var item in array)
             {
                 Settings.Remove(item);
             }           
         }
 
+        public const string LoginHashKey = "LoginHashKey";
         public const string ServiceUrlKey = "ServiceUrlKey";
-        public const string PushTokenKey = "PushTokenKey";
         public const string CsrfTokenKey = "CsrfTokenKey";
         public const string SessionNameKey = "SessionNameKey";
         public const string SessionIdKey = "SessionIdKey";

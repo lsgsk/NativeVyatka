@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Authorization_LoginFailed" xml:space="preserve">
-    <value>Авторизация не удалась. Проверьте логин или пароль</value>
+    <value>Авторизация не удалась. Проверьте сетевое подключение, а так же  логин или пароль</value>
   </data>
   <data name="Authorization_SigninFailed" xml:space="preserve">
-    <value>Не удалось выполнить вход</value>
+    <value>Не удалось выполнить вход. Вы сможите продолжить работу в автономном режиме</value>
   </data>
   <data name="Dialog_Attention" xml:space="preserve">
     <value>Внимание</value>

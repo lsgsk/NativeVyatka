@@ -55,7 +55,6 @@ namespace NativeVyatkaCore.Controllers
         public void Logout()
         {
             settings.ClearPrefs();
-            storage.ClearDataBase();
             mNavigator.GoToPage(PageStates.LoginPage, closePrevious:true);
         }
 

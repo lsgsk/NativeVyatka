@@ -24,14 +24,6 @@
     {
         public string sessid { get; set; }
         public string session_name { get; set; }
-        public SigninApiUser user { get; set; }
-
-        public class SigninApiUser
-        {
-            public string uid { get; set; }
-            public string name { get; set; }
-            public string mail { get; set; }
-        }
     }
 }
 
