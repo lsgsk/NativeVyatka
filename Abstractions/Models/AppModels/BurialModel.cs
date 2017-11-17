@@ -6,7 +6,8 @@ namespace Abstractions.Models.AppModels
     public class BurialModel
     {
         public string CloudId { get; set; }
-        public BurialStatus Status { get; set; }
+        public string UserHash { get; set; }
+        public BurialStatus Status { get; private set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Patronymic { get; set; }
@@ -19,16 +20,22 @@ namespace Abstractions.Models.AppModels
         public bool Updated { get; set; }
         public bool Uploaded { get; set; }
 
-        public BurialModel()
+        public BurialModel() : this(string.Empty)
         {
-            Name = Surname = Patronymic = Description = string.Empty;
+        }
+
+        public BurialModel(string userHash)
+        {
+            this.Name = Surname = Patronymic = Description = string.Empty;
             this.CloudId = Guid.NewGuid().ToString();
+            this.UserHash = userHash;
             this.Location = new Position();
         }
     
         public BurialModel(BurialEntity entity)
         {
             this.CloudId = entity.CloudId;
+            this.UserHash = entity.UserHash;
             this.Status = BurialStatus.Normal;
             this.Name = entity.Name;
             this.Surname = entity.Surname;
@@ -54,6 +61,7 @@ namespace Abstractions.Models.AppModels
             return new BurialEntity()
             {
                 CloudId = this.CloudId,
+                UserHash = this.UserHash,
                 Name = this.Name,
                 Surname = this.Surname,
                 Patronymic = this.Patronymic,
@@ -92,9 +100,10 @@ namespace Abstractions.Models.AppModels
             };
         }
 
-        public BurialModel(ApiBurialToReceive entity)
+        public BurialModel(ApiBurialToReceive entity, string userHash)
         {
             this.CloudId = entity.CloudId;
+            this.UserHash = userHash;
             this.Status = (BurialStatus)entity.Status;
             this.Name = entity.Name;
             this.Surname = entity.Surname;

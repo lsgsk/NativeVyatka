@@ -58,7 +58,9 @@ namespace NativeVyatkaCore
             container.RegisterType<ICrossPageNavigator, NativeVyatkaAndroid.Utilities.PageNavigator>()
                      .RegisterType<IPageTypeImplementation, NativeVyatkaAndroid.Utilities.ActivityTypeImplementation>()
                      .RegisterInstance<IUserDialogs>(UserDialogs.Instance)
+                     .RegisterType<IMd5HashGenerator, Md5HashGenerator>()
                      .RegisterType<IGpsSatelliteManager, NativeVyatkaAndroid.Utilities.GpsSatelliteManager>(new ContainerControlledLifetimeManager());
+
 #elif UWP
 #elif __IOS__
             container.RegisterType<IPageNameImplementation, NativeVyatkaIOS.Utilities.ControllersTypeImplementation>()

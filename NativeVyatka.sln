@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeVyatka.Core", "Core.NativeVyatka\NativeVyatka.Core.csproj", "{BA664D97-02FF-438C-A0E4-E6DA2BEAD050}"
 EndProject
@@ -358,5 +358,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{22435D49-3FF8-4433-B497-C70E6871801C} = {5ADE82DC-4BA8-491B-902C-057B16D27E09}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4FECAE39-3EB1-4877-941A-BD72A1ADFEEC}
 	EndGlobalSection
 EndGlobal

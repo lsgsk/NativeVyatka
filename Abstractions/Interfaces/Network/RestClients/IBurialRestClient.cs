@@ -8,6 +8,6 @@ namespace Abstractions.Interfaces.Network.RestClients
     {
         Task UploadNewBurialAsync(BurialModel burial);
         Task UpdateBurialAsync(BurialModel burial);
-        Task<IEnumerable<BurialModel>> DownloadBurialsAsync(int lastSynchronization);
+        Task<IEnumerable<BurialModel>> DownloadBurialsAsync(int lastSynchronization, string userHash);
     }
 }

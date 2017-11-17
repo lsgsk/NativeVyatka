@@ -85,8 +85,7 @@ namespace NativeVyatkaCore.Controllers
             try
             {
                 await mBurialsDataProvider.UploadBurialAsync(Burial);
-                Updated = Progress = false;
-                await AlertAsync(Resources.EditScreen_SyncSuccess);                
+                Updated = Progress = false;           
             }
             catch (BurialSyncException)
             {

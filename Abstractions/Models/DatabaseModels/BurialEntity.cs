@@ -8,6 +8,7 @@ namespace Abstractions.Models.DatabaseModels
     {     
         [PrimaryKey]
         public string CloudId { get; set;}
+        public string UserHash { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Patronymic { get; set; }

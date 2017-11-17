@@ -1,4 +1,5 @@
-﻿using Abstractions.Exceptions;
+﻿using Abstractions;
+using Abstractions.Exceptions;
 using Abstractions.Interfaces.Database.Tables;
 using Abstractions.Interfaces.Network;
 using Abstractions.Interfaces.Network.RestClients;
@@ -13,11 +14,12 @@ namespace NativeVyatkaCore.Network
 {
     public class BurialsNetworkProvider : IBurialsNetworkProvider
     {
-        public BurialsNetworkProvider(IBurialRestClient restClient, IBurialStorage storage, ISettingsProvider settings)
+        public BurialsNetworkProvider(IBurialRestClient restClient, IBurialStorage storage, ISettingsProvider settings, IBurialImageGuide guide)
         {
             this.restClient = restClient;
             this.storage = storage;
             this.settings = settings;
+            this.guide = guide;
         }
 
         public async Task UploadBurialAsync(BurialModel burial)
@@ -63,11 +65,16 @@ namespace NativeVyatkaCore.Network
                     }
                 }
 
-                foreach (var burial in await restClient.DownloadBurialsAsync(settings.LastSynchronization) ?? Enumerable.Empty<BurialModel>())
+                foreach (var burial in await restClient.DownloadBurialsAsync(settings.LastSynchronization, settings.UserHash) ?? Enumerable.Empty<BurialModel>())
                 {
                     if (burial.Status == BurialModel.BurialStatus.ToRemove)
                     {
-                        storage.DeleteBurial(burial.CloudId);
+                        var existing = storage.GetBurial(burial.CloudId);
+                        if(existing != BurialModel.Null)
+                        {
+                            await TryDeletePicture(existing.PicturePath);
+                            storage.DeleteBurial(existing.CloudId);                            
+                        }                        
                     }
                     else
                     {
@@ -86,8 +93,20 @@ namespace NativeVyatkaCore.Network
                 throw new BurialSyncException();
             }
         }
+
+        private async Task TryDeletePicture(string picturePath)
+        {
+            try
+            {
+                await guide.DeleteFromFileSystemAsync(picturePath);
+            }
+            catch (FileGuideException)
+            {
+            }
+        }
         private readonly IBurialRestClient restClient;
         private readonly IBurialStorage storage;
         private readonly ISettingsProvider settings;
+        private readonly IBurialImageGuide guide;
     }
 }

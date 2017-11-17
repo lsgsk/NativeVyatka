@@ -3,6 +3,7 @@ using Abstractions;
 using Abstractions.Models.DatabaseModels;
 using System.IO;
 using NativeVyatkaCore.Utilities;
+using Abstractions.Interfaces.Settings;
 
 namespace NativeVyatkaCore.Database
 {
@@ -25,8 +26,9 @@ namespace NativeVyatkaCore.Database
             }
         }
 
-        public BurialDatabase()
+        public BurialDatabase(ISettingsProvider settingsProvider)
         {
+            this.settingsProvider = settingsProvider;
         }
 
         private static SQLiteConnection GetConnection()
@@ -46,6 +48,7 @@ namespace NativeVyatkaCore.Database
         private const string DbName = "burials.db";
         private static string mPathToDatabase;
         private static int mVersion = 0;
+        private readonly ISettingsProvider settingsProvider;
     }
 }
 

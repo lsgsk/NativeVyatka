@@ -16,7 +16,7 @@ namespace NativeVyatkaCore.Database
             {
                 using (var conn = GetConnection())
                 {
-                    return conn.Table<BurialEntity>().Count();
+                    return conn.Table<BurialEntity>().Where(x => x.UserHash == settingsProvider.UserHash).Count();
                 }
             }
             catch(Exception ex)
@@ -32,7 +32,7 @@ namespace NativeVyatkaCore.Database
             {
                 using (var conn = GetConnection())
                 {
-                    return conn.Table<BurialEntity>().ToList().Select(x => new BurialModel(x)).OrderByDescending(x => x.RecordTime).ToList();
+                    return conn.Table<BurialEntity>().Where(x => x.UserHash == settingsProvider.UserHash).ToList().Select(x => new BurialModel(x)).OrderByDescending(x => x.RecordTime).ToList();
                 }
             }
             catch (Exception ex)
@@ -48,7 +48,7 @@ namespace NativeVyatkaCore.Database
             {
                 using (var conn = GetConnection())
                 {
-                    return conn.Table<BurialEntity>().Where(x => x.Updated == false).ToList().Select(x => new BurialModel(x)).ToList();
+                    return conn.Table<BurialEntity>().Where(x => x.Updated == false && x.UserHash == settingsProvider.UserHash).ToList().Select(x => new BurialModel(x)).ToList();
                 }
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace NativeVyatkaCore.Database
             {
                 using (var conn = GetConnection())
                 {
-                    var item = conn.Table<BurialEntity>().First(x => x.CloudId == cloudId);
+                    var item = conn.Table<BurialEntity>().Where(x => x.UserHash == settingsProvider.UserHash).First(x => x.CloudId == cloudId);
                     return new BurialModel(item);
                 }
             }
@@ -104,7 +104,7 @@ namespace NativeVyatkaCore.Database
             {
                 using (var conn = GetConnection())
                 {
-                    var burial = conn.Table<BurialEntity>().Where(x => x.CloudId == cloudId).FirstOrDefault();
+                    var burial = conn.Table<BurialEntity>().Where(x => x.CloudId == cloudId && x.UserHash == settingsProvider.UserHash).FirstOrDefault();
                     if (burial != null)
                     {
                         conn.Delete<BurialEntity>(burial.CloudId);

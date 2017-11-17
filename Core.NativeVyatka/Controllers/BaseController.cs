@@ -46,17 +46,6 @@ namespace NativeVyatkaCore.Controllers
             return mDialogs.ConfirmAsync(message, title, okText, cancelText);
         }
 
-        public virtual Task<DatePromptResult> DatePromptAsync(DateTime? time = null, DateTime? maxTime = null, DateTime? minTime = null)
-        {
-            return mDialogs.DatePromptAsync(new DatePromptConfig()
-            {
-                SelectedDate = time ?? DateTime.UtcNow,
-                UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc,
-                MaximumDate = maxTime,
-                MinimumDate = minTime
-            });
-        }
-
         protected async Task<string> CreatePhoto()
         {
             try
@@ -65,8 +54,8 @@ namespace NativeVyatkaCore.Controllers
                 {
                     var file = await mMedia.TakePhotoAsync(new StoreCameraMediaOptions
                     {
-                        PhotoSize = PhotoSize.Small,
-                        CompressionQuality = 80,
+                        PhotoSize = PhotoSize.Medium,
+                        CompressionQuality = 75,
                         Directory = "BurialFolder",
                         Name = Path.GetRandomFileName() + ".jpg"
                     });

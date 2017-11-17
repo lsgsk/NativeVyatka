@@ -8,6 +8,6 @@ namespace Abstractions.Interfaces.Utilities
     {
         Task<ApiBurialToSend> Convert(BurialModel model);
         Task<string> Serialize(BurialModel model);
-        IEnumerable<BurialModel> ParceJson(string json);
+        IEnumerable<BurialModel> ParceJson(string json, string userHash);
     }
 }

@@ -14,7 +14,7 @@ namespace NativeVyatkaAndroid
     public class App : Application, Application.IActivityLifecycleCallbacks
     {
         public App(IntPtr handle, JniHandleOwnership transer):base(handle, transer)
-        {            
+        {
         }
 
         public override void OnCreate()

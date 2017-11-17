@@ -34,7 +34,7 @@ namespace NativeVyatkaCore.Controllers
             this.compass = compass;
             this.satelliteManager = satelliteManager;
             this.mBurialsNetworkProvider = burialsNetworkProvider;
-            this.geolocator.StartListeningAsync(new TimeSpan(10000), 5, true);
+            this.geolocator.StartListeningAsync(new TimeSpan(5000), 2, true);
             this.compass.SensorValueChanged += this.OnSensorValueChanged;
             this.compass.Start(MotionSensorType.Compass);
             this.satelliteManager.OnGpsEnableChanged += OnGpsEnableChanged;
@@ -62,7 +62,7 @@ namespace NativeVyatkaCore.Controllers
         {
             try
             {
-                var burial = new BurialModel();
+                var burial = new BurialModel(settings.UserHash);
                 if (geolocator.IsGeolocationAvailable)
                 {
                     Progress = true;

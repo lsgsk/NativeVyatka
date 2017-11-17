@@ -46,6 +46,7 @@
     <Compile Include="Interfaces\Network\RestClients\IBurialRestClient.cs" />
     <Compile Include="Interfaces\Utilities\IApiBurialConverter.cs" />
     <Compile Include="Interfaces\Utilities\IGpsSatelliteManager.cs" />
+    <Compile Include="Interfaces\Utilities\IMd5HashGenerator.cs" />
     <Compile Include="Interfaces\Utilities\SaveProviders\IoGuide\IFileGuide.cs" />
     <Compile Include="Interfaces\Network\IBurialsNetworkProvider.cs" />
     <Compile Include="Interfaces\Network\INetworkProvider.cs" />

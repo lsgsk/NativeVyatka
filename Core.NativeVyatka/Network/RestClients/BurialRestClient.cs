@@ -56,20 +56,17 @@ namespace NativeVyatkaCore.Network.RestClients
             }
         }
 
-        public async Task<IEnumerable<BurialModel>> DownloadBurialsAsync(int lastSynchronization)
+        public async Task<IEnumerable<BurialModel>> DownloadBurialsAsync(int lastSynchronization, string userHash)
         {
             try
             {
-#if DEBUG
-                //lastSynchronization = 0;
-#endif
                 using (var client = mFactory.GetAuthClient())
                 {
                     var content = new FormUrlEncodedContent(new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("LastSynchronization", lastSynchronization.ToString())});
                     var response = await client.PostAsync("/rv_burial/burial/index.json", content, Cancel.Token);
                     response.EnsureSuccessStatusCode();
                     var json = await response.Content.ReadAsStringAsync();
-                    return mConverter.ParceJson(json);
+                    return mConverter.ParceJson(json, userHash);
                 }
             }
             catch (Exception ex)

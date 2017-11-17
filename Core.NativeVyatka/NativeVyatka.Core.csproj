@@ -55,7 +55,6 @@
     <Compile Include="Settings\SettingsProvider.cs" />
     <Compile Include="Utilities\ApiBurialConverter.cs" />
     <Compile Include="Utilities\iConsole.cs" />
-    <Compile Include="Utilities\Md5HashGenerator.cs" />
     <Compile Include="Utilities\SaveProviders\IoGuide\BaseFileGuide.cs" />
     <Compile Include="Utilities\SaveProviders\IoGuide\BurialImageGuide.cs" />
     <Compile Include="Utilities\Validators\SignInValidator.cs" />

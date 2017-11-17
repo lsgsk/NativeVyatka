@@ -9,7 +9,7 @@ namespace NativeVyatkaCore.Settings
     {
         private ISettings Settings => CrossSettings.Current;
 
-        public string LoginHash
+        public string UserHash
         {
             get => Settings.GetValueOrDefault(LoginHashKey, string.Empty);
             set => Settings.AddOrUpdateValue(LoginHashKey, value);
@@ -44,7 +44,7 @@ namespace NativeVyatkaCore.Settings
 
         public void ClearPrefs()
         {
-            var array = new []{ ServiceUrlKey, CsrfTokenKey, SessionNameKey, SessionIdKey, LastSynchronizationKey };
+            var array = new []{ LoginHashKey, ServiceUrlKey, CsrfTokenKey, SessionNameKey, SessionIdKey, LastSynchronizationKey };
             foreach(var item in array)
             {
                 Settings.Remove(item);

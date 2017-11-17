@@ -6,24 +6,26 @@ using Abstractions.Exceptions;
 using Abstractions.Interfaces.Database.Tables;
 using Abstractions.Models.AppModels;
 using Abstractions.Models.Network.ServiceEntities;
+using Abstractions.Interfaces.Utilities;
 
 namespace NativeVyatkaCore.Network
 {
     public class LoginNetworkProvider : ILoginNetworkProvider
     {
-        public LoginNetworkProvider(ILoginRestClient restClient, ISettingsProvider settingsProvider, IProfileStorage pstorage)
+        public LoginNetworkProvider(ILoginRestClient restClient, ISettingsProvider settingsProvider, IProfileStorage pstorage, IMd5HashGenerator hashGenerator )
         {
-            this.mRestClient = restClient;
-            this.mSettingsProvider = settingsProvider;
+            this.restClient = restClient;
+            this.settings = settingsProvider;
             this.pStorage = pstorage;
+            this.hashGenerator = hashGenerator;
         }
 
         public async Task LoginAsync(string login, string password)
         {
             try
             {
-                var user = await mRestClient.LoginAsync(login, password);
-                UpdateSessionAndProfile(user);
+                var user = await restClient.LoginAsync(login, password);
+                UpdateSessionAndProfile(login, user);
             }
             catch(LoginLoadException)
             {
@@ -36,7 +38,7 @@ namespace NativeVyatkaCore.Network
         {
             try
             {
-                var user = await mRestClient.SiginAsync();
+                var user = await restClient.SiginAsync();
                 UpdateSession(user);
             }            
             catch (SigninLoadException)
@@ -45,27 +47,29 @@ namespace NativeVyatkaCore.Network
             }
         }
 
-        private void UpdateSessionAndProfile(LoginApiProfile value)
+        private void UpdateSessionAndProfile(string login, LoginApiProfile value)
         {
-            mSettingsProvider.CsrfToken = value.token;
-            mSettingsProvider.SessionName = value.session_name;
-            mSettingsProvider.SessionId = value.sessid;
+            settings.UserHash = hashGenerator.GenerateHash(login);
+            settings.CsrfToken = value.token;
+            settings.SessionName = value.session_name;
+            settings.SessionId = value.sessid;
             pStorage.SaveProfile(new ProfileModel(value.user));
         }
 
         private void UpdateSession(SigninApiProfile value)
         {
-            mSettingsProvider.SessionName = value.session_name;
-            mSettingsProvider.SessionId = value.sessid;
+            settings.SessionName = value.session_name;
+            settings.SessionId = value.sessid;
         }
 
         public void Cancel()
         {
-            mRestClient.Cancel.Cancel();
+            restClient.Cancel.Cancel();
         }        
 
-        private readonly ILoginRestClient mRestClient;
-        private readonly ISettingsProvider mSettingsProvider;
-        private readonly IProfileStorage pStorage;      
+        private readonly ILoginRestClient restClient;
+        private readonly ISettingsProvider settings;
+        private readonly IProfileStorage pStorage;
+        private readonly IMd5HashGenerator hashGenerator;
     }
 }

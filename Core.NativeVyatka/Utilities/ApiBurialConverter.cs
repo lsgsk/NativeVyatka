@@ -45,10 +45,10 @@ namespace NativeVyatkaCore.Utilities
             }
         }
 
-        public IEnumerable<BurialModel> ParceJson(string json)
+        public IEnumerable<BurialModel> ParceJson(string json, string userHash)
         {
             var collection = JsonConvert.DeserializeObject<IEnumerable<ApiBurialToReceive>>(json);
-            return collection.Select(x => new BurialModel(x));
+            return collection.Select(x => new BurialModel(x, userHash));
         }
 
         private IBurialImageGuide mGuide;

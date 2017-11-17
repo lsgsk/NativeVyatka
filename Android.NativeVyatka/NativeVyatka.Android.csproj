@@ -16,7 +16,7 @@
     <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
     <AssemblyName>NativeVyatkaAndroid</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
-    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -269,6 +269,7 @@
     <Compile Include="Services\BackgroundUploadService.cs" />
     <Compile Include="Utilities\ConsoleRealization.cs" />
     <Compile Include="Utilities\GpsSatelliteManager.cs" />
+    <Compile Include="Utilities\Md5HashGenerator.cs" />
     <Compile Include="Utilities\PageNavigator.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Utilities\Adapters\SimpleDividerItemDecoration.cs" />
