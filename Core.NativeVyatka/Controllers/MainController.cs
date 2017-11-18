@@ -35,10 +35,11 @@ namespace NativeVyatkaCore.Controllers
             this.satelliteManager = satelliteManager;
             this.mBurialsNetworkProvider = burialsNetworkProvider;
             this.geolocator.StartListeningAsync(new TimeSpan(5000), 2, true);
+            this.geolocator.PositionChanged += this.OnPositionChanged;
             this.compass.SensorValueChanged += this.OnSensorValueChanged;
             this.compass.Start(MotionSensorType.Compass);
             this.satelliteManager.OnGpsEnableChanged += OnGpsEnableChanged;
-        }
+        }        
 
         public async override void Dispose()
         {
@@ -141,8 +142,16 @@ namespace NativeVyatkaCore.Controllers
 
         private void OnGpsEnableChanged(object sender, int e)
         {
-            GpsEnableChanged?.Invoke(this, e);
+            GpsEnableChanged?.Invoke(this, new GpsState(satelites = e, accuracy));
         }
+
+        private void OnPositionChanged(object sender, PositionEventArgs e)
+        {
+            GpsEnableChanged?.Invoke(this, new GpsState(satelites, accuracy = e.Position.Accuracy));
+        }
+
+        private double accuracy = 0;
+        private int satelites = 0;
 
         private double? heading = null;
         private IBurialsNetworkProvider mBurialsNetworkProvider;
@@ -154,6 +163,6 @@ namespace NativeVyatkaCore.Controllers
         private readonly ISettingsProvider settings;
         private readonly ICrossPageNavigator mNavigator;
         private readonly IGpsSatelliteManager satelliteManager;
-        public event EventHandler<int> GpsEnableChanged;
+        public event EventHandler<GpsState> GpsEnableChanged;
     }
 }

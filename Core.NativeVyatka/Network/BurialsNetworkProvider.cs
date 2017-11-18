@@ -51,20 +51,19 @@ namespace NativeVyatkaCore.Network
         {
             try
             {
+                bool exception = false;
                 var burials = storage.GetNotSyncBurials();
                 foreach (var burial in burials ?? Enumerable.Empty<BurialModel>())
                 {
                     try
                     {
-                        await restClient.UploadNewBurialAsync(burial);
-                        burial.Updated = true;
-                        storage.InsertOrUpdateBurial(burial);
+                        await UploadBurialAsync(burial);
                     }
                     catch(BurialUploadException)
                     {
+                        exception = true;
                     }
                 }
-
                 foreach (var burial in await restClient.DownloadBurialsAsync(settings.LastSynchronization, settings.UserHash) ?? Enumerable.Empty<BurialModel>())
                 {
                     if (burial.Status == BurialModel.BurialStatus.ToRemove)
@@ -82,6 +81,10 @@ namespace NativeVyatkaCore.Network
                     }
                 }
                 settings.LastSynchronization = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                if(exception)
+                {
+                    throw new BurialUploadException();
+                }
             }
             catch (BurialUploadException)
             {

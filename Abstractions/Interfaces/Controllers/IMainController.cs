@@ -10,7 +10,7 @@ namespace Abstractions.Interfaces.Controllers
         void Logout();
         Task CreateNewBurial();
         ProfileModel Profile { get; }
-        event EventHandler<int> GpsEnableChanged;
+        event EventHandler<GpsState> GpsEnableChanged;
     }
 
     public interface IMainRecordsController
@@ -24,5 +24,16 @@ namespace Abstractions.Interfaces.Controllers
     {
         List<BurialModel> GetBurials();
         void DisplayBurial(BurialModel burial);
+    }
+
+    public class GpsState : EventArgs
+    {
+        public GpsState(int satetiles, double accuracy)
+        {
+            this.Satetiles = satetiles;
+            this.Accuracy = accuracy;
+        }
+        public int Satetiles { get; }
+        public double Accuracy { get; }
     }
 }

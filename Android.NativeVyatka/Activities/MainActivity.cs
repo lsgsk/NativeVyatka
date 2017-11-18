@@ -22,7 +22,7 @@ namespace NativeVyatkaAndroid
         public MainActivity()
         {
             mController = App.Container.Resolve<IMainController>();
-            mController.GpsEnableChanged += this.OnGpsEnableChanged;
+            mController.GpsEnableChanged += OnGpsEnableChanged;
         }       
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -140,14 +140,10 @@ namespace NativeVyatkaAndroid
             return base.OnOptionsItemSelected(item);
         }
 
-        private void OnGpsEnableChanged(object sender, int e)
+        private void OnGpsEnableChanged(object sender, GpsState e)
         {
-            tvGpsState.Text = $"Gps: {e}";
-            tvGpsState.SetBackgroundResource(
-                (e < 1)
-                    ? Resource.Drawable.small_rounded_corner_red
-                    : (e < 5) ? Resource.Drawable.small_rounded_corner_yellow : Resource.Drawable.small_rounded_corner_green);
-
+            tvGpsState.Text = $"Gps: {e.Satetiles}/{e.Accuracy:0.##}";
+            tvGpsState.SetBackgroundResource((e.Satetiles < 1) ? Resource.Drawable.small_rounded_corner_red : (e.Satetiles < 5) ? Resource.Drawable.small_rounded_corner_yellow : Resource.Drawable.small_rounded_corner_green);
         }
 
         public readonly IMainController mController;
