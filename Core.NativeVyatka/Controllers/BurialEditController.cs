@@ -40,12 +40,16 @@ namespace NativeVyatkaCore.Controllers
                     //это создание, а не редактирование
                     burial.RecordTime = DateTime.UtcNow;
                     Updated = true;
-                    Creating = true;
                 }
                 if(!burial.Updated)
                 {
                     //запись не синхранизирована, предлагаем сохранить
                     Updated = true;
+                }
+                if (!burial.Uploaded)
+                {
+                    //запись вообще не синхранизировалась, ее можно удалить
+                    Removable = true;
                 }
             }
         }
@@ -167,7 +171,7 @@ namespace NativeVyatkaCore.Controllers
                 BurialUpdated?.Invoke(this, value);
             }
         }
-        public bool Creating { get; private set; } = false;
+        public bool Removable { get; private set; } = false;
         private readonly ICrossPageNavigator mNavigator;
         private readonly IBurialImageGuide mBurialImageGuide;
         private readonly IBurialStorage mStorage;

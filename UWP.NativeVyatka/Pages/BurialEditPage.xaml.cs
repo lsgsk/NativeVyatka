@@ -87,7 +87,7 @@ namespace NativeVyatka.UWP.Pages
             cdpBirthTime.Date = burial.BirthDay;
             cdpDeathTime.Date = burial.DeathDay;
             mSaveIcon.Visibility = (mController.Updated) ? Visibility.Visible : Visibility.Collapsed;
-            mDeleteIcon.Visibility = (!mController.Creating) ? Visibility.Visible : Visibility.Collapsed;
+            mDeleteIcon.Visibility = (!mController.Removable) ? Visibility.Visible : Visibility.Collapsed;
             OnMapBurialLoaded(null, null);
         }
 

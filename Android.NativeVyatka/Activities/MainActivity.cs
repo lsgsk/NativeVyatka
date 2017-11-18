@@ -165,6 +165,9 @@ namespace NativeVyatkaAndroid
                 fabNewPhoto.Enabled = false;
                 tvGpsState.SetBackgroundResource(Resource.Drawable.small_rounded_corner_red);
             }
+#if DEBUG
+            fabNewPhoto.Enabled = true;
+#endif
         }
 
         public readonly IMainController mController;

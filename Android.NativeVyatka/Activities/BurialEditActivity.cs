@@ -180,6 +180,13 @@ namespace NativeVyatkaAndroid
             mSaveIcon.Visibility = e ? ViewStates.Visible : ViewStates.Gone;
         }
 
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.menu_edit_bar, menu);
+            menu.FindItem(Resource.Id.action_delete).SetVisible(mController.Removable);
+            return base.OnCreateOptionsMenu(menu);
+        }
+
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
@@ -187,6 +194,9 @@ namespace NativeVyatkaAndroid
                 case Android.Resource.Id.Home:
                     mController.SaveAndUploadBurialAndGoBackAsync();
                     return true;
+                case Resource.Id.action_delete:
+                    mController.DeleteRecordAsync();
+                    break;                    
             }
             return base.OnOptionsItemSelected(item);
         }

@@ -14,7 +14,7 @@ namespace Abstractions.Interfaces.Controllers
         Task SaveAndUploadBurialAndGoBackAsync();
         Task DeleteRecordAsync();
         bool Updated { get; set; }
-        bool Creating { get;}
+        bool Removable { get;}
         event EventHandler<bool> BurialUpdated;
     }
 }
