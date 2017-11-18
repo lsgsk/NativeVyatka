@@ -48,6 +48,7 @@ namespace Abstractions.Models.AppModels
             {
                 Latitude = entity.Latitude,
                 Longitude = entity.Longitude,
+                Accuracy = entity.Accuracy,
                 Altitude = entity.Altitude,
                 Heading = entity.Heading
             };           
@@ -71,6 +72,7 @@ namespace Abstractions.Models.AppModels
                 RecordTime = this.RecordTime,
                 Latitude = this.Location.Latitude,
                 Longitude = this.Location.Longitude,
+                Accuracy = this.Location.Accuracy,
                 Altitude = this.Location.Altitude,
                 Heading = this.Location.Heading,
                 PicturePath = this.PicturePath,
@@ -94,6 +96,7 @@ namespace Abstractions.Models.AppModels
                 RecordTime = (Int32)(this.RecordTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
                 Latitude = this.Location.Latitude,
                 Longitude = this.Location.Longitude,
+                Accuracy = this.Location.Accuracy,
                 Altitude = this.Location.Altitude,
                 Heading = this.Location.Heading,
                 Picture = null
@@ -116,6 +119,7 @@ namespace Abstractions.Models.AppModels
             {
                 Latitude = entity.Latitude,
                 Longitude = entity.Longitude,
+                Accuracy = entity.Accuracy,
                 Altitude = entity.Altitude,
                 Heading = entity.Heading
             };
@@ -129,6 +133,7 @@ namespace Abstractions.Models.AppModels
         {
             public double Latitude { get; set; }
             public double Longitude { get; set; }
+            public double Accuracy { get; set; }
             public double Altitude { get; set; }
             public double? Heading { get; set; }
         }

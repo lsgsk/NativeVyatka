@@ -34,18 +34,21 @@ namespace NativeVyatkaCore.Controllers
             this.compass = compass;
             this.satelliteManager = satelliteManager;
             this.mBurialsNetworkProvider = burialsNetworkProvider;
-            this.geolocator.StartListeningAsync(new TimeSpan(5000), 2, true);
-            this.geolocator.PositionChanged += this.OnPositionChanged;
-            this.compass.SensorValueChanged += this.OnSensorValueChanged;
-            this.compass.Start(MotionSensorType.Compass);
-            this.satelliteManager.OnGpsEnableChanged += OnGpsEnableChanged;
-        }        
+            geolocator.PositionChanged += OnPositionChanged;
+            compass.SensorValueChanged += OnSensorValueChanged;
+            satelliteManager.OnGpsEnableChanged += OnGpsEnableChanged;
+            compass.Start(MotionSensorType.Compass);
+            geolocator.StartListeningAsync(new TimeSpan(5000), 2, true);
+        }
 
         public async override void Dispose()
         {
             base.Dispose();
+            geolocator.PositionChanged -= OnPositionChanged;
+            compass.SensorValueChanged -= OnSensorValueChanged;
+            satelliteManager.OnGpsEnableChanged -= OnGpsEnableChanged;
+            compass.Stop(MotionSensorType.Compass);
             await geolocator.StopListeningAsync();
-            this.compass.SensorValueChanged -= OnSensorValueChanged;
         }
 
         private void OnSensorValueChanged(object sender, SensorValueChangedEventArgs e)
@@ -76,7 +79,8 @@ namespace NativeVyatkaCore.Controllers
                         {
                             burial.Location.Latitude = position.Latitude;
                             burial.Location.Longitude = position.Longitude;
-                            burial.Location.Altitude = position.Altitude;
+                            burial.Location.Accuracy = position.Accuracy;
+                            burial.Location.Altitude = position.Altitude;                            
                             burial.Location.Heading = heading;
                             burial.BirthDay = "00-00-0000";
                             burial.DeathDay = "00-00-0000";
@@ -148,7 +152,7 @@ namespace NativeVyatkaCore.Controllers
         private void OnPositionChanged(object sender, PositionEventArgs e)
         {
             GpsEnableChanged?.Invoke(this, new GpsState(satelites, accuracy = e.Position.Accuracy));
-        }
+        }     
 
         private double accuracy = 0;
         private int satelites = 0;

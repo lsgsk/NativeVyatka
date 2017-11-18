@@ -5,6 +5,7 @@
     <dimen name="base_fab_margin">16dp</dimen>
     <dimen name="base_progress_bar_size">50dp</dimen>
     <dimen name="base_circle_border">2dp</dimen>
+    <dimen name="base_elevation">6dp</dimen>
 
     <dimen name="navigation_view_max_width">280dp</dimen>
     <dimen name="drawer_header_height">158dp</dimen>
@@ -15,9 +16,8 @@
     <dimen name="burial_list_image_size">60dp</dimen>
     <dimen name="round_point">10dp</dimen>
 
-    <!-- карточки -->
-    <dimen name="base_card_elevation">4dp</dimen>
-    <dimen name="base_card_radius">8dp</dimen>
+
+    
 
     <!-- BuriaEditActivity -->
     <dimen name="photo_size">300dp</dimen>

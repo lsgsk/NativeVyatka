@@ -37,6 +37,12 @@ namespace NativeVyatkaAndroid
             }
         }
 
+        protected override void OnResume()
+        {
+            base.OnResume();
+            fabNewPhoto.Enabled = false;
+        }
+
         protected override void OnDestroy()
         {
             base.OnDestroy();
@@ -53,7 +59,8 @@ namespace NativeVyatkaAndroid
             new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close).SyncState();
             SetSupportActionBar(mToolbar);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-            mNavigationView.SetNavigationItemSelectedListener(this);            
+            mNavigationView.SetNavigationItemSelectedListener(this);
+            fabNewPhoto = FindViewById<FloatingActionButton>(Resource.Id.fabNewPhoto);
         }
 
         private void DisplayProfile()
@@ -142,8 +149,22 @@ namespace NativeVyatkaAndroid
 
         private void OnGpsEnableChanged(object sender, GpsState e)
         {
-            tvGpsState.Text = $"Gps: {e.Satetiles}/{e.Accuracy:0.##}";
-            tvGpsState.SetBackgroundResource((e.Satetiles < 1) ? Resource.Drawable.small_rounded_corner_red : (e.Satetiles < 5) ? Resource.Drawable.small_rounded_corner_yellow : Resource.Drawable.small_rounded_corner_green);
+            tvGpsState.Text = $"Gps: {e.Satetiles}/{e.Accuracy:0.#}";
+            if(e.Satetiles > 4 && e.Accuracy <= 3)
+            {
+                fabNewPhoto.Enabled = true;
+                tvGpsState.SetBackgroundResource(Resource.Drawable.small_rounded_corner_green);
+            }
+            else if (e.Satetiles > 3 && e.Accuracy <= 7)
+            {
+                fabNewPhoto.Enabled = true;
+                tvGpsState.SetBackgroundResource(Resource.Drawable.small_rounded_corner_yellow);
+            }
+            else
+            {
+                fabNewPhoto.Enabled = false;
+                tvGpsState.SetBackgroundResource(Resource.Drawable.small_rounded_corner_red);
+            }
         }
 
         public readonly IMainController mController;
@@ -151,6 +172,7 @@ namespace NativeVyatkaAndroid
         protected NavigationView mNavigationView;
         private Fragment mFragment;
         private TextView tvGpsState;
+        private FloatingActionButton fabNewPhoto;
     }
 }
 

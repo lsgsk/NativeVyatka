@@ -9,21 +9,21 @@ namespace NativeVyatkaCore.Network.RestClients
     {
         public HttpClientFactory(ISettingsProvider settings)
         {
-            this.mSettings = settings;
+            this.settings = settings;
         }
 
         public HttpClient GetClient()
         {
-            return new HttpClient() { BaseAddress = new Uri(mSettings.ServiceUrl) };
+            return new HttpClient() { BaseAddress = new Uri(settings.ServiceUrl), Timeout = TimeSpan.FromSeconds(15) };
         }
 
         public HttpClient GetAuthClient()
         {
-            var client = new HttpClient() { BaseAddress = new Uri(mSettings.ServiceUrl) };
-            client.DefaultRequestHeaders.Add("Cookie", $"{mSettings.SessionName}={mSettings.SessionId}");
-            client.DefaultRequestHeaders.Add("X-CSRF-Token", mSettings.CsrfToken);
+            var client = new HttpClient() { BaseAddress = new Uri(settings.ServiceUrl), Timeout = TimeSpan.FromSeconds(15) };
+            client.DefaultRequestHeaders.Add("Cookie", $"{settings.SessionName}={settings.SessionId}");
+            client.DefaultRequestHeaders.Add("X-CSRF-Token", settings.CsrfToken);
             return client;
         }
-        private readonly ISettingsProvider mSettings;
+        private readonly ISettingsProvider settings;
     }
 }

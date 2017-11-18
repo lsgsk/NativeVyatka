@@ -15,16 +15,17 @@ namespace NativeVyatkaCore.Network.RestClients
 {
     public class LoginRestClient : ILoginRestClient
     {
-        public LoginRestClient(ISettingsProvider settings)
+        public LoginRestClient(ISettingsProvider settings, IHttpClientFactory factory)
         {
-            this.mSettings = settings;
+            this.settings = settings;
+            this.factory = factory;
         }
 
         public async Task<LoginApiProfile> LoginAsync(string login, string password)
         {
             try
             {
-                using (var client = new HttpClient() { BaseAddress = new Uri(mSettings.ServiceUrl) })
+                using (var client = factory.GetClient())
                 {
                     var content = new FormUrlEncodedContent(new[]
                         {
@@ -48,10 +49,8 @@ namespace NativeVyatkaCore.Network.RestClients
         {
             try
             {
-                using (var client = new HttpClient() { BaseAddress = new Uri(mSettings.ServiceUrl) })
+                using (var client = factory.GetAuthClient())
                 {
-                    client.DefaultRequestHeaders.Add("Cookie", $"{mSettings.SessionName}={mSettings.SessionId}");
-                    client.DefaultRequestHeaders.Add("X-CSRF-Token", mSettings.CsrfToken);
                     var response = await client.PostAsync("/rv_burial/system/connect.json", null, Cancel.Token);
                     response.EnsureSuccessStatusCode();
                     var json = await response.Content.ReadAsStringAsync();
@@ -75,7 +74,8 @@ namespace NativeVyatkaCore.Network.RestClients
             return JsonConvert.DeserializeObject<SigninApiProfile>(json);
         }
 
-        private readonly ISettingsProvider mSettings;
+        private readonly ISettingsProvider settings;
+        private readonly IHttpClientFactory factory;
         public CancellationTokenSource Cancel { get; set; } = new CancellationTokenSource();
     }
 }

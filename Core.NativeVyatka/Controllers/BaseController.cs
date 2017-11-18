@@ -53,8 +53,9 @@ namespace NativeVyatkaCore.Controllers
                 if (mMedia.IsCameraAvailable && mMedia.IsTakePhotoSupported)
                 {
                     var file = await mMedia.TakePhotoAsync(new StoreCameraMediaOptions
-                    {
-                        PhotoSize = PhotoSize.Medium,
+                    {                        
+                        PhotoSize = PhotoSize.MaxWidthHeight,
+                        MaxWidthHeight = 1024,
                         CompressionQuality = 75,
                         Directory = "BurialFolder",
                         Name = Path.GetRandomFileName() + ".jpg"

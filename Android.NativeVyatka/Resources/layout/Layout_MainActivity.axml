@@ -46,7 +46,9 @@
             android:layout_margin="@dimen/base_fab_margin"
             app:layout_anchorGravity="bottom|right|end"
             android:layout_gravity="bottom|right"
-            android:src="@drawable/ic_add_a_photo_white" />
+            android:src="@drawable/ic_add_a_photo_white"          
+            app:backgroundTint="@drawable/floating_action_button"            
+            app:elevation="@dimen/base_elevation"/>
     </android.support.design.widget.CoordinatorLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_drawer"
