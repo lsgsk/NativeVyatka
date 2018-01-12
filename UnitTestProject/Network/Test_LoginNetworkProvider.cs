@@ -28,7 +28,7 @@ namespace UnitTestProject.Network
                     }
                     else
                     {
-                        throw new LoginLoadException();
+                        throw new LoginException();
                     }
                 };
             mock.Setup(x => x.LoginAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(action);

@@ -57,7 +57,7 @@ namespace NativeVyatkaAndroid
                 ? picasso.Load(burial.PicturePath)
                 : picasso.Load(new Java.IO.File(burial.PicturePath));
             creator.ResizeDimen(Resource.Dimension.photo_size, Resource.Dimension.photo_size).CenterInside().OnlyScaleDown().Into(imgPhoto);
-            SupportActionBar.Title = $"{burial.Name} {burial.Surname} {burial.Patronymic}";
+            //SupportActionBar.Title = $"{burial.Name} {burial.Surname} {burial.Patronymic}";
             etName.Text = burial.Name;
             etSurname.Text = burial.Surname;
             etPatronymic.Text = burial.Patronymic;
@@ -80,8 +80,8 @@ namespace NativeVyatkaAndroid
         {
             SetContentView(Resource.Layout.Layout_BurialEditDetailActivity);
             var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(toolbar);
-            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+            //SetSupportActionBar(toolbar);
+            //SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             imgPhoto = FindViewById<ImageView>(Resource.Id.imgPhoto);
             etName = FindViewById<EditText>(Resource.Id.etName);
             etName.TextChanged += (s, e) =>

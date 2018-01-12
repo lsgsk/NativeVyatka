@@ -9,16 +9,27 @@ namespace NativeVyatkaCore.Settings
     {
         private ISettings Settings => CrossSettings.Current;
 
+        public string Login
+        {
+            get => Settings.GetValueOrDefault(LoginKey, string.Empty);
+            set => Settings.AddOrUpdateValue(LoginKey, value);
+        }
+        public string Password
+        {
+            get => Settings.GetValueOrDefault(PasswordKey, string.Empty);
+            set => Settings.AddOrUpdateValue(PasswordKey, value);
+        }
+
         public string UserHash
         {
-            get => Settings.GetValueOrDefault(LoginHashKey, string.Empty);
-            set => Settings.AddOrUpdateValue(LoginHashKey, value);
+            get => Settings.GetValueOrDefault(UserHashKey, string.Empty);
+            set => Settings.AddOrUpdateValue(UserHashKey, value);
         }
 
         public string ServiceUrl
         {
-            get => Settings.GetValueOrDefault(ServiceUrlKey, ApConstant.ServiceUrl);            
-            set => Settings.AddOrUpdateValue(ServiceUrlKey, value);            
+            get => Settings.GetValueOrDefault(ServiceUrlKey, ApConstant.ServiceUrl);           
+     
         }
         public string CsrfToken
         {
@@ -44,14 +55,19 @@ namespace NativeVyatkaCore.Settings
 
         public void ClearPrefs()
         {
-            var array = new []{ LoginHashKey, ServiceUrlKey, CsrfTokenKey, SessionNameKey, SessionIdKey, LastSynchronizationKey };
-            foreach(var item in array)
+            foreach(var item in new[] { UserHashKey, ServiceUrlKey, CsrfTokenKey, SessionNameKey, SessionIdKey, LastSynchronizationKey })
             {
                 Settings.Remove(item);
-            }           
+            }
+            foreach (var item in new[] { LoginKey, PasswordKey })
+            {
+                Settings.Remove(item);
+            }
         }
 
-        public const string LoginHashKey = "LoginHashKey";
+        public const string LoginKey = "LoginKey";
+        public const string PasswordKey = "PasswordKey";
+        public const string UserHashKey = "LoginHashKey";
         public const string ServiceUrlKey = "ServiceUrlKey";
         public const string CsrfTokenKey = "CsrfTokenKey";
         public const string SessionNameKey = "SessionNameKey";

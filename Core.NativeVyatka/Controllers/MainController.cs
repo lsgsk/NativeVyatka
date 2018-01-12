@@ -34,21 +34,29 @@ namespace NativeVyatkaCore.Controllers
             this.compass = compass;
             this.satelliteManager = satelliteManager;
             this.mBurialsNetworkProvider = burialsNetworkProvider;
-            geolocator.PositionChanged += OnPositionChanged;
-            compass.SensorValueChanged += OnSensorValueChanged;
-            satelliteManager.OnGpsEnableChanged += OnGpsEnableChanged;
-            compass.Start(MotionSensorType.Compass);
-            geolocator.StartListeningAsync(new TimeSpan(5000), 2, true);
+            this.geolocator.PositionChanged += OnPositionChanged;
+            this.compass.SensorValueChanged += OnSensorValueChanged;
+            this.satelliteManager.OnGpsEnableChanged += OnGpsEnableChanged;        
         }
 
-        public async override void Dispose()
+        public async void OnGpsStart()
+        {
+            compass.Start(MotionSensorType.Compass);
+            await geolocator.StartListeningAsync(new TimeSpan(3000), 0, true);
+        }
+
+        public async void OnGpsStop()
+        {
+            compass.Stop(MotionSensorType.Compass);
+            await geolocator.StopListeningAsync();
+        }
+
+        public override void Dispose()
         {
             base.Dispose();
             geolocator.PositionChanged -= OnPositionChanged;
             compass.SensorValueChanged -= OnSensorValueChanged;
-            satelliteManager.OnGpsEnableChanged -= OnGpsEnableChanged;
-            compass.Stop(MotionSensorType.Compass);
-            await geolocator.StopListeningAsync();
+            satelliteManager.OnGpsEnableChanged -= OnGpsEnableChanged;          
         }
 
         private void OnSensorValueChanged(object sender, SensorValueChangedEventArgs e)

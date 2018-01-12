@@ -86,23 +86,23 @@
       <HintPath>..\packages\Xam.Plugin.DeviceMotion.1.1.2\lib\MonoAndroid10\DeviceMotion.Plugin.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.7.2.1\lib\netstandard1.0\FluentValidation.dll</HintPath>
+      <HintPath>..\packages\FluentValidation.7.3.3\lib\netstandard2.0\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Plugin.Geolocator, Version=4.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xam.Plugin.Geolocator.4.1.2\lib\MonoAndroid10\Plugin.Geolocator.dll</HintPath>
+    <Reference Include="Plugin.Geolocator, Version=4.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xam.Plugin.Geolocator.4.1.3\lib\MonoAndroid10\Plugin.Geolocator.dll</HintPath>
     </Reference>
-    <Reference Include="Plugin.Geolocator.Abstractions, Version=4.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xam.Plugin.Geolocator.4.1.2\lib\MonoAndroid10\Plugin.Geolocator.Abstractions.dll</HintPath>
+    <Reference Include="Plugin.Geolocator.Abstractions, Version=4.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xam.Plugin.Geolocator.4.1.3\lib\MonoAndroid10\Plugin.Geolocator.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Plugin.Media, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xam.Plugin.Media.3.0.1\lib\MonoAndroid10\Plugin.Media.dll</HintPath>
+    <Reference Include="Plugin.Media, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xam.Plugin.Media.3.1.1\lib\MonoAndroid10\Plugin.Media.dll</HintPath>
     </Reference>
-    <Reference Include="Plugin.Media.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xam.Plugin.Media.3.0.1\lib\MonoAndroid10\Plugin.Media.Abstractions.dll</HintPath>
+    <Reference Include="Plugin.Media.Abstractions, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xam.Plugin.Media.3.1.1\lib\MonoAndroid10\Plugin.Media.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Permissions, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Plugin.Permissions.2.1.0\lib\MonoAndroid10\Plugin.Permissions.dll</HintPath>
@@ -127,19 +127,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="SQLitePCLRaw.batteries_green, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.8\lib\MonoAndroid\SQLitePCLRaw.batteries_green.dll</HintPath>
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.9\lib\MonoAndroid\SQLitePCLRaw.batteries_green.dll</HintPath>
     </Reference>
     <Reference Include="SQLitePCLRaw.batteries_v2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.8\lib\MonoAndroid\SQLitePCLRaw.batteries_v2.dll</HintPath>
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.9\lib\MonoAndroid\SQLitePCLRaw.batteries_v2.dll</HintPath>
     </Reference>
     <Reference Include="SQLitePCLRaw.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.core.1.1.8\lib\MonoAndroid\SQLitePCLRaw.core.dll</HintPath>
+      <HintPath>..\packages\SQLitePCLRaw.core.1.1.9\lib\MonoAndroid\SQLitePCLRaw.core.dll</HintPath>
     </Reference>
     <Reference Include="SQLitePCLRaw.lib.e_sqlite3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e4ad490600e2234c, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.lib.e_sqlite3.android.1.1.8\lib\MonoAndroid\SQLitePCLRaw.lib.e_sqlite3.dll</HintPath>
+      <HintPath>..\packages\SQLitePCLRaw.lib.e_sqlite3.android.1.1.9\lib\MonoAndroid\SQLitePCLRaw.lib.e_sqlite3.dll</HintPath>
     </Reference>
     <Reference Include="SQLitePCLRaw.provider.e_sqlite3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9c301db686d0bd12, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.provider.e_sqlite3.android.1.1.8\lib\MonoAndroid\SQLitePCLRaw.provider.e_sqlite3.dll</HintPath>
+      <HintPath>..\packages\SQLitePCLRaw.provider.e_sqlite3.android.1.1.9\lib\MonoAndroid\SQLitePCLRaw.provider.e_sqlite3.dll</HintPath>
     </Reference>
     <Reference Include="Square.OkHttp, Version=2.7.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Square.OkHttp.2.7.5.0\lib\MonoAndroid\Square.OkHttp.dll</HintPath>

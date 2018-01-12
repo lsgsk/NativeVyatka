@@ -12,11 +12,7 @@ namespace Abstractions.Exceptions
     {
     }
 
-    public class LoginLoadException : Exception
+    public class LoginException : Exception
     {
-    }
-
-    public class SigninLoadException : Exception
-    {
-    }
+    }   
 }

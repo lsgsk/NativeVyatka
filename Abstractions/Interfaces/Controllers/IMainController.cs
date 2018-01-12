@@ -7,6 +7,8 @@ namespace Abstractions.Interfaces.Controllers
 {
     public interface IMainController : IMainRecordsController, IMainMapController, IBaseController
     {
+        void OnGpsStart();
+        void OnGpsStop();
         void Logout();
         Task CreateNewBurial();
         ProfileModel Profile { get; }

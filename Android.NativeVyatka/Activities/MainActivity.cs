@@ -37,10 +37,22 @@ namespace NativeVyatkaAndroid
             }
         }
 
+        protected override void OnStart()
+        {
+            base.OnStart();
+            mController.OnGpsStart();
+        }
+
         protected override void OnResume()
         {
             base.OnResume();
-            fabNewPhoto.Enabled = false;
+            fabNewPhoto.Enabled = false;           
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+            mController.OnGpsStop();
         }
 
         protected override void OnDestroy()
@@ -165,9 +177,6 @@ namespace NativeVyatkaAndroid
                 fabNewPhoto.Enabled = false;
                 tvGpsState.SetBackgroundResource(Resource.Drawable.small_rounded_corner_red);
             }
-#if DEBUG
-            fabNewPhoto.Enabled = true;
-#endif
         }
 
         public readonly IMainController mController;

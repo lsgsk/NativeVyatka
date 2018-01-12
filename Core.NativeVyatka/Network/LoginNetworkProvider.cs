@@ -25,11 +25,10 @@ namespace NativeVyatkaCore.Network
             try
             {
                 var user = await restClient.LoginAsync(login, password);
-                UpdateSessionAndProfile(login, user);
+                UpdateSessionAndProfile(login, password, user);
             }
-            catch(LoginLoadException)
+            catch(LoginException)
             {
-                pStorage.ClearProfile();
                 throw new AuthorizationSyncException();
             }
         }
@@ -41,19 +40,21 @@ namespace NativeVyatkaCore.Network
                 var user = await restClient.SiginAsync();
                 UpdateSession(user);
             }            
-            catch (SigninLoadException)
+            catch (LoginException)
             {
-                throw new AuthorizationSyncException();
+                await LoginAsync(settings.Login, settings.Password);                  
             }
         }
 
-        private void UpdateSessionAndProfile(string login, LoginApiProfile value)
+        private void UpdateSessionAndProfile(string login, string password, LoginApiProfile value)
         {
+            settings.Login = login;
+            settings.Password = password;
             settings.UserHash = hashGenerator.GenerateHash(login);
             settings.CsrfToken = value.token;
             settings.SessionName = value.session_name;
             settings.SessionId = value.sessid;
-            pStorage.SaveProfile(new ProfileModel(value.user));
+            pStorage.SaveProfile(new ProfileModel(value.user));            
         }
 
         private void UpdateSession(SigninApiProfile value)

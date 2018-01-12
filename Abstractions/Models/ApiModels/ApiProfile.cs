@@ -24,6 +24,6 @@
     {
         public string sessid { get; set; }
         public string session_name { get; set; }
-    }
+    }   
 }
 

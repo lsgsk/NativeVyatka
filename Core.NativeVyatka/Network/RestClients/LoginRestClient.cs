@@ -41,7 +41,7 @@ namespace NativeVyatkaCore.Network.RestClients
             catch (Exception ex)
             {
                 iConsole.Error(ex);
-                throw new LoginLoadException();
+                throw new LoginException();
             }
         }
 
@@ -60,7 +60,7 @@ namespace NativeVyatkaCore.Network.RestClients
             catch (Exception ex)
             {
                 iConsole.Error(ex);
-                throw new SigninLoadException();
+                throw new LoginException();
             }
         }
 
