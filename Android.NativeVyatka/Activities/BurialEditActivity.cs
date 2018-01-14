@@ -23,13 +23,13 @@ namespace NativeVyatkaAndroid
     {
         public BurialEditActivity()
         {
-            mController = App.Container.Resolve<IBurialEditController>();
-            mController.BurialUpdated += OnBurialUpdated;
-        }       
+            mController = App.Container.Resolve<IBurialEditController>();            
+        }      
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            mController.BurialUpdated += OnBurialUpdated;
             FindAndBindViews(savedInstanceState);            
             try
             {

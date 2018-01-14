@@ -3087,8 +3087,8 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0a008a
 			public const int action_context_bar = 2131361930;
 			
-			// aapt resource value: 0x7f0a00f1
-			public const int action_delete = 2131362033;
+			// aapt resource value: 0x7f0a00ef
+			public const int action_delete = 2131362031;
 			
 			// aapt resource value: 0x7f0a00d5
 			public const int action_divider = 2131362005;
@@ -3110,12 +3110,6 @@ namespace NativeVyatkaAndroid
 			
 			// aapt resource value: 0x7f0a0069
 			public const int action_mode_close_button = 2131361897;
-			
-			// aapt resource value: 0x7f0a00ef
-			public const int action_rephoto = 2131362031;
-			
-			// aapt resource value: 0x7f0a00f0
-			public const int action_save = 2131362032;
 			
 			// aapt resource value: 0x7f0a00ee
 			public const int action_sync = 2131362030;
@@ -3450,14 +3444,14 @@ namespace NativeVyatkaAndroid
 			// aapt resource value: 0x7f0a00a0
 			public const int navigation_header_container = 2131361952;
 			
-			// aapt resource value: 0x7f0a00f4
-			public const int navigation_logout = 2131362036;
-			
-			// aapt resource value: 0x7f0a00f3
-			public const int navigation_map_records = 2131362035;
-			
 			// aapt resource value: 0x7f0a00f2
-			public const int navigation_my_records = 2131362034;
+			public const int navigation_logout = 2131362034;
+			
+			// aapt resource value: 0x7f0a00f1
+			public const int navigation_map_records = 2131362033;
+			
+			// aapt resource value: 0x7f0a00f0
+			public const int navigation_my_records = 2131362032;
 			
 			// aapt resource value: 0x7f0a0056
 			public const int never = 2131361878;
