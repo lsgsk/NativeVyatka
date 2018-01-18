@@ -164,7 +164,6 @@ namespace NativeVyatkaCore.Controllers
 
         private double accuracy = 0;
         private int satelites = 0;
-
         private double? heading = null;
         private IBurialsNetworkProvider mBurialsNetworkProvider;
         private readonly IGeolocator geolocator;

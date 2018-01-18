@@ -21,13 +21,13 @@ namespace NativeVyatkaAndroid
     {
         public MainActivity()
         {
-            mController = App.Container.Resolve<IMainController>();
-            mController.GpsEnableChanged += OnGpsEnableChanged;
+            mController = App.Container.Resolve<IMainController>();            
         }       
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            mController.GpsEnableChanged += OnGpsEnableChanged;
             FindAndBindViews();
             DisplayProfile();
             if (savedInstanceState == null)
@@ -58,6 +58,7 @@ namespace NativeVyatkaAndroid
         protected override void OnDestroy()
         {
             base.OnDestroy();
+            mController.GpsEnableChanged -= OnGpsEnableChanged;
             mController.Dispose();
         }
 
@@ -162,7 +163,7 @@ namespace NativeVyatkaAndroid
         private void OnGpsEnableChanged(object sender, GpsState e)
         {
             tvGpsState.Text = $"Gps: {e.Satetiles}/{e.Accuracy:0.#}";
-            if(e.Satetiles > 4 && e.Accuracy <= 3)
+            if (e.Satetiles > 4 && e.Accuracy <= 3)
             {
                 fabNewPhoto.Enabled = true;
                 tvGpsState.SetBackgroundResource(Resource.Drawable.small_rounded_corner_green);
@@ -177,6 +178,9 @@ namespace NativeVyatkaAndroid
                 fabNewPhoto.Enabled = false;
                 tvGpsState.SetBackgroundResource(Resource.Drawable.small_rounded_corner_red);
             }
+#if DEBUG
+            fabNewPhoto.Enabled = true;
+#endif
         }
 
         public readonly IMainController mController;
