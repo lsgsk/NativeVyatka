@@ -1,4 +1,6 @@
-﻿namespace Abstractions.Models.Network.ServiceEntities
+﻿using Newtonsoft.Json;
+
+namespace Abstractions.Models.Network.ServiceEntities
 {
     public class LoginApiProfile
     {
@@ -24,6 +26,22 @@
     {
         public string sessid { get; set; }
         public string session_name { get; set; }
+        public SigninApiUser user { get; set; }
+
+        public class SigninApiUser
+        {
+            public string uid { get; set; }
+            public string hostname { get; set; }
+            public Roles roles { get; set; }
+            public int cache { get; set; }
+            public long timestamp { get; set; }
+        }
+
+        public class Roles
+        {
+            [JsonProperty(PropertyName = "1")]
+            public string Name { get; set;}
+        }
     }   
 }
 

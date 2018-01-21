@@ -56,7 +56,7 @@ namespace NativeVyatkaAndroid
             var creator = (burial.PicturePath.StartsWith("http"))
                 ? picasso.Load(burial.PicturePath)
                 : picasso.Load(new Java.IO.File(burial.PicturePath));
-            creator.ResizeDimen(Resource.Dimension.photo_size, Resource.Dimension.photo_size).CenterInside().OnlyScaleDown().Into(imgPhoto);
+            creator.Placeholder(Resource.Drawable.nophoto).ResizeDimen(Resource.Dimension.photo_size, Resource.Dimension.photo_size).CenterInside().OnlyScaleDown().Into(imgPhoto);
             SupportActionBar.Title = $"{burial.Name} {burial.Surname} {burial.Patronymic}";
             etName.Text = burial.Name;
             etSurname.Text = burial.Surname;

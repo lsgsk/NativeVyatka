@@ -1,5 +1,4 @@
-﻿using System;
-using Android.Graphics.Drawables;
+﻿using Android.Graphics.Drawables;
 using Android.Support.V7.Widget;
 using Android.Graphics;
 using Android.Content;

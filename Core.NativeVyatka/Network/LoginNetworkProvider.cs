@@ -7,6 +7,8 @@ using Abstractions.Interfaces.Database.Tables;
 using Abstractions.Models.AppModels;
 using Abstractions.Models.Network.ServiceEntities;
 using Abstractions.Interfaces.Utilities;
+using System;
+using NativeVyatkaCore.Utilities;
 
 namespace NativeVyatkaCore.Network
 {
@@ -38,6 +40,7 @@ namespace NativeVyatkaCore.Network
             try
             {
                 var user = await restClient.SiginAsync();
+                ValidateProfile(user);
                 UpdateSession(user);
             }            
             catch (LoginException)
@@ -61,6 +64,23 @@ namespace NativeVyatkaCore.Network
         {
             settings.SessionName = value.session_name;
             settings.SessionId = value.sessid;
+        }
+
+
+        private void ValidateProfile(SigninApiProfile value)
+        {
+            try
+            {
+                if (value.user.uid == "0" && value.user.roles.Name == "anonymous user")
+                {
+                    throw new LoginException();
+                }
+            }
+            catch (Exception ex)
+            {
+                iConsole.Error(ex);
+                throw new LoginException();
+            }
         }
 
         public void Cancel()
