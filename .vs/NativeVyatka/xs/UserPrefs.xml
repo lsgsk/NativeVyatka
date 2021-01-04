@@ -1,0 +1,30 @@
+﻿<Properties StartupConfiguration="{ECBE4359-F959-432D-94D6-10DDEDC8D7F7}|Default">
+  <MonoDevelop.Ide.ItemProperties.NativeVyatka AndroidDesignerPreferredTheme="AppTheme" PreferredExecutionTarget="Android.pixel_2_pie_9_0_-_api_28" />
+  <MonoDevelop.Ide.Workbench>
+    <Files>
+      <File FileName="NativeVyatka/Modules/Login/LoginFlowFragment.cs" Line="1" Column="1" />
+      <File FileName="NativeVyatka/NativeVyatka.csproj" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="NativeVyatka" expanded="True">
+            <Node name="NativeVyatka" expanded="True">
+              <Node name="Modules" expanded="True">
+                <Node name="Login" expanded="True">
+                  <Node name="LoginFlowFragment.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

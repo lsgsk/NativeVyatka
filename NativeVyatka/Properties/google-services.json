@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "690706507194",
+    "project_id": "rodnaya-vyatka",
+    "storage_bucket": "rodnaya-vyatka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690706507194:android:ff027c2214c02e3cdfe983",
+        "android_client_info": {
+          "package_name": "lsgsk.rodnaya.vyatka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "690706507194-15loj93v834bo42ik6s5d6p67v7drt7l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lsgsk.rodnaya.vyatka",
+            "certificate_hash": "80872c28986135e8870d8de2a30bc01071d48a29"
+          }
+        },
+        {
+          "client_id": "690706507194-prvg0779gvq18pi94rbli8nkvcvf1qgm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwC0m1BpU8l7vrDDhVuaB7ofTJeyaPgD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "690706507194-prvg0779gvq18pi94rbli8nkvcvf1qgm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
