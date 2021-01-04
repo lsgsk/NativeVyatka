@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ECBE4359-F959-432D-94D6-10DDEDC8D7F7}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{84dd83c5-0fe3-4294-9419-09e7c8ba324f}</TemplateGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NativeVyatka</RootNamespace>
+    <AssemblyName>NativeVyatka</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
+    <AndroidUseAapt2>true</AndroidUseAapt2>
+    <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;ANDROID;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;ANDROID;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile></DocumentationFile>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <AndroidApkSignerAdditionalArguments></AndroidApkSignerAdditionalArguments>
+    <AndroidTlsProvider></AndroidTlsProvider>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+    <Reference Include="Mono.Android.Export" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="Modules\Login\LoginFlowFragment.cs" />
+    <Compile Include="Modules\Login\LoginPresenter.cs" />
+    <Compile Include="Modules\BurialEdit\BurialEditPresenter.cs" />
+    <Compile Include="Modules\BurialEdit\BurialEditFlowFragment.cs" />
+    <Compile Include="Modules\Main\Fragment\RecordsFragment.cs" />
+    <Compile Include="Modules\Main\Fragment\MapFragment.cs" />
+    <Compile Include="Core\Validators\SignInValidator.cs" />
+    <Compile Include="Common\Fragmen\ProgressFragment.cs" />
+    <Compile Include="Core\Database\BurialDatabase.cs" />
+    <Compile Include="Core\Database\Models\BurialEntity.cs" />
+    <Compile Include="Core\Database\Models\DbVersionEntity.cs" />
+    <Compile Include="Core\Database\Models\ProfileEntity.cs" />
+    <Compile Include="Core\Database\Tables\BurialsDatabase.cs" />
+    <Compile Include="Core\Database\Tables\ProfileDatabase.cs" />
+    <Compile Include="Core\Models\AppModels\BurialModel.cs" />
+    <Compile Include="Core\Models\AppModels\ProfileModel.cs" />
+    <Compile Include="Core\Network\BurialsNetworkProvider.cs" />
+    <Compile Include="Core\Network\INetworkProvider.cs" />
+    <Compile Include="Core\Network\RestClients\BurialRestClient.cs" />
+    <Compile Include="Core\Network\RestClients\HttpClientFactory.cs" />
+    <Compile Include="Core\Network\RestClients\IRestClient.cs" />
+    <Compile Include="Core\Network\RestClients\LoginRestClient.cs" />
+    <Compile Include="Core\Properties\Resources.cs" />
+    <Compile Include="Core\Settings\SettingsProvider.cs" />
+    <Compile Include="RegisterTypesIntoDI.cs" />
+    <Compile Include="Core\Database\Tables\VersionStorage.cs" />
+    <Compile Include="Core\Network\LoginNetworkProvider.cs" />
+    <Compile Include="Modules\BurialEdit\BurialViewModel.cs" />
+    <Compile Include="Core\Network\Models\ApiBurial.cs" />
+    <Compile Include="Core\Network\Models\ApiProfile.cs" />
+    <Compile Include="Core\Constants\Common.cs" />
+    <Compile Include="Core\Models\Exceptions\BurialsExceptions.cs" />
+    <Compile Include="Core\Models\Exceptions\FileGuideException.cs" />
+    <Compile Include="Core\Models\Exceptions\LoginExceptions.cs" />
+    <Compile Include="Core\Utilities\FileSystem\BaseFileGuide.cs" />
+    <Compile Include="Core\Utilities\FileSystem\BurialImageGuide.cs" />
+    <Compile Include="Core\Utilities\Converters\ApiBurialConverter.cs" />
+    <Compile Include="Core\Utilities\Logs\iConsole.cs" />
+    <Compile Include="Core\Geolocation\GeolocationService.cs" />
+    <Compile Include="Core\Utilities\Logs\ConsoleRealization.cs" />
+    <Compile Include="Core\Permissions\PermissionsProvider.cs" />
+    <Compile Include="Common\Adapters\SimpleDividerItemDecoration.cs" />
+    <Compile Include="Common\Adapters\BaseRecyclerViewAdapter.cs" />
+    <Compile Include="Core\Security\Md5HashGenerator.cs" />
+    <Compile Include="Core\Utilities\Converters\ImageSizeConverter.cs" />
+    <Compile Include="Common\Activity\ApplicationActivity.cs" />
+    <Compile Include="Common\Navigation\Router.cs" />
+    <Compile Include="Common\Activity\SplashActivity.cs" />
+    <Compile Include="Common\Fragmen\IBackFragment.cs" />
+    <Compile Include="Modules\Main\MainFlowFragment.cs" />
+    <Compile Include="Core\Geolocation\Providers\CompassProvider.cs" />
+    <Compile Include="Core\Geolocation\Providers\GpsProvider.cs" />
+    <Compile Include="Modules\Main\Fragment\ProfileFragment.cs" />
+    <Compile Include="Modules\Main\Fragment\FavoritesFragment.cs" />
+    <Compile Include="Modules\Main\Presenter\MainPresenter.cs" />
+    <Compile Include="Modules\Main\Presenter\ProfileMainPresenter.cs" />
+    <Compile Include="Core\Models\Exceptions\ProfileException.cs" />
+    <Compile Include="Modules\Main\Adapters\BurialRecordViewHolder.cs" />
+    <Compile Include="Modules\Main\Presenter\RecordsMainPresenter.cs" />
+    <Compile Include="Modules\Main\Presenter\FavoriteMainPresenter.cs" />
+    <Compile Include="Modules\Main\Presenter\MapMainPresenter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="Assets\AboutAssets.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\values\dimens.xml" />
+    <AndroidResource Include="Resources\values\strings.xml" />
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\values\settingsStrings.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\values\themes.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\floating_action_button.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\item_selector_row.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\line_divider.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\nophoto.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\round_point.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\small_rounded_corner_green.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\small_rounded_corner_red.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\small_rounded_corner_yellow.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_exit_to_app_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_event_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_map_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_exit_to_app_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_event_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_map_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_delete_white.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_exit_to_app_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_add_a_photo_white.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\Icon.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_send_white.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\drawer_header.jpg">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_event_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_map_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_mode_edit_white.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_action_save.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_exit_to_app_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_event_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_map_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_exit_to_app_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_event_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_map_white_24dp.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\menu\menu_edit_bar.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Item_BurialRecord.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\FlowFragment_Login.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Fragment_Progress.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Fragment_Records.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Fragment_Profile.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Fragment_Map.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\FlowFragment_BurialEditDetail.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\xml\network_security_config.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\xml\file_paths.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Layout_ApplicationActivity.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\background_splash.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\logo.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\FlowFragment_Dashboard.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\menu\bottom_navigation_menu.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_favorite_white_24.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_favorite_white_24.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_favorite_white_24.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_favorite_white_24.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_favorite_white_24.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_person_white_24.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_person_white_24.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_person_white_24.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_person_white_24.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_person_white_24.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\drawable\" />
+    <Folder Include="Resources\layout\" />
+    <Folder Include="Resources\menu\" />
+    <Folder Include="Resources\xml\" />
+    <Folder Include="Modules\" />
+    <Folder Include="Common\" />
+    <Folder Include="Modules\Login\" />
+    <Folder Include="Modules\Main\" />
+    <Folder Include="Modules\BurialEdit\" />
+    <Folder Include="Core\" />
+    <Folder Include="Modules\Main\Fragment\" />
+    <Folder Include="Core\Validators\" />
+    <Folder Include="Common\Fragmen\" />
+    <Folder Include="Core\Database\" />
+    <Folder Include="Core\Models\" />
+    <Folder Include="Core\Network\" />
+    <Folder Include="Core\Properties\" />
+    <Folder Include="Core\Settings\" />
+    <Folder Include="Core\Utilities\" />
+    <Folder Include="Core\Network\Models\" />
+    <Folder Include="Core\Constants\" />
+    <Folder Include="Core\Models\Exceptions\" />
+    <Folder Include="Core\Utilities\FileSystem\" />
+    <Folder Include="Core\Utilities\Converters\" />
+    <Folder Include="Core\Utilities\Logs\" />
+    <Folder Include="Core\Geolocation\" />
+    <Folder Include="Core\Permissions\" />
+    <Folder Include="Common\Adapters\" />
+    <Folder Include="Modules\Main\Adapters\" />
+    <Folder Include="Core\Security\" />
+    <Folder Include="Common\Navigation\" />
+    <Folder Include="Modules\Main\Presenter\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.2.1.1" />
+    <PackageReference Include="Xamarin.AndroidX.Legacy.Support.Core.Utils" Version="1.0.0.6" />
+    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.3.0.4" />
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.7.335</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.Permissions">
+      <Version>6.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Unity">
+      <Version>5.11.9</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="FluentValidation">
+      <Version>9.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.CurrentActivity">
+      <Version>2.1.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.AppCompat">
+      <Version>1.2.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.PercentLayout">
+      <Version>1.0.0.7</Version>
+    </PackageReference>
+    <PackageReference Include="Square.Picasso">
+      <Version>2.71828.0</Version>
+    </PackageReference>
+  <PackageReference Include="Xamarin.AndroidX.Migration" Version="1.0.8" />  <PackageReference Include="Karamunting.Android.HDodenhof.CircleImageView">
+    <Version>3.1.0</Version>
+  </PackageReference>
+  <PackageReference Include="Xamarin.Android.Support.Exif">
+    <Version>28.0.0.3</Version>
+  </PackageReference>
+  <PackageReference Include="Xamarin.AndroidX.ExifInterface">
+    <Version>1.3.2.1</Version>
+  </PackageReference>
+  <PackageReference Include="Xamarin.AndroidX.Preference">
+    <Version>1.1.1.6</Version>
+  </PackageReference>
+  <PackageReference Include="Xamarin.GooglePlayServices.Maps">
+    <Version>117.0.0</Version>
+  </PackageReference>
+  <PackageReference Include="Xamarin.AndroidX.Media">
+    <Version>1.2.1.1</Version>
+  </PackageReference>
+  <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4">
+    <Version>1.0.0.6</Version>
+  </PackageReference>
+  <PackageReference Include="PCLStorage">
+    <Version>1.0.2</Version>
+  </PackageReference>
+  <PackageReference Include="Acr.UserDialogs">
+    <Version>7.1.0.470</Version>
+  </PackageReference>
+  <PackageReference Include="Xam.Plugin.Geolocator">
+    <Version>4.5.0.6</Version>
+  </PackageReference>
+  <PackageReference Include="Xam.Plugin.Media">
+    <Version>5.0.1</Version>
+  </PackageReference>
+  <PackageReference Include="Xamarin.Essentials">
+    <Version>1.6.0</Version>
+  </PackageReference>
+  <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment">
+    <Version>2.3.2.1</Version>
+  </PackageReference>
+  <PackageReference Include="Xamarin.AndroidX.Lifecycle.Common">
+    <Version>2.2.0.4</Version>
+  </PackageReference>
+  <PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime">
+    <Version>2.2.0.4</Version>
+  </PackageReference>
+  <PackageReference Include="Xamarin.AndroidX.Lifecycle.Extensions">
+    <Version>2.2.0.6</Version>
+  </PackageReference>
+  <PackageReference Include="FluentResults">
+    <Version>2.3.0</Version>
+  </PackageReference>
+</ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+    Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+  -->
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <TextStylePolicy TabWidth="4" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" EolMarker="Native" FileWidth="80" TabsToSpaces="True" scope="text/x-csharp" />
+          <CSharpFormattingPolicy IndentBlock="True" IndentBraces="False" IndentSwitchSection="True" IndentSwitchCaseSection="True" LabelPositioning="OneLess" NewLinesForBracesInTypes="True" NewLinesForBracesInProperties="True" NewLinesForBracesInAccessors="True" NewLineForElse="True" NewLineForCatch="True" NewLineForFinally="True" NewLineForMembersInObjectInit="True" NewLineForMembersInAnonymousTypes="True" NewLineForClausesInQuery="True" SpacingAfterMethodDeclarationName="False" SpaceWithinMethodDeclarationParenthesis="False" SpaceBetweenEmptyMethodDeclarationParentheses="False" SpaceAfterMethodCallName="False" SpaceWithinMethodCallParentheses="False" SpaceBetweenEmptyMethodCallParentheses="False" SpaceAfterControlFlowStatementKeyword="True" SpaceWithinExpressionParentheses="False" SpaceWithinCastParentheses="False" SpaceWithinOtherParentheses="False" SpaceAfterCast="False" SpacesIgnoreAroundVariableDeclaration="False" SpaceBeforeOpenSquareBracket="False" SpaceBetweenEmptySquareBrackets="False" SpaceWithinSquareBrackets="False" SpaceAfterColonInBaseTypeDeclaration="True" SpaceAfterComma="True" SpaceAfterDot="False" SpaceAfterSemicolonsInForStatement="True" SpaceBeforeColonInBaseTypeDeclaration="True" SpaceBeforeComma="False" SpaceBeforeDot="False" SpaceBeforeSemicolonsInForStatement="False" SpacingAroundBinaryOperator="Single" WrappingPreserveSingleLine="True" WrappingKeepStatementsOnSingleLine="True" NewLinesForBracesInMethods="False" NewLinesForBracesInAnonymousMethods="False" NewLinesForBracesInControlBlocks="False" NewLinesForBracesInAnonymousTypes="False" NewLinesForBracesInObjectCollectionArrayInitializers="False" NewLinesForBracesInLambdaExpressionBody="False" scope="text/x-csharp" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

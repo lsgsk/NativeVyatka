@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+	<LinearLayout
+		android:orientation="horizontal"
+		android:background="@drawable/item_selector_row"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/base_margin"
+		android:layout_alignParentLeft="true">
+		<de.hdodenhof.circleimageview.CircleImageView
+			android:id="@+id/imgImage"
+			android:layout_width="@dimen/burial_list_image_size"
+			android:layout_height="@dimen/burial_list_image_size"/>
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginLeft="@dimen/base_margin"
+			android:layout_marginRight="@dimen/base_margin">
+			<TextView
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/tvName"
+				android:singleLine="true"
+				android:ellipsize="end"
+				android:textStyle="bold"/>
+			<TextView
+				android:textAppearance="?android:attr/textAppearanceSmall"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/tvDescription"
+				android:ellipsize="end"
+				android:maxLines="2"/>
+		</LinearLayout>
+	</LinearLayout>
+	<View
+		android:id="@+id/vIsSended"
+		android:visibility="visible"
+		android:background="@drawable/round_point"
+		android:layout_width="@dimen/round_point"
+		android:layout_height="@dimen/round_point"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentRight="true"
+		android:layout_margin="@dimen/base_margin" />
+</RelativeLayout>
